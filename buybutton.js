@@ -195,6 +195,7 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
+
   // French
   if (window.location.href.indexOf("fr.meer.care") > -1) {
   /* Shopify Code Stat */
@@ -592,7 +593,7 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 
   // Slovakia
-  if (window.location.href.indexOf("pl.meer.care") > -1) {
+  if (window.location.href.indexOf("sk.meer.care") > -1) {
   /* Shopify Code Stat */
   (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -788,7 +789,6 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
-
   // English
   if (window.location.href.indexOf("en.meer.care") > -1) {
   /* Shopify Code Stat */
@@ -986,7 +986,6 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
-
 
 else {
     /* Shopify Code Stat */
