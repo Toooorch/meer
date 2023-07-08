@@ -1,4 +1,3 @@
-<script>
   // Polish
   if (window.location.href.indexOf("pl.meer.care") > -1) {
   /* Shopify Code Stat */
@@ -1190,5 +1189,3 @@ else {
 }
 })();
 }
-
-</script>
