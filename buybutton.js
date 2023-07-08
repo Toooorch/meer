@@ -1,6 +1,6 @@
   // Polish
   if (window.location.href.indexOf("pl.meer.care") > -1) {
-  /* Shopify Code Stat */
+  /* Shopify Code Start */
   (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     if (window.ShopifyBuy) {
@@ -195,10 +195,207 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
+// Czech Default
+else {
+  /* Shopify Code Start */
+  (function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'meer.cz',
+      storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'cs',
+    });
+
+    var input = {
+      buyerIdentity: {
+        countryCode: 'CZ',
+      },
+    };
+
+client.checkout.create(input).then((checkout) => {
+  ShopifyBuy.UI.onReady(client).then(function (ui) {
+    var options = {
+  "product": {
+    "iframe": false,
+    "contents": {
+      "img": false,
+      "button": false,
+      "buttonWithQuantity": true,
+      "title": false,
+      "price": false
+    },
+    "text": {
+      "button": "Přidat do košíku",
+      "outOfStock": "Vyprodáno",
+      "unavailable": "Vyprodáno"
+    }
+  },
+  "productSet": {},
+  "cart": {
+      "iframe": false,
+      "text": {
+        "title": "Košík",
+          "total": "Celková částka",
+          "empty": "Momentálně nemáte v košíku vloženo žádné zboží.",
+          "notice": "",
+          "button": "Pokračovat k pokladně",
+          "noteDescription": "Poznámka k objednávce",
+          "outOfStock": "Vyprodáno",
+          "unavailable": "Vyprodáno",
+      },
+      "contents": {
+        "note": true
+      },
+      "popup": false
+},
+"toggle": {
+  "iframe": false,
+  "templates": {
+      "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
+  }
+},
+"lineItem": {}
+}
+
+  if(document.getElementById('buy-button-set-I-desktop')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-desktop')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-desktop')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-desktop')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-desktop')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-desktop')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-desktop')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-desktop'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+if(document.getElementById('buy-button-set-I-mobile')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-mobile')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-mobile')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-mobile')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-mobile')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-mobile')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-mobile')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-mobile'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+
+});
+})
+}
+})();
+}
 
   // French
   if (window.location.href.indexOf("fr.meer.care") > -1) {
-  /* Shopify Code Stat */
+  /* Shopify Code Start */
   (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     if (window.ShopifyBuy) {
@@ -393,10 +590,207 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
+// Czech Default
+else {
+  /* Shopify Code Start */
+  (function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'meer.cz',
+      storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'cs',
+    });
+
+    var input = {
+      buyerIdentity: {
+        countryCode: 'CZ',
+      },
+    };
+
+client.checkout.create(input).then((checkout) => {
+  ShopifyBuy.UI.onReady(client).then(function (ui) {
+    var options = {
+  "product": {
+    "iframe": false,
+    "contents": {
+      "img": false,
+      "button": false,
+      "buttonWithQuantity": true,
+      "title": false,
+      "price": false
+    },
+    "text": {
+      "button": "Přidat do košíku",
+      "outOfStock": "Vyprodáno",
+      "unavailable": "Vyprodáno"
+    }
+  },
+  "productSet": {},
+  "cart": {
+      "iframe": false,
+      "text": {
+        "title": "Košík",
+          "total": "Celková částka",
+          "empty": "Momentálně nemáte v košíku vloženo žádné zboží.",
+          "notice": "",
+          "button": "Pokračovat k pokladně",
+          "noteDescription": "Poznámka k objednávce",
+          "outOfStock": "Vyprodáno",
+          "unavailable": "Vyprodáno",
+      },
+      "contents": {
+        "note": true
+      },
+      "popup": false
+},
+"toggle": {
+  "iframe": false,
+  "templates": {
+      "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
+  }
+},
+"lineItem": {}
+}
+
+  if(document.getElementById('buy-button-set-I-desktop')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-desktop')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-desktop')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-desktop')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-desktop')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-desktop')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-desktop')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-desktop'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+if(document.getElementById('buy-button-set-I-mobile')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-mobile')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-mobile')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-mobile')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-mobile')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-mobile')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-mobile')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-mobile'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+
+});
+})
+}
+})();
+}
 
   // German
   if (window.location.href.indexOf("de.meer.care") > -1) {
-  /* Shopify Code Stat */
+  /* Shopify Code Start */
   (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     if (window.ShopifyBuy) {
@@ -591,10 +985,207 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
+// Czech Default
+else {
+  /* Shopify Code Start */
+  (function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'meer.cz',
+      storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'cs',
+    });
+
+    var input = {
+      buyerIdentity: {
+        countryCode: 'CZ',
+      },
+    };
+
+client.checkout.create(input).then((checkout) => {
+  ShopifyBuy.UI.onReady(client).then(function (ui) {
+    var options = {
+  "product": {
+    "iframe": false,
+    "contents": {
+      "img": false,
+      "button": false,
+      "buttonWithQuantity": true,
+      "title": false,
+      "price": false
+    },
+    "text": {
+      "button": "Přidat do košíku",
+      "outOfStock": "Vyprodáno",
+      "unavailable": "Vyprodáno"
+    }
+  },
+  "productSet": {},
+  "cart": {
+      "iframe": false,
+      "text": {
+        "title": "Košík",
+          "total": "Celková částka",
+          "empty": "Momentálně nemáte v košíku vloženo žádné zboží.",
+          "notice": "",
+          "button": "Pokračovat k pokladně",
+          "noteDescription": "Poznámka k objednávce",
+          "outOfStock": "Vyprodáno",
+          "unavailable": "Vyprodáno",
+      },
+      "contents": {
+        "note": true
+      },
+      "popup": false
+},
+"toggle": {
+  "iframe": false,
+  "templates": {
+      "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
+  }
+},
+"lineItem": {}
+}
+
+  if(document.getElementById('buy-button-set-I-desktop')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-desktop')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-desktop')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-desktop')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-desktop')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-desktop')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-desktop')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-desktop'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+if(document.getElementById('buy-button-set-I-mobile')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-mobile')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-mobile')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-mobile')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-mobile')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-mobile')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-mobile')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-mobile'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+
+});
+})
+}
+})();
+}
 
   // Slovakia
   if (window.location.href.indexOf("sk.meer.care") > -1) {
-  /* Shopify Code Stat */
+  /* Shopify Code Start */
   (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     if (window.ShopifyBuy) {
@@ -789,9 +1380,207 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
+// Czech Default
+else {
+  /* Shopify Code Start */
+  (function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'meer.cz',
+      storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'cs',
+    });
+
+    var input = {
+      buyerIdentity: {
+        countryCode: 'CZ',
+      },
+    };
+
+client.checkout.create(input).then((checkout) => {
+  ShopifyBuy.UI.onReady(client).then(function (ui) {
+    var options = {
+  "product": {
+    "iframe": false,
+    "contents": {
+      "img": false,
+      "button": false,
+      "buttonWithQuantity": true,
+      "title": false,
+      "price": false
+    },
+    "text": {
+      "button": "Přidat do košíku",
+      "outOfStock": "Vyprodáno",
+      "unavailable": "Vyprodáno"
+    }
+  },
+  "productSet": {},
+  "cart": {
+      "iframe": false,
+      "text": {
+        "title": "Košík",
+          "total": "Celková částka",
+          "empty": "Momentálně nemáte v košíku vloženo žádné zboží.",
+          "notice": "",
+          "button": "Pokračovat k pokladně",
+          "noteDescription": "Poznámka k objednávce",
+          "outOfStock": "Vyprodáno",
+          "unavailable": "Vyprodáno",
+      },
+      "contents": {
+        "note": true
+      },
+      "popup": false
+},
+"toggle": {
+  "iframe": false,
+  "templates": {
+      "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
+  }
+},
+"lineItem": {}
+}
+
+  if(document.getElementById('buy-button-set-I-desktop')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-desktop')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-desktop')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-desktop')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-desktop')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-desktop')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-desktop')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-desktop'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+if(document.getElementById('buy-button-set-I-mobile')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-mobile')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-mobile')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-mobile')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-mobile')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-mobile')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-mobile')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-mobile'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+
+});
+})
+}
+})();
+}
+
   // English
   if (window.location.href.indexOf("en.meer.care") > -1) {
-  /* Shopify Code Stat */
+  /* Shopify Code Start */
   (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     if (window.ShopifyBuy) {
@@ -986,199 +1775,199 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
-
-else if {
-    /* Shopify Code Stat */
-    (function () {
-    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-    if (window.ShopifyBuy) {
-      if (window.ShopifyBuy.UI) {
-        ShopifyBuyInit();
-      } else {
-        loadScript();
-      }
+// Czech Default
+else {
+  /* Shopify Code Start */
+  (function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
     } else {
       loadScript();
     }
-    function loadScript() {
-      var script = document.createElement('script');
-      script.async = true;
-      script.src = scriptURL;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
-      script.onload = ShopifyBuyInit;
-    }
-    function ShopifyBuyInit() {
-      var client = ShopifyBuy.buildClient({
-        domain: 'meer.cz',
-        storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
-        language: 'cs',
-      });
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'meer.cz',
+      storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'cs',
+    });
 
-      var input = {
-        buyerIdentity: {
-          countryCode: 'CZ',
-        },
-      };
-
-  client.checkout.create(input).then((checkout) => {
-    ShopifyBuy.UI.onReady(client).then(function (ui) {
-      var options = {
-    "product": {
-      "iframe": false,
-      "contents": {
-        "img": false,
-        "button": false,
-        "buttonWithQuantity": true,
-        "title": false,
-        "price": false
+    var input = {
+      buyerIdentity: {
+        countryCode: 'CZ',
       },
-      "text": {
-        "button": "Přidat do košíku",
-        "outOfStock": "Vyprodáno",
-        "unavailable": "Vyprodáno"
-      }
-    },
-    "productSet": {},
-    "cart": {
-        "iframe": false,
-        "text": {
-          "title": "Košík",
-            "total": "Celková částka",
-            "empty": "Momentálně nemáte v košíku vloženo žádné zboží.",
-            "notice": "",
-            "button": "Pokračovat k pokladně",
-            "noteDescription": "Poznámka k objednávce",
-            "outOfStock": "Vyprodáno",
-            "unavailable": "Vyprodáno",
-        },
-        "contents": {
-          "note": true
-        },
-        "popup": false
-  },
-  "toggle": {
+    };
+
+client.checkout.create(input).then((checkout) => {
+  ShopifyBuy.UI.onReady(client).then(function (ui) {
+    var options = {
+  "product": {
     "iframe": false,
-    "templates": {
-        "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
+    "contents": {
+      "img": false,
+      "button": false,
+      "buttonWithQuantity": true,
+      "title": false,
+      "price": false
+    },
+    "text": {
+      "button": "Přidat do košíku",
+      "outOfStock": "Vyprodáno",
+      "unavailable": "Vyprodáno"
     }
   },
-  "lineItem": {}
+  "productSet": {},
+  "cart": {
+      "iframe": false,
+      "text": {
+        "title": "Košík",
+          "total": "Celková částka",
+          "empty": "Momentálně nemáte v košíku vloženo žádné zboží.",
+          "notice": "",
+          "button": "Pokračovat k pokladně",
+          "noteDescription": "Poznámka k objednávce",
+          "outOfStock": "Vyprodáno",
+          "unavailable": "Vyprodáno",
+      },
+      "contents": {
+        "note": true
+      },
+      "popup": false
+},
+"toggle": {
+  "iframe": false,
+  "templates": {
+      "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
+  }
+},
+"lineItem": {}
 }
-  
-    if(document.getElementById('buy-button-set-I-desktop')){
-        ui.createComponent('product', {
-        id: [7542825058534],
-        node: document.getElementById('buy-button-set-I-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-set-II-desktop')){
-        ui.createComponent('product', {
-        id: [8021842854118],
-        node: document.getElementById('buy-button-set-II-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-I-desktop')){
-        ui.createComponent('product', {
-        id: [7601486758118],
-        node: document.getElementById('buy-button-step-I-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-II-desktop')){
-        ui.createComponent('product', {
-        id: [7609802686694],
-        node: document.getElementById('buy-button-step-II-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-III-desktop')){
-        ui.createComponent('product', {
-        id: [7931357692134],
-        node: document.getElementById('buy-button-step-III-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-IV-desktop')){
-        ui.createComponent('product', {
-        id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-gift-card-desktop')){
-      ui.createComponent('product', {
-      id: [8578704736581],
-      node: document.getElementById('buy-button-gift-card-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-  if(document.getElementById('buy-button-set-I-mobile')){
-        ui.createComponent('product', {
-        id: [7542825058534],
-        node: document.getElementById('buy-button-set-I-mobile'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-set-II-mobile')){
-        ui.createComponent('product', {
-        id: [8021842854118],
-        node: document.getElementById('buy-button-set-II-mobile'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-I-mobile')){
-        ui.createComponent('product', {
-        id: [7601486758118],
-        node: document.getElementById('buy-button-step-I-mobile'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-II-mobile')){
-        ui.createComponent('product', {
-        id: [7609802686694],
-        node: document.getElementById('buy-button-step-II-mobile'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-III-mobile')){
-        ui.createComponent('product', {
-        id: [7931357692134],
-        node: document.getElementById('buy-button-step-III-mobile'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-step-IV-mobile')){
-        ui.createComponent('product', {
-        id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV-mobile'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-    });
-  }
-    if(document.getElementById('buy-button-gift-card-mobile')){
-      ui.createComponent('product', {
-      id: [8578704736581],
-      node: document.getElementById('buy-button-gift-card-mobile'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
 
+  if(document.getElementById('buy-button-set-I-desktop')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
   });
+}
+  if(document.getElementById('buy-button-set-II-desktop')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-desktop')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-desktop')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-desktop')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-desktop')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-desktop')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-desktop'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+if(document.getElementById('buy-button-set-I-mobile')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-set-II-mobile')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-I-mobile')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-II-mobile')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-III-mobile')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-step-IV-mobile')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+  });
+}
+  if(document.getElementById('buy-button-gift-card-mobile')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-mobile'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+  });
+}
+
+});
 })
 }
 })();
