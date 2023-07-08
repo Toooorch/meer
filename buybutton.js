@@ -393,7 +393,6 @@ if(document.getElementById('buy-button-set-I-desktop')){
 })();
 }
 
-
   // German
   if (window.location.href.indexOf("de.meer.care") > -1) {
   /* Shopify Code Stat */
@@ -592,7 +591,6 @@ if(document.getElementById('buy-button-set-I-desktop')){
 })();
 }
 
-
   // Slovakia
   if (window.location.href.indexOf("pl.meer.care") > -1) {
   /* Shopify Code Stat */
@@ -790,9 +788,6 @@ if(document.getElementById('buy-button-set-I-desktop')){
 }
 })();
 }
-
-
-
 
   // English
   if (window.location.href.indexOf("en.meer.care") > -1) {
