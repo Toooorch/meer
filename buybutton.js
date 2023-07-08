@@ -987,7 +987,7 @@ if(document.getElementById('buy-button-set-I-desktop')){
 })();
 }
 
-else {
+else if {
     /* Shopify Code Stat */
     (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
