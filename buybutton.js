@@ -858,7 +858,7 @@ switch (href) {
         "cart": {
             "iframe": false,
             "text": {
-              "title": "Moszyk",
+              "title": "Koszyk",
                 "total": "Suma",
                 "empty": "Obecnie nie masz żadnych produktów w koszyku.",
                 "notice": "",
