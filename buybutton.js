@@ -1,5 +1,5 @@
 const href = window.location.href;
-const findTerm = (term) => {
+const findTermBuyButton = (term) => {
   if (href.includes(term)){
     return href;
   }
@@ -7,7 +7,7 @@ const findTerm = (term) => {
 
 switch (href) {
   // English
-  case findTerm('en.meer.care'):
+  case findTermBuyButton('en.meer.care'):
         /* Shopify Code Start */
         (function () {
           var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -206,7 +206,7 @@ switch (href) {
       break;
   
   // Slovakia
-  case findTerm('sk.meer.care'):
+  case findTermBuyButton('sk.meer.care'):
     /* Shopify Code Start */
     (function () {
       var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -405,7 +405,7 @@ switch (href) {
       break;
 
 // Germany
-    case findTerm('de.meer.care'):
+    case findTermBuyButton('de.meer.care'):
           /* Shopify Code Start */
           (function () {
             var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -604,7 +604,7 @@ switch (href) {
     break;
 
     // France
-    case findTerm('fr.meer.care'):
+    case findTermBuyButton('fr.meer.care'):
           /* Shopify Code Start */
           (function () {
             var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -803,7 +803,7 @@ switch (href) {
 
     break;
 // Poland
-    case findTerm('pl.meer.care'):
+    case findTermBuyButton('pl.meer.care'):
       /* Shopify Code Start */
       (function () {
         var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
