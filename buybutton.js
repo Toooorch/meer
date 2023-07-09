@@ -228,7 +228,7 @@ switch (href) {
       }
       function ShopifyBuyInit() {
         var client = ShopifyBuy.buildClient({
-          domain: 'meer.cz',
+          domain: 'meer.sk',
           storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
           language: 'sk',
         });
