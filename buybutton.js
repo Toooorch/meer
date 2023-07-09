@@ -29,7 +29,7 @@ switch (href) {
           }
           function ShopifyBuyInit() {
             var client = ShopifyBuy.buildClient({
-              domain: 'meer.cz',
+              domain: 'meer-care.myshopify.com',
               storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
               language: 'en',
             });
@@ -427,7 +427,7 @@ switch (href) {
             }
             function ShopifyBuyInit() {
               var client = ShopifyBuy.buildClient({
-                domain: 'meer.cz',
+                domain: 'meercarede.cz',
                 storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
                 language: 'de',
               });
@@ -603,7 +603,7 @@ switch (href) {
 
     break;
 
-    // French
+    // France
     case findTerm('fr.meer.care'):
           /* Shopify Code Start */
           (function () {
@@ -626,7 +626,7 @@ switch (href) {
             }
             function ShopifyBuyInit() {
               var client = ShopifyBuy.buildClient({
-                domain: 'meer.cz',
+                domain: 'meercarefr.cz',
                 storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
                 language: 'fr',
               });
