@@ -825,7 +825,7 @@ switch (href) {
         }
         function ShopifyBuyInit() {
           var client = ShopifyBuy.buildClient({
-            domain: 'meer.cz',
+            domain: 'meercare.pl',
             storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
             language: 'pl',
           });
