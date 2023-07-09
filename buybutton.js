@@ -1,5 +1,5 @@
 const href = window.location.href;
-const findTermBuyButton = (term) => {
+const findTermURL = (term) => {
   if (href.includes(term)){
     return href;
   }
@@ -7,7 +7,11 @@ const findTermBuyButton = (term) => {
 
 switch (href) {
   // English
-  case findTermBuyButton('en.meer.care'):
+  case findTermURL('en.meer.care'):
+
+  document.getElementById("delivery-treshold").innerHTML = "Free delivery from $50"
+  //document.getElementById("delivery-speed").innerHTML = "Free delivery from $50"
+
         /* Shopify Code Start */
         (function () {
           var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -206,7 +210,11 @@ switch (href) {
       break;
   
   // Slovakia
-  case findTermBuyButton('sk.meer.care'):
+  case findTermURL('sk.meer.care'):
+
+  document.getElementById("delivery-treshold").innerHTML = "Doprava zadarmo od €50"
+  //document.getElementById("delivery-speed").innerHTML = "Doprava zadarmo od €50"
+
     /* Shopify Code Start */
     (function () {
       var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -405,7 +413,11 @@ switch (href) {
       break;
 
 // Germany
-    case findTermBuyButton('de.meer.care'):
+    case findTermURL('de.meer.care'):
+
+    document.getElementById("delivery-treshold").innerHTML = "Kostenloser Versand ab €60"
+    //document.getElementById("delivery-speed").innerHTML = "Kostenloser Versand ab €60"
+
           /* Shopify Code Start */
           (function () {
             var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -604,7 +616,11 @@ switch (href) {
     break;
 
     // France
-    case findTermBuyButton('fr.meer.care'):
+    case findTermURL('fr.meer.care'):
+
+    document.getElementById("delivery-treshold").innerHTML = "Frais de port offerts à partir de €60"
+    //document.getElementById("delivery-speed").innerHTML = "Frais de port offerts à partir de €60"
+
           /* Shopify Code Start */
           (function () {
             var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -803,7 +819,11 @@ switch (href) {
 
     break;
 // Poland
-    case findTermBuyButton('pl.meer.care'):
+    case findTermURL('pl.meer.care'):
+
+    document.getElementById("delivery-treshold").innerHTML = "Darmowa wysyłka od 200 zł"
+    //document.getElementById("delivery-speed").innerHTML = "Darmowa wysyłka od 200 zł"
+
       /* Shopify Code Start */
       (function () {
         var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -1002,6 +1022,10 @@ switch (href) {
 
   default:
     // Czech
+
+    document.getElementById("delivery-treshold").innerHTML = "Nyní doprava zdarma"
+    //document.getElementById("delivery-speed").innerHTML = "Nyní doprava zdarma"
+    
       /* Shopify Code Start */
       (function () {
         var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
