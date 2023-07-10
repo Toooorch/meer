@@ -1,3 +1,6 @@
+const deliveryTrashold = document.getElementById("delivery-treshold");
+const deliveryTime = document.getElementById("delivery-speed");
+
 const href = window.location.href;
 const findTermURL = (term) => {
   if (href.includes(term)){
@@ -9,8 +12,8 @@ switch (href) {
   // English
   case findTermURL('en.meer.care'):
 
-  document.getElementById("delivery-treshold").innerHTML = "Free delivery from $50"
-  //document.getElementById("delivery-speed").innerHTML = "Free delivery from $50"
+    deliveryTrashold.textContent = "Free delivery from $50";
+    //deliveryTime.textContent = "";
 
         /* Shopify Code Start */
         (function () {
@@ -212,8 +215,8 @@ switch (href) {
   // Slovakia
   case findTermURL('sk.meer.care'):
 
-  document.getElementById("delivery-treshold").innerHTML = "Doprava zadarmo od €50"
-  //document.getElementById("delivery-speed").innerHTML = "Doprava zadarmo od €50"
+  deliveryTrashold.textContent = "Doprava zadarmo od €50";
+  //deliveryTime.textContent = "";
 
     /* Shopify Code Start */
     (function () {
@@ -415,8 +418,8 @@ switch (href) {
 // Germany
     case findTermURL('de.meer.care'):
 
-    document.getElementById("delivery-treshold").innerHTML = "Kostenloser Versand ab €60"
-    //document.getElementById("delivery-speed").innerHTML = "Kostenloser Versand ab €60"
+    deliveryTrashold.textContent = "Kostenloser Versand ab €60";
+    //deliveryTime.textContent = "";
 
           /* Shopify Code Start */
           (function () {
@@ -618,8 +621,8 @@ switch (href) {
     // France
     case findTermURL('fr.meer.care'):
 
-    document.getElementById("delivery-treshold").innerHTML = "Frais de port offerts à partir de €60"
-    //document.getElementById("delivery-speed").innerHTML = "Frais de port offerts à partir de €60"
+    deliveryTrashold.textContent = "Frais de port offerts à partir de €60";
+    //deliveryTime.textContent = "";
 
           /* Shopify Code Start */
           (function () {
@@ -821,8 +824,8 @@ switch (href) {
 // Poland
     case findTermURL('pl.meer.care'):
 
-    document.getElementById("delivery-treshold").innerHTML = "Darmowa wysyłka od 200 zł"
-    //document.getElementById("delivery-speed").innerHTML = "Darmowa wysyłka od 200 zł"
+    deliveryTrashold.textContent = "Darmowa wysyłka od 200 zł";
+    //deliveryTime.textContent = "";
 
       /* Shopify Code Start */
       (function () {
@@ -1021,10 +1024,11 @@ switch (href) {
     break;
 
   default:
-    // Czech
 
-    document.getElementById("delivery-treshold").innerHTML = "Nyní doprava zdarma"
-    //document.getElementById("delivery-speed").innerHTML = "Nyní doprava zdarma"
+    // Czech
+    
+    deliveryTrashold.textContent = "Nyní doprava zdarma";
+    //deliveryTime.textContent = "";
     
       /* Shopify Code Start */
       (function () {
