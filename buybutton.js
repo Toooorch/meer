@@ -627,7 +627,7 @@ switch (href) {
     case findTermURL('fr.meer.care'):
 
     deliveryTrashold.textContent = "Frais de port offerts à partir de €60";
-    deliveryTime.textContent = deliveryMessage;
+    deliveryTime.textContent = "Livraison en 2-5 jours";
 
           /* Shopify Code Start */
           (function () {
@@ -1031,7 +1031,6 @@ switch (href) {
   default:
 
     // Czech
-
     var deliveryMessage;
     var tomorrow = "zítra u Vás (Zásilkovna)";
     var nexttomorrow = "pozítří u Vás (Zásilkovna)";
