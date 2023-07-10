@@ -11,6 +11,32 @@ var nexttomorrow = "pozítří u Vás (Zásilkovna)";
 var monday = "v pondělí u Vás (Zásilkovna)";
 var tuesday = "v úterý u Vás (Zásilkovna)";
 
+if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
+    deliveryMessage = tomorrow;
+  } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 1) {
+    deliveryMessage = nexttomorrow;
+  } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 2) {
+    deliveryMessage = tomorrow;
+  } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 2) {
+    deliveryMessage = nexttomorrow;
+  } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 3) {
+    deliveryMessage = tomorrow;
+  } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 3) {
+    deliveryMessage = nexttomorrow;
+  } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 4) { // Thursday before 19
+    deliveryMessage = tomorrow;
+  } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 4) { // Thursday after 19
+    deliveryMessage = monday;
+  } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 5) { // Friday before 19
+    deliveryMessage = monday;
+  } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
+    deliveryMessage = tuesday;
+  } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
+    deliveryMessage = tuesday;
+  } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun
+    deliveryMessage = tuesday;
+  }
+
 const href = window.location.href;
 const findTermURL = (term) => {
   if (href.includes(term)){
@@ -1036,32 +1062,6 @@ switch (href) {
   default:
 
     // Czech
-    if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
-      deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 1) {
-      deliveryMessage = nexttomorrow;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 2) {
-      deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 2) {
-      deliveryMessage = nexttomorrow;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 3) {
-      deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 3) {
-      deliveryMessage = nexttomorrow;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 4) { // Thursday before 19
-      deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 4) { // Thursday after 19
-      deliveryMessage = monday;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 5) { // Friday before 19
-      deliveryMessage = monday;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
-      deliveryMessage = tuesday;
-    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
-      deliveryMessage = tuesday;
-    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun
-      deliveryMessage = tuesday;
-    }
-
     deliveryTrashold.textContent = "Nyní doprava zdarma";
     deliveryTime.textContent = deliveryMessage;
     
