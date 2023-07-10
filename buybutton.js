@@ -1,6 +1,16 @@
 const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
 
+var deliveryDivDesktop = document.getElementById("delivery-date-desktop");
+var deliveryDivMobile = document.getElementById("delivery-date-mobile");
+var thehours = new Date().getHours();
+var dayOfWeek = new Date().getDay();
+var deliveryMessage;
+var tomorrow = "zítra u Vás (Zásilkovna)";
+var nexttomorrow = "pozítří u Vás (Zásilkovna)";
+var monday = "v pondělí u Vás (Zásilkovna)";
+var tuesday = "v úterý u Vás (Zásilkovna)";
+
 const href = window.location.href;
 const findTermURL = (term) => {
   if (href.includes(term)){
@@ -12,8 +22,8 @@ switch (href) {
   // English
   case findTermURL('en.meer.care'):
 
-    deliveryTrashold.textContent = "Free delivery from $50";
-    //deliveryTime.textContent = "";
+    deliveryTrashold.textContent = "Free Delivery from $50";
+    deliveryTime.textContent = "Fast Delivery";
 
         /* Shopify Code Start */
         (function () {
@@ -216,7 +226,7 @@ switch (href) {
   case findTermURL('sk.meer.care'):
 
   deliveryTrashold.textContent = "Doprava zadarmo od €50";
-  //deliveryTime.textContent = "";
+  deliveryTime.textContent = "Doručenie za 1-3 dni";
 
     /* Shopify Code Start */
     (function () {
@@ -419,7 +429,7 @@ switch (href) {
     case findTermURL('de.meer.care'):
 
     deliveryTrashold.textContent = "Kostenloser Versand ab €60";
-    //deliveryTime.textContent = "";
+    deliveryTime.textContent = "Lieferung in 2-3 Tagen";
 
           /* Shopify Code Start */
           (function () {
@@ -622,7 +632,7 @@ switch (href) {
     case findTermURL('fr.meer.care'):
 
     deliveryTrashold.textContent = "Frais de port offerts à partir de €60";
-    //deliveryTime.textContent = "";
+    deliveryTime.textContent = deliveryMessage;
 
           /* Shopify Code Start */
           (function () {
@@ -825,7 +835,7 @@ switch (href) {
     case findTermURL('pl.meer.care'):
 
     deliveryTrashold.textContent = "Darmowa wysyłka od 200 zł";
-    //deliveryTime.textContent = "";
+    deliveryTime.textContent = "Dostawa w ciągu 2-5 dni";
 
       /* Shopify Code Start */
       (function () {
@@ -1026,9 +1036,34 @@ switch (href) {
   default:
 
     // Czech
-    
+    if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
+      deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 1) {
+      deliveryMessage = nexttomorrow;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 2) {
+      deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 2) {
+      deliveryMessage = nexttomorrow;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 3) {
+      deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 3) {
+      deliveryMessage = nexttomorrow;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 4) { // Thursday before 19
+      deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 4) { // Thursday after 19
+      deliveryMessage = monday;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 5) { // Friday before 19
+      deliveryMessage = monday;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
+      deliveryMessage = tuesday;
+    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
+      deliveryMessage = tuesday;
+    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun
+      deliveryMessage = tuesday;
+    }
+
     deliveryTrashold.textContent = "Nyní doprava zdarma";
-    //deliveryTime.textContent = "";
+    deliveryTime.textContent = deliveryMessage;
     
       /* Shopify Code Start */
       (function () {
