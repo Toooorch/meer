@@ -5,6 +5,13 @@ const deliveryDateMobile = document.getElementById("delivery-date-mobile");
 
 var deliveryDivDesktop = document.getElementById("delivery-date-desktop");
 var deliveryDivMobile = document.getElementById("delivery-date-mobile");
+
+// Delivery
+var deliveryMessageEN = "Fast Delivery";
+var deliveryMessageSK = "Doručenie za 1-3 dni";
+var deliveryMessageDE = "Lieferung in 2-3 Tagen";
+var deliveryMessagePL = "Dostawa w ciągu 1-3 dni";
+
 var thehours = new Date().getHours();
 var dayOfWeek = new Date().getDay();
 
@@ -19,12 +26,11 @@ switch (href) {
   // English
   case findTermURL('en.meer.care'):
 
-    var deliveryMessage = "Fast Delivery";
-    deliveryDateDesktop = deliveryMessage;
-    deliveryDateMobile = deliveryMessage;
+    deliveryDateDesktop.textContent = deliveryMessageEN;
+    deliveryDateMobile.textContent = deliveryMessageEN;
   
     deliveryTrashold.textContent = "Free Delivery from $50";
-    deliveryTime.textContent = deliveryMessage;
+    deliveryTime.textContent = deliveryMessageEN;
 
         /* Shopify Code Start */
         (function () {
@@ -226,12 +232,11 @@ switch (href) {
   // Slovakia
   case findTermURL('sk.meer.care'):
 
-  var deliveryMessage = "Doručenie za 1-3 dni";
-  deliveryDateDesktop = deliveryMessage;
-  deliveryDateMobile = deliveryMessage;
+  deliveryDateDesktop.textContent = deliveryMessageSK;
+  deliveryDateMobile.textContent = deliveryMessageSK;
 
   deliveryTrashold.textContent = "Doprava zadarmo od €50";
-  deliveryTime.textContent = deliveryMessage;
+  deliveryTime.textContent = deliveryMessageSK;
 
     /* Shopify Code Start */
     (function () {
@@ -433,12 +438,11 @@ switch (href) {
 // Germany
     case findTermURL('de.meer.care'):
 
-    var deliveryMessage = "Lieferung in 2-3 Tagen";
-    deliveryDateDesktop = deliveryMessage;
-    deliveryDateMobile = deliveryMessage;
+    deliveryDateDesktop.textContent = deliveryMessageDE;
+    deliveryDateMobile.textContent = deliveryMessageDE;
 
     deliveryTrashold.textContent = "Kostenloser Versand ab €60";
-    deliveryTime.textContent = deliveryMessage;
+    deliveryTime.textContent = deliveryMessageDE;
 
           /* Shopify Code Start */
           (function () {
@@ -641,8 +645,8 @@ switch (href) {
     case findTermURL('fr.meer.care'):
 
     var deliveryMessage = "Livraison en 2-5 jours";
-    deliveryDateDesktop = deliveryMessage;
-    deliveryDateMobile = deliveryMessage;
+    deliveryDateDesktop.textContent = deliveryMessage;
+    deliveryDateMobile.textContent = deliveryMessage;
 
     deliveryTrashold.textContent = "Frais de port offerts à partir de €60";
     deliveryTime.textContent = deliveryMessage;
@@ -847,12 +851,11 @@ switch (href) {
 // Poland
     case findTermURL('pl.meer.care'):
 
-    var deliveryMessage = "Dostawa w ciągu 1-3 dni";
-    deliveryDateDesktop = deliveryMessage;
-    deliveryDateMobile = deliveryMessage;
+    deliveryDateDesktop.textContent = deliveryMessagePL;
+    deliveryDateMobile.textContent = deliveryMessagePL;
 
     deliveryTrashold.textContent = "Darmowa wysyłka od 200 zł";
-    deliveryTime.textContent = deliveryMessage;
+    deliveryTime.textContent = deliveryMessagePL;
 
       /* Shopify Code Start */
       (function () {
