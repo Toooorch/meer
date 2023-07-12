@@ -3,9 +3,6 @@ const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDateDesktop = document.getElementById("delivery-date-desktop");
 const deliveryDateMobile = document.getElementById("delivery-date-mobile");
 
-var deliveryDateDesktop = document.getElementById("delivery-date-desktop");
-var deliveryDateMobile = document.getElementById("delivery-date-mobile");
-
 // Delivery
 var deliveryMessageEN = "Fast Delivery";
 var deliveryMessageSK = "Doručenie za 1-3 dni";
