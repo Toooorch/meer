@@ -19,8 +19,12 @@ switch (href) {
   // English
   case findTermURL('en.meer.care'):
 
+    var deliveryMessage = "Fast Delivery";
+    deliveryDateDesktop = deliveryMessage;
+    deliveryDateMobile = deliveryMessage;
+  
     deliveryTrashold.textContent = "Free Delivery from $50";
-    deliveryTime.textContent = "Fast Delivery";
+    deliveryTime.textContent = deliveryMessage;
 
         /* Shopify Code Start */
         (function () {
@@ -222,8 +226,12 @@ switch (href) {
   // Slovakia
   case findTermURL('sk.meer.care'):
 
+  var deliveryMessage = "Doručenie za 1-3 dni";
+  deliveryDateDesktop = deliveryMessage;
+  deliveryDateMobile = deliveryMessage;
+
   deliveryTrashold.textContent = "Doprava zadarmo od €50";
-  deliveryTime.textContent = "Doručenie za 1-3 dni";
+  deliveryTime.textContent = deliveryMessage;
 
     /* Shopify Code Start */
     (function () {
@@ -425,8 +433,12 @@ switch (href) {
 // Germany
     case findTermURL('de.meer.care'):
 
+    var deliveryMessage = "Lieferung in 2-3 Tagen";
+    deliveryDateDesktop = deliveryMessage;
+    deliveryDateMobile = deliveryMessage;
+
     deliveryTrashold.textContent = "Kostenloser Versand ab €60";
-    deliveryTime.textContent = "Lieferung in 2-3 Tagen";
+    deliveryTime.textContent = deliveryMessage;
 
           /* Shopify Code Start */
           (function () {
@@ -628,8 +640,12 @@ switch (href) {
     // France
     case findTermURL('fr.meer.care'):
 
+    var deliveryMessage = "Livraison en 2-5 jours";
+    deliveryDateDesktop = deliveryMessage;
+    deliveryDateMobile = deliveryMessage;
+
     deliveryTrashold.textContent = "Frais de port offerts à partir de €60";
-    deliveryTime.textContent = "Livraison en 2-5 jours";
+    deliveryTime.textContent = deliveryMessage;
 
           /* Shopify Code Start */
           (function () {
@@ -831,8 +847,12 @@ switch (href) {
 // Poland
     case findTermURL('pl.meer.care'):
 
+    var deliveryMessage = "Dostawa w ciągu 1-3 dni";
+    deliveryDateDesktop = deliveryMessage;
+    deliveryDateMobile = deliveryMessage;
+
     deliveryTrashold.textContent = "Darmowa wysyłka od 200 zł";
-    deliveryTime.textContent = "Dostawa w ciągu 2-5 dni";
+    deliveryTime.textContent = deliveryMessage;
 
       /* Shopify Code Start */
       (function () {
