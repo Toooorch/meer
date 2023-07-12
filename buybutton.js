@@ -1090,8 +1090,8 @@ switch (href) {
 
     deliveryTrashold.textContent = "Nyní doprava zdarma";
     deliveryTime.textContent = deliveryMessage;
-    deliveryDateDesktop.textContent = deliveryMessage;
-    deliveryDateMobile.textContent = deliveryMessage;
+    //deliveryDateDesktop.textContent = deliveryMessage;
+    //deliveryDateMobile.textContent = deliveryMessage;
     
       /* Shopify Code Start */
       (function () {
