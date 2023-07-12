@@ -3,8 +3,8 @@ const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDateDesktop = document.getElementById("delivery-date-desktop");
 const deliveryDateMobile = document.getElementById("delivery-date-mobile");
 
-var deliveryDivDesktop = document.getElementById("delivery-date-desktop");
-var deliveryDivMobile = document.getElementById("delivery-date-mobile");
+var deliveryDateDesktop = document.getElementById("delivery-date-desktop");
+var deliveryDateMobile = document.getElementById("delivery-date-mobile");
 
 // Delivery
 var deliveryMessageEN = "Fast Delivery";
@@ -1090,8 +1090,8 @@ switch (href) {
 
     deliveryTrashold.textContent = "Nyní doprava zdarma";
     deliveryTime.textContent = deliveryMessage;
-    //deliveryDateDesktop.textContent = deliveryMessage;
-    //deliveryDateMobile.textContent = deliveryMessage;
+    deliveryDateDesktop.textContent = deliveryMessage;
+    deliveryDateMobile.textContent = deliveryMessage;
     
       /* Shopify Code Start */
       (function () {
