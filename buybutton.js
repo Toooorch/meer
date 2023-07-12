@@ -1,5 +1,7 @@
 const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
+const deliveryDateDesktop = document.getElementById("delivery-date-desktop");
+const deliveryDateMobile = document.getElementById("delivery-date-mobile");
 
 var deliveryDivDesktop = document.getElementById("delivery-date-desktop");
 var deliveryDivMobile = document.getElementById("delivery-date-mobile");
@@ -1059,12 +1061,14 @@ switch (href) {
         deliveryMessage = tuesday;
     } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
         deliveryMessage = tuesday;
-    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun
+    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun 
         deliveryMessage = tuesday;
     }
 
     deliveryTrashold.textContent = "Nyní doprava zdarma";
     deliveryTime.textContent = deliveryMessage;
+    deliveryDateDesktop = deliveryMessage;
+    deliveryDateMobile = deliveryMessage;
     
       /* Shopify Code Start */
       (function () {
