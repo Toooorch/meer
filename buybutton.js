@@ -33,8 +33,10 @@ switch (href) {
   // English
   case findTermURL('en.meer.care'):
 
+  if (deliveryDateDesktop !== null) {
     deliveryDateDesktop.textContent = deliveryMessageEN;
     deliveryDateMobile.textContent = deliveryMessageEN;
+  }
     deliveryTrashold.textContent = trasholdMessageEN;
     deliveryTime.textContent = deliveryMessageEN;
 
@@ -115,7 +117,7 @@ switch (href) {
         "lineItem": {}
       }
 
-      if(document.getElementById('buy-button-set-I-desktop')){
+    if(document.getElementById('buy-button-set-I-desktop')){
         ui.createComponent('product', {
         id: [7542825058534],
         node: document.getElementById('buy-button-set-I-desktop'),
@@ -239,8 +241,10 @@ switch (href) {
   // Slovakia
   case findTermURL('sk.meer.care'):
 
-  deliveryDateDesktop.textContent = deliveryMessageSK;
-  deliveryDateMobile.textContent = deliveryMessageSK;
+  if (deliveryDateDesktop !== null) {
+    deliveryDateDesktop.textContent = deliveryMessageSK;
+    deliveryDateMobile.textContent = deliveryMessageSK;
+  }
   deliveryTrashold.textContent = trasholdMessageSK;
   deliveryTime.textContent = deliveryMessageSK;
 
@@ -445,8 +449,10 @@ if(document.getElementById('buy-button-gift-card-mobile')){
 // Germany
     case findTermURL('de.meer.care'):
 
-    deliveryDateDesktop.textContent = deliveryMessageDE;
-    deliveryDateMobile.textContent = deliveryMessageDE;
+    if (deliveryDateDesktop !== null) {
+      deliveryDateDesktop.textContent = deliveryMessageDE;
+      deliveryDateMobile.textContent = deliveryMessageDE;
+    }
     deliveryTrashold.textContent = trasholdMessageDE;
     deliveryTime.textContent = deliveryMessageDE;
 
@@ -651,8 +657,10 @@ if(document.getElementById('buy-button-gift-card-mobile')){
     // France
     case findTermURL('fr.meer.care'):
 
+    if (deliveryDateDesktop !== null) {
     deliveryDateDesktop.textContent = deliveryMessageFR;
     deliveryDateMobile.textContent = deliveryMessageFR;
+    }
     deliveryTrashold.textContent = trasholdMessageFR;
     deliveryTime.textContent = deliveryMessageFR;
 
@@ -857,8 +865,10 @@ if(document.getElementById('buy-button-gift-card-mobile')){
 // Poland
     case findTermURL('pl.meer.care'):
 
-    deliveryDateDesktop.textContent = deliveryMessagePL;
-    deliveryDateMobile.textContent = deliveryMessagePL;
+    if (deliveryDateDesktop !== null) {
+      deliveryDateDesktop.textContent = deliveryMessagePL;
+      deliveryDateMobile.textContent = deliveryMessagePL;
+    }
     deliveryTrashold.textContent = trasholdMessagePL;
     deliveryTime.textContent = deliveryMessagePL;
 
@@ -1060,9 +1070,8 @@ if(document.getElementById('buy-button-gift-card-mobile')){
     break;
 
   default:
-
+      // Czech
       if (deliveryDateDesktop !== null) {
-        // Czech
         var tomorrow = "zítra u Vás (Zásilkovna)";
         var nexttomorrow = "pozítří u Vás (Zásilkovna)";
         var monday = "v pondělí u Vás (Zásilkovna)";
