@@ -1,0 +1,157 @@
+    #cookiescript_copyright,
+    #cookiescript_manageicon,
+    #cookiescript_readmore {
+        display: none !important;
+    }
+    #cookiescript_close,
+    #cookiescript_header,
+    #cookiescript_manage,
+    #cookiescript_readmore,
+    #cookiescript_reject {
+        color: #23262d !important;
+    }
+    #cookiescript_injected {
+        font-family: "Avenir Next", Arial, "Trebuchet MS", "Segoe UI", Helvetica, sans-serif !important;
+        background-color: #fff !important;
+        padding: 24px 12px !important;
+        border-radius: 20px !important;
+        -webkit-box-shadow: 0 10px 20px 20px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 10px 20px 20px rgba(0, 0, 0, 0.2) !important;
+    }
+    #cookiescript_injected a {
+        text-transform: none !important;
+    }
+    #cookiescript_header {
+        font-size: 12px !important;
+        padding: 4px 0 !important;
+    }
+    #cookiescript_description {
+        font-size: 10px !important;
+        line-height: 100% !important;
+        color: #555 !important;
+    }
+    #cookiescript_checkboxs {
+        margin: -10px 0 10px -10px !important;
+        display: none !important;
+    }
+    .cookiescript_checkbox_label,
+    .cookiescript_checkbox_text {
+        font-size: 10px !important;
+        text-transform: none !important;
+    }
+    #cookiescript_cookiescriptlink,
+    #cookiescript_readmore,
+    #cookiescript_reportlink {
+        font-size: 11px !important;
+        text-transform: none !important;
+    }
+    #cookiescript_injected .mdc-checkbox__background {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    #cookiescript_injected .mdc-checkbox {
+        flex: 0 0 12px !important;
+        padding: 10px !important;
+    }
+    .cookiescript_checkbox {
+        margin: 0 0 -15px !important;
+    }
+    #cookiescript_readmore {
+        text-transform: none !important;
+    }
+    #cookiescript_accept,
+    #cookiescript_save {
+        background-color: #23262d !important;
+        text-transform: none !important;
+        color: #fff !important;
+    }
+    #cookiescript_reject {
+        background-color: #fff !important;
+        text-transform: none !important;
+        border: 2px solid #23262d !important;
+    }
+    #cookiescript_accept,
+    #cookiescript_reject,
+    #cookiescript_save {
+        margin: 3px !important;
+    }
+    #cookiescript_manage_wrap {
+        margin: 0 !important;
+        text-transform: none !important;
+    }
+    @keyframes flipIn {
+        from {
+            max-height: 0;
+            -webkit-transform: rotatex(90deg) translatey(-50%);
+            transform: rotatex(90deg) translatey(-50%);
+            margin-bottom: -65px;
+            opacity: 0;
+        }
+        to {
+            max-height: none;
+            -webkit-transform: none;
+            transform: none;
+            margin-bottom: 20px;
+            opacity: 1;
+        }
+    }
+    @-webkit-keyframes flipIn {
+        from {
+            max-height: 0;
+            -webkit-transform: rotatex(90deg) translatey(-50%);
+            transform: rotatex(90deg) translatey(-50%);
+            margin-bottom: -65px;
+            opacity: 0;
+        }
+        to {
+            max-height: none;
+            -webkit-transform: none;
+            transform: none;
+            margin-bottom: 20px;
+            opacity: 1;
+        }
+    }
+    @keyframes flipOut {
+        from {
+            max-height: none;
+            -webkit-transform: none;
+            transform: none;
+            margin-bottom: 20px;
+            opacity: 1;
+        }
+        to {
+            max-height: 0;
+            -webkit-transform: rotatex(90deg) translatey(-50%);
+            transform: rotatex(90deg) translatey(-50%);
+            margin-bottom: -65px;
+            opacity: 0;
+        }
+    }
+    @-webkit-keyframes flipOut {
+        from {
+            max-height: none;
+            -webkit-transform: none;
+            transform: none;
+            margin-bottom: 20px;
+            opacity: 1;
+        }
+        to {
+            max-height: 0;
+            -webkit-transform: rotatex(90deg) translatey(-50%);
+            transform: rotatex(90deg) translatey(-50%);
+            margin-bottom: -65px;
+            opacity: 0;
+        }
+    }
+    .shopify-buy__cart-items {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .shopify-buy__cart-item {
+        -webkit-animation: 200ms flipIn forwards;
+        animation: 200ms flipIn forwards;
+    }
+    .shopify-buy__cart-item.is-hidden {
+        -webkit-animation-name: flipOut;
+        animation-name: flipOut;
+    }
