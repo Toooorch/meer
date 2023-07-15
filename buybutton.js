@@ -10,12 +10,14 @@ var deliveryMessageSK = "Doručenie za 1-3 dni";
 var deliveryMessageDE = "Lieferung in 2-3 Tagen";
 var deliveryMessagePL = "Dostawa w ciągu 1-3 dni";
 var deliveryMessageFR = "Livraison en 2-5 jours";
-
+// Free Delivery
 var trasholdMessagePL = "Darmowa wysyłka od 200 zł";
 var trasholdMessageEN = "Free Delivery from $50";
 var trasholdMessageSK = "Doprava zadarmo od €50";
 var trasholdMessageFR = "Frais de port offerts à partir de €60";
 var trasholdMessageDE = "Kostenloser Versand ab €60";
+
+var deliveryMessage;
 
 var thehours = new Date().getHours();
 var dayOfWeek = new Date().getDay();
@@ -490,7 +492,6 @@ switch (href) {
   default:
 
     // Czech
-    var deliveryMessage;
     var tomorrow = "zítra u Vás (Zásilkovna)";
     var nexttomorrow = "pozítří u Vás (Zásilkovna)";
     var monday = "v pondělí u Vás (Zásilkovna)";
