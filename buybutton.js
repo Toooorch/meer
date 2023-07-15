@@ -17,7 +17,7 @@ const trasholdMessageSK = "Doprava zadarmo od €50";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
 const trasholdMessageDE = "Kostenloser Versand ab €60";
 
-const deliveryMessage;
+let deliveryMessage;
 
 const thehours = new Date().getHours();
 const dayOfWeek = new Date().getDay();
