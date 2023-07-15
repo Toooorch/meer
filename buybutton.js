@@ -490,8 +490,6 @@ switch (href) {
   default:
 
     // Czech
-
-    /*
     var deliveryMessage;
     var tomorrow = "zítra u Vás (Zásilkovna)";
     var nexttomorrow = "pozítří u Vás (Zásilkovna)";
@@ -527,7 +525,7 @@ switch (href) {
     deliveryTrashold.textContent = deliveryMessageCZ;
     deliveryTime.textContent = deliveryMessage;
     deliveryDateDesktop.textContent = deliveryMessage;
-    deliveryDateMobile.textContent = deliveryMessage; */
+    deliveryDateMobile.textContent = deliveryMessage;
 
       /* Shopify Code Start */
       (function () {
