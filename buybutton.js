@@ -492,41 +492,6 @@ switch (href) {
   default:
 
     // Czech
-    var tomorrow = "zítra u Vás (Zásilkovna)";
-    var nexttomorrow = "pozítří u Vás (Zásilkovna)";
-    var monday = "v pondělí u Vás (Zásilkovna)";
-    var tuesday = "v úterý u Vás (Zásilkovna)";
-
-    if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
-        deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 1) {
-        deliveryMessage = nexttomorrow;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 2) {
-        deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 2) {
-        deliveryMessage = nexttomorrow;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 3) {
-        deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 3) {
-        deliveryMessage = nexttomorrow;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 4) { // Thursday before 19
-        deliveryMessage = tomorrow;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 4) { // Thursday after 19
-        deliveryMessage = monday;
-    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 5) { // Friday before 19
-        deliveryMessage = monday;
-    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
-        deliveryMessage = tuesday;
-    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
-        deliveryMessage = tuesday;
-    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun 
-        deliveryMessage = tuesday;
-    }
-
-    deliveryTrashold.textContent = deliveryMessageCZ;
-    deliveryTime.textContent = deliveryMessage;
-    deliveryDateDesktop.textContent = deliveryMessage;
-    deliveryDateMobile.textContent = deliveryMessage;
 
       /* Shopify Code Start */
       (function () {
@@ -605,128 +570,158 @@ switch (href) {
       "lineItem": {}
     }
 
-    placeButtons();
+    if(document.getElementById('buy-button-set-I-desktop')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-set-II-desktop')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-I-desktop')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-II-desktop')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-III-desktop')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-IV-desktop')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-desktop'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-gift-card-desktop')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-desktop'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+    });
+    }
+    if(document.getElementById('buy-button-set-I-mobile')){
+      ui.createComponent('product', {
+      id: [7542825058534],
+      node: document.getElementById('buy-button-set-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-set-II-mobile')){
+      ui.createComponent('product', {
+      id: [8021842854118],
+      node: document.getElementById('buy-button-set-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-I-mobile')){
+      ui.createComponent('product', {
+      id: [7601486758118],
+      node: document.getElementById('buy-button-step-I-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-II-mobile')){
+      ui.createComponent('product', {
+      id: [7609802686694],
+      node: document.getElementById('buy-button-step-II-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-III-mobile')){
+      ui.createComponent('product', {
+      id: [7931357692134],
+      node: document.getElementById('buy-button-step-III-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-step-IV-mobile')){
+      ui.createComponent('product', {
+      id: [7931360051430],
+      node: document.getElementById('buy-button-step-IV-mobile'),
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      options: options
+    });
+    }
+    if(document.getElementById('buy-button-gift-card-mobile')){
+    ui.createComponent('product', {
+    id: [8578704736581],
+    node: document.getElementById('buy-button-gift-card-mobile'),
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    options: options
+    });
+    }
 
       });
     })
     }
     })();
 
+    var tomorrow = "zítra u Vás (Zásilkovna)";
+    var nexttomorrow = "pozítří u Vás (Zásilkovna)";
+    var monday = "v pondělí u Vás (Zásilkovna)";
+    var tuesday = "v úterý u Vás (Zásilkovna)";
+
+    if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
+        deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 1) {
+        deliveryMessage = nexttomorrow;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 2) {
+        deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 2) {
+        deliveryMessage = nexttomorrow;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 3) {
+        deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 3) {
+        deliveryMessage = nexttomorrow;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 4) { // Thursday before 19
+        deliveryMessage = tomorrow;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 4) { // Thursday after 19
+        deliveryMessage = monday;
+    } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 5) { // Friday before 19
+        deliveryMessage = monday;
+    } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
+        deliveryMessage = tuesday;
+    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
+        deliveryMessage = tuesday;
+    } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun 
+        deliveryMessage = tuesday;
+    }
+
+    deliveryTrashold.textContent = deliveryMessageCZ;
+    deliveryTime.textContent = deliveryMessage;
+    deliveryDateDesktop.textContent = deliveryMessage;
+    deliveryDateMobile.textContent = deliveryMessage;
+
 };
-
-
-function placeButtons () {
-
-  if(document.getElementById('buy-button-set-I-desktop')){
-    ui.createComponent('product', {
-    id: [7542825058534],
-    node: document.getElementById('buy-button-set-I-desktop'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-set-II-desktop')){
-    ui.createComponent('product', {
-    id: [8021842854118],
-    node: document.getElementById('buy-button-set-II-desktop'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-I-desktop')){
-    ui.createComponent('product', {
-    id: [7601486758118],
-    node: document.getElementById('buy-button-step-I-desktop'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-II-desktop')){
-    ui.createComponent('product', {
-    id: [7609802686694],
-    node: document.getElementById('buy-button-step-II-desktop'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-III-desktop')){
-    ui.createComponent('product', {
-    id: [7931357692134],
-    node: document.getElementById('buy-button-step-III-desktop'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-IV-desktop')){
-    ui.createComponent('product', {
-    id: [7931360051430],
-    node: document.getElementById('buy-button-step-IV-desktop'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-gift-card-desktop')){
-  ui.createComponent('product', {
-  id: [8578704736581],
-  node: document.getElementById('buy-button-gift-card-desktop'),
-  moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-  options: options
-  });
-  }
-  if(document.getElementById('buy-button-set-I-mobile')){
-    ui.createComponent('product', {
-    id: [7542825058534],
-    node: document.getElementById('buy-button-set-I-mobile'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-set-II-mobile')){
-    ui.createComponent('product', {
-    id: [8021842854118],
-    node: document.getElementById('buy-button-set-II-mobile'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-I-mobile')){
-    ui.createComponent('product', {
-    id: [7601486758118],
-    node: document.getElementById('buy-button-step-I-mobile'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-II-mobile')){
-    ui.createComponent('product', {
-    id: [7609802686694],
-    node: document.getElementById('buy-button-step-II-mobile'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-III-mobile')){
-    ui.createComponent('product', {
-    id: [7931357692134],
-    node: document.getElementById('buy-button-step-III-mobile'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-step-IV-mobile')){
-    ui.createComponent('product', {
-    id: [7931360051430],
-    node: document.getElementById('buy-button-step-IV-mobile'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-  }
-  if(document.getElementById('buy-button-gift-card-mobile')){
-  ui.createComponent('product', {
-  id: [8578704736581],
-  node: document.getElementById('buy-button-gift-card-mobile'),
-  moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-  options: options
-  });
-  }
-}
