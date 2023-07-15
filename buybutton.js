@@ -4,10 +4,18 @@ const deliveryDateDesktop = document.getElementById("delivery-date-desktop");
 const deliveryDateMobile = document.getElementById("delivery-date-mobile");
 
 // Delivery
+var deliveryMessageCZ = "Doprava nyní zdarma";
 var deliveryMessageEN = "Fast Delivery";
 var deliveryMessageSK = "Doručenie za 1-3 dni";
 var deliveryMessageDE = "Lieferung in 2-3 Tagen";
 var deliveryMessagePL = "Dostawa w ciągu 1-3 dni";
+var deliveryMessageFR = "Livraison en 2-5 jours";
+
+var trasholdMessagePL = "Darmowa wysyłka od 200 zł";
+var trasholdMessageEN = "Free Delivery from $50";
+var trasholdMessageSK = "Doprava zadarmo od €50";
+var trasholdMessageFR = "Frais de port offerts à partir de €60";
+var trasholdMessageDE = "Kostenloser Versand ab €60";
 
 var thehours = new Date().getHours();
 var dayOfWeek = new Date().getDay();
@@ -25,8 +33,7 @@ switch (href) {
 
     deliveryDateDesktop.textContent = deliveryMessageEN;
     deliveryDateMobile.textContent = deliveryMessageEN;
-  
-    deliveryTrashold.textContent = "Free Delivery from $50";
+    deliveryTrashold.textContent = trasholdMessageEN;
     deliveryTime.textContent = deliveryMessageEN;
 
         /* Shopify Code Start */
@@ -231,8 +238,7 @@ switch (href) {
 
   deliveryDateDesktop.textContent = deliveryMessageSK;
   deliveryDateMobile.textContent = deliveryMessageSK;
-
-  deliveryTrashold.textContent = "Doprava zadarmo od €50";
+  deliveryTrashold.textContent = trasholdMessageSK;
   deliveryTime.textContent = deliveryMessageSK;
 
     /* Shopify Code Start */
@@ -437,8 +443,7 @@ switch (href) {
 
     deliveryDateDesktop.textContent = deliveryMessageDE;
     deliveryDateMobile.textContent = deliveryMessageDE;
-
-    deliveryTrashold.textContent = "Kostenloser Versand ab €60";
+    deliveryTrashold.textContent = trasholdMessageDE;
     deliveryTime.textContent = deliveryMessageDE;
 
           /* Shopify Code Start */
@@ -643,8 +648,7 @@ switch (href) {
 
     deliveryDateDesktop.textContent = deliveryMessageFR;
     deliveryDateMobile.textContent = deliveryMessageFR;
-
-    deliveryTrashold.textContent = "Frais de port offerts à partir de €60";
+    deliveryTrashold.textContent = trasholdMessageFR;
     deliveryTime.textContent = deliveryMessageFR;
 
           /* Shopify Code Start */
@@ -849,8 +853,7 @@ switch (href) {
 
     deliveryDateDesktop.textContent = deliveryMessagePL;
     deliveryDateMobile.textContent = deliveryMessagePL;
-
-    deliveryTrashold.textContent = "Darmowa wysyłka od 200 zł";
+    deliveryTrashold.textContent = trasholdMessagePL;
     deliveryTime.textContent = deliveryMessagePL;
 
       /* Shopify Code Start */
@@ -1084,11 +1087,11 @@ switch (href) {
         deliveryMessage = tuesday;
     }
 
-    deliveryTrashold.textContent = "Nyní doprava zdarma";
+    deliveryTrashold.textContent = deliveryMessageCZ;
     deliveryTime.textContent = deliveryMessage;
     deliveryDateDesktop.textContent = deliveryMessage;
     deliveryDateMobile.textContent = deliveryMessage;
-    
+
       /* Shopify Code Start */
       (function () {
         var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
