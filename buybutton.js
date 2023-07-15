@@ -29,7 +29,6 @@ const findTermURL = (term) => {
   }
 };
 
-
 function placeButtons() {
   if(document.getElementById('buy-button-set-I-desktop')){
     ui.createComponent('product', {
@@ -724,6 +723,7 @@ switch (href) {
       "lineItem": {}
     }
 
+    placeButtons();
 
       });
     })
