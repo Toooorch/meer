@@ -641,12 +641,11 @@ switch (href) {
     // France
     case findTermURL('fr.meer.care'):
 
-    var deliveryMessage = "Livraison en 2-5 jours";
-    deliveryDateDesktop.textContent = deliveryMessage;
-    deliveryDateMobile.textContent = deliveryMessage;
+    deliveryDateDesktop.textContent = deliveryMessageFR;
+    deliveryDateMobile.textContent = deliveryMessageFR;
 
     deliveryTrashold.textContent = "Frais de port offerts à partir de €60";
-    deliveryTime.textContent = deliveryMessage;
+    deliveryTime.textContent = deliveryMessageFR;
 
           /* Shopify Code Start */
           (function () {
