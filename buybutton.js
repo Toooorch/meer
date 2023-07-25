@@ -1071,7 +1071,6 @@ if(document.getElementById('buy-button-gift-card-mobile')){
 
   default:
       // Czech
-      if (deliveryDateDesktop !== null) {
         var tomorrow = "zítra u Vás (Zásilkovna)";
         var nexttomorrow = "pozítří u Vás (Zásilkovna)";
         var monday = "v pondělí u Vás (Zásilkovna)";
@@ -1104,8 +1103,10 @@ if(document.getElementById('buy-button-gift-card-mobile')){
         }
 
         deliveryTime.textContent = deliveryMessage;
-        deliveryDateDesktop.textContent = deliveryMessage;
-        deliveryDateMobile.textContent = deliveryMessage;
+
+    if (deliveryDateDesktop !== null) {
+      deliveryDateDesktop.textContent = deliveryMessage;
+      deliveryDateMobile.textContent = deliveryMessage;
     }
 
     deliveryTrashold.textContent = deliveryMessageCZ;
