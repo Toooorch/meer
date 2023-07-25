@@ -1104,7 +1104,7 @@ if(document.getElementById('buy-button-gift-card-mobile')){
 
         deliveryTime.textContent = deliveryMessage;
 
-    if (deliveryDateDesktop !== null) {
+    if (deliveryDateDesktop != null) {
       deliveryDateDesktop.textContent = deliveryMessage;
       deliveryDateMobile.textContent = deliveryMessage;
     }
