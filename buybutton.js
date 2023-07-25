@@ -33,7 +33,7 @@ switch (href) {
   // English
   case findTermURL('en.meer.care'):
 
-  if (deliveryDateDesktop !== null) {
+  if (deliveryDateDesktop != null) {
     deliveryDateDesktop.textContent = deliveryMessageEN;
     deliveryDateMobile.textContent = deliveryMessageEN;
   }
@@ -241,7 +241,7 @@ switch (href) {
   // Slovakia
   case findTermURL('sk.meer.care'):
 
-  if (deliveryDateDesktop !== null) {
+  if (deliveryDateDesktop != null) {
     deliveryDateDesktop.textContent = deliveryMessageSK;
     deliveryDateMobile.textContent = deliveryMessageSK;
   }
@@ -449,7 +449,7 @@ if(document.getElementById('buy-button-gift-card-mobile')){
 // Germany
     case findTermURL('de.meer.care'):
 
-    if (deliveryDateDesktop !== null) {
+    if (deliveryDateDesktop != null) {
       deliveryDateDesktop.textContent = deliveryMessageDE;
       deliveryDateMobile.textContent = deliveryMessageDE;
     }
@@ -657,7 +657,7 @@ if(document.getElementById('buy-button-gift-card-mobile')){
     // France
     case findTermURL('fr.meer.care'):
 
-    if (deliveryDateDesktop !== null) {
+    if (deliveryDateDesktop != null) {
     deliveryDateDesktop.textContent = deliveryMessageFR;
     deliveryDateMobile.textContent = deliveryMessageFR;
     }
@@ -865,7 +865,7 @@ if(document.getElementById('buy-button-gift-card-mobile')){
 // Poland
     case findTermURL('pl.meer.care'):
 
-    if (deliveryDateDesktop !== null) {
+    if (deliveryDateDesktop != null) {
       deliveryDateDesktop.textContent = deliveryMessagePL;
       deliveryDateMobile.textContent = deliveryMessagePL;
     }
