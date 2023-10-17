@@ -4,7 +4,7 @@ const deliveryDateDesktop = document.getElementById("delivery-date-desktop");
 const deliveryDateMobile = document.getElementById("delivery-date-mobile");
 
 // Delivery
-const deliveryMessageCZ = "Doprava nyní zdarma";
+const deliveryMessageCZ = "Doprava zdarma od 1100Kč";
 const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
