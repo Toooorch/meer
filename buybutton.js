@@ -1,7 +1,6 @@
 const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
-const deliveryDateDesktop = document.getElementById("delivery-date-desktop");
-const deliveryDateMobile = document.getElementById("delivery-date-mobile");
+const deliveryDate = document.getElementById("delivery-date");
 
 // Delivery
 const deliveryMessageCZ = "Doprava zdarma od 1100Kč";
@@ -33,9 +32,8 @@ switch (href) {
   // English
   case findTermURL('en.meer.care'):
 
-  if (deliveryDateDesktop != null) {
-    deliveryDateDesktop.textContent = deliveryMessageEN;
-    deliveryDateMobile.textContent = deliveryMessageEN;
+  if (deliveryDate != null) {
+    deliveryDate.textContent = deliveryMessageEN;
   }
     deliveryTrashold.textContent = trasholdMessageEN;
     deliveryTime.textContent = deliveryMessageEN;
@@ -117,132 +115,68 @@ switch (href) {
         "lineItem": {}
       }
 
-      if(document.getElementById('buy-button-set-complete-mobile')){
+      if(document.getElementById('buy-button-set-complete')){
         ui.createComponent('product', {
         id: [8623720366405],
-        node: document.getElementById('buy-button-set-complete-mobile'),
+        node: document.getElementById('buy-button-set-complete'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-      if(document.getElementById('buy-button-set-I-mobile')){
+      if(document.getElementById('buy-button-set-I')){
           ui.createComponent('product', {
           id: [7542825058534],
-          node: document.getElementById('buy-button-set-I-mobile'),
+          node: document.getElementById('buy-button-set-I'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-      if(document.getElementById('buy-button-set-II-mobile')){
+      if(document.getElementById('buy-button-set-II')){
           ui.createComponent('product', {
           id: [8021842854118],
-          node: document.getElementById('buy-button-set-II-mobile'),
+          node: document.getElementById('buy-button-set-II'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-      if(document.getElementById('buy-button-step-I-mobile')){
+      if(document.getElementById('buy-button-step-I')){
           ui.createComponent('product', {
           id: [7601486758118],
-          node: document.getElementById('buy-button-step-I-mobile'),
+          node: document.getElementById('buy-button-step-I'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-      if(document.getElementById('buy-button-step-II-mobile')){
+      if(document.getElementById('buy-button-step-II')){
           ui.createComponent('product', {
           id: [7609802686694],
-          node: document.getElementById('buy-button-step-II-mobile'),
+          node: document.getElementById('buy-button-step-II'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-      if(document.getElementById('buy-button-step-III-mobile')){
+      if(document.getElementById('buy-button-step-III')){
           ui.createComponent('product', {
           id: [7931357692134],
-          node: document.getElementById('buy-button-step-III-mobile'),
+          node: document.getElementById('buy-button-step-III'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-      if(document.getElementById('buy-button-step-IV-mobile')){
+      if(document.getElementById('buy-button-step-IV')){
           ui.createComponent('product', {
           id: [7931360051430],
-          node: document.getElementById('buy-button-step-IV-mobile'),
+          node: document.getElementById('buy-button-step-IV'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-      if(document.getElementById('buy-button-gift-card-mobile')){
+      if(document.getElementById('buy-button-gift-card')){
         ui.createComponent('product', {
         id: [8578704736581],
-        node: document.getElementById('buy-button-gift-card-mobile'),
+        node: document.getElementById('buy-button-gift-card'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
-        });
-      }
-      if(document.getElementById('buy-button-set-complete-desktop')){
-        ui.createComponent('product', {
-        id: [8623720366405],
-        node: document.getElementById('buy-button-set-complete-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-      if(document.getElementById('buy-button-set-I-desktop')){
-          ui.createComponent('product', {
-          id: [7542825058534],
-          node: document.getElementById('buy-button-set-I-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-      if(document.getElementById('buy-button-set-II-desktop')){
-          ui.createComponent('product', {
-          id: [8021842854118],
-          node: document.getElementById('buy-button-set-II-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-      if(document.getElementById('buy-button-step-I-desktop')){
-          ui.createComponent('product', {
-          id: [7601486758118],
-          node: document.getElementById('buy-button-step-I-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-      if(document.getElementById('buy-button-step-II-desktop')){
-          ui.createComponent('product', {
-          id: [7609802686694],
-          node: document.getElementById('buy-button-step-II-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-      if(document.getElementById('buy-button-step-III-desktop')){
-          ui.createComponent('product', {
-          id: [7931357692134],
-          node: document.getElementById('buy-button-step-III-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-      if(document.getElementById('buy-button-step-IV-desktop')){
-          ui.createComponent('product', {
-          id: [7931360051430],
-          node: document.getElementById('buy-button-step-IV-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-      if(document.getElementById('buy-button-gift-card-desktop')){
-          ui.createComponent('product', {
-          id: [8578704736581],
-          node: document.getElementById('buy-button-gift-card-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
         });
       }
 
@@ -257,9 +191,8 @@ switch (href) {
   // Slovakia
   case findTermURL('sk.meer.care'):
 
-  if (deliveryDateDesktop != null) {
-    deliveryDateDesktop.textContent = deliveryMessageSK;
-    deliveryDateMobile.textContent = deliveryMessageSK;
+  if (deliveryDate != null) {
+    deliveryDate.textContent = deliveryMessageSK;
   }
   deliveryTrashold.textContent = trasholdMessageSK;
   deliveryTime.textContent = deliveryMessageSK;
@@ -341,132 +274,68 @@ switch (href) {
     "lineItem": {}
   }
 
-  if(document.getElementById('buy-button-set-complete-mobile')){
+  if(document.getElementById('buy-button-set-complete')){
     ui.createComponent('product', {
     id: [8623720366405],
-    node: document.getElementById('buy-button-set-complete-mobile'),
+    node: document.getElementById('buy-button-set-complete'),
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
     options: options
   });
 }
-  if(document.getElementById('buy-button-set-I-mobile')){
+  if(document.getElementById('buy-button-set-I')){
       ui.createComponent('product', {
       id: [7542825058534],
-      node: document.getElementById('buy-button-set-I-mobile'),
+      node: document.getElementById('buy-button-set-I'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-  if(document.getElementById('buy-button-set-II-mobile')){
+  if(document.getElementById('buy-button-set-II')){
       ui.createComponent('product', {
       id: [8021842854118],
-      node: document.getElementById('buy-button-set-II-mobile'),
+      node: document.getElementById('buy-button-set-II'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-  if(document.getElementById('buy-button-step-I-mobile')){
+  if(document.getElementById('buy-button-step-I')){
       ui.createComponent('product', {
       id: [7601486758118],
-      node: document.getElementById('buy-button-step-I-mobile'),
+      node: document.getElementById('buy-button-step-I'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-  if(document.getElementById('buy-button-step-II-mobile')){
+  if(document.getElementById('buy-button-step-II')){
       ui.createComponent('product', {
       id: [7609802686694],
-      node: document.getElementById('buy-button-step-II-mobile'),
+      node: document.getElementById('buy-button-step-II'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-  if(document.getElementById('buy-button-step-III-mobile')){
+  if(document.getElementById('buy-button-step-III')){
       ui.createComponent('product', {
       id: [7931357692134],
-      node: document.getElementById('buy-button-step-III-mobile'),
+      node: document.getElementById('buy-button-step-III'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-  if(document.getElementById('buy-button-step-IV-mobile')){
+  if(document.getElementById('buy-button-step-IV')){
       ui.createComponent('product', {
       id: [7931360051430],
-      node: document.getElementById('buy-button-step-IV-mobile'),
+      node: document.getElementById('buy-button-step-IV'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-  if(document.getElementById('buy-button-gift-card-mobile')){
+  if(document.getElementById('buy-button-gift-card')){
     ui.createComponent('product', {
     id: [8578704736581],
-    node: document.getElementById('buy-button-gift-card-mobile'),
+    node: document.getElementById('buy-button-gift-card'),
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
     options: options
-    });
-  }
-  if(document.getElementById('buy-button-set-complete-desktop')){
-    ui.createComponent('product', {
-    id: [8623720366405],
-    node: document.getElementById('buy-button-set-complete-desktop'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    options: options
-  });
-}
-  if(document.getElementById('buy-button-set-I-desktop')){
-      ui.createComponent('product', {
-      id: [7542825058534],
-      node: document.getElementById('buy-button-set-I-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-  if(document.getElementById('buy-button-set-II-desktop')){
-      ui.createComponent('product', {
-      id: [8021842854118],
-      node: document.getElementById('buy-button-set-II-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-  if(document.getElementById('buy-button-step-I-desktop')){
-      ui.createComponent('product', {
-      id: [7601486758118],
-      node: document.getElementById('buy-button-step-I-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-  if(document.getElementById('buy-button-step-II-desktop')){
-      ui.createComponent('product', {
-      id: [7609802686694],
-      node: document.getElementById('buy-button-step-II-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-  if(document.getElementById('buy-button-step-III-desktop')){
-      ui.createComponent('product', {
-      id: [7931357692134],
-      node: document.getElementById('buy-button-step-III-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-  if(document.getElementById('buy-button-step-IV-desktop')){
-      ui.createComponent('product', {
-      id: [7931360051430],
-      node: document.getElementById('buy-button-step-IV-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-  if(document.getElementById('buy-button-gift-card-desktop')){
-      ui.createComponent('product', {
-      id: [8578704736581],
-      node: document.getElementById('buy-button-gift-card-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
     });
   }
 
@@ -481,9 +350,8 @@ switch (href) {
 // Germany
     case findTermURL('de.meer.care'):
 
-    if (deliveryDateDesktop != null) {
-      deliveryDateDesktop.textContent = deliveryMessageDE;
-      deliveryDateMobile.textContent = deliveryMessageDE;
+    if (deliveryDate != null) {
+      deliveryDate.textContent = deliveryMessageDE;
     }
     deliveryTrashold.textContent = trasholdMessageDE;
     deliveryTime.textContent = deliveryMessageDE;
@@ -565,132 +433,68 @@ switch (href) {
           "lineItem": {}
         }
 
-        if(document.getElementById('buy-button-set-complete-mobile')){
+        if(document.getElementById('buy-button-set-complete')){
           ui.createComponent('product', {
           id: [8623720366405],
-          node: document.getElementById('buy-button-set-complete-mobile'),
+          node: document.getElementById('buy-button-set-complete'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-        if(document.getElementById('buy-button-set-I-mobile')){
+        if(document.getElementById('buy-button-set-I')){
             ui.createComponent('product', {
             id: [7542825058534],
-            node: document.getElementById('buy-button-set-I-mobile'),
+            node: document.getElementById('buy-button-set-I'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-set-II-mobile')){
+        if(document.getElementById('buy-button-set-II')){
             ui.createComponent('product', {
             id: [8021842854118],
-            node: document.getElementById('buy-button-set-II-mobile'),
+            node: document.getElementById('buy-button-set-II'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-I-mobile')){
+        if(document.getElementById('buy-button-step-I')){
             ui.createComponent('product', {
             id: [7601486758118],
-            node: document.getElementById('buy-button-step-I-mobile'),
+            node: document.getElementById('buy-button-step-I'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-II-mobile')){
+        if(document.getElementById('buy-button-step-II')){
             ui.createComponent('product', {
             id: [7609802686694],
-            node: document.getElementById('buy-button-step-II-mobile'),
+            node: document.getElementById('buy-button-step-II'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-III-mobile')){
+        if(document.getElementById('buy-button-step-III')){
             ui.createComponent('product', {
             id: [7931357692134],
-            node: document.getElementById('buy-button-step-III-mobile'),
+            node: document.getElementById('buy-button-step-III'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-IV-mobile')){
+        if(document.getElementById('buy-button-step-IV')){
             ui.createComponent('product', {
             id: [7931360051430],
-            node: document.getElementById('buy-button-step-IV-mobile'),
+            node: document.getElementById('buy-button-step-IV'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-gift-card-mobile')){
+        if(document.getElementById('buy-button-gift-card')){
           ui.createComponent('product', {
           id: [8578704736581],
-          node: document.getElementById('buy-button-gift-card-mobile'),
+          node: document.getElementById('buy-button-gift-card'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
-          });
-        }
-        if(document.getElementById('buy-button-set-complete-desktop')){
-          ui.createComponent('product', {
-          id: [8623720366405],
-          node: document.getElementById('buy-button-set-complete-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-        if(document.getElementById('buy-button-set-I-desktop')){
-            ui.createComponent('product', {
-            id: [7542825058534],
-            node: document.getElementById('buy-button-set-I-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-set-II-desktop')){
-            ui.createComponent('product', {
-            id: [8021842854118],
-            node: document.getElementById('buy-button-set-II-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-I-desktop')){
-            ui.createComponent('product', {
-            id: [7601486758118],
-            node: document.getElementById('buy-button-step-I-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-II-desktop')){
-            ui.createComponent('product', {
-            id: [7609802686694],
-            node: document.getElementById('buy-button-step-II-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-III-desktop')){
-            ui.createComponent('product', {
-            id: [7931357692134],
-            node: document.getElementById('buy-button-step-III-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-IV-desktop')){
-            ui.createComponent('product', {
-            id: [7931360051430],
-            node: document.getElementById('buy-button-step-IV-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-gift-card-desktop')){
-            ui.createComponent('product', {
-            id: [8578704736581],
-            node: document.getElementById('buy-button-gift-card-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
           });
         }
   
@@ -705,9 +509,8 @@ switch (href) {
     // France
     case findTermURL('fr.meer.care'):
 
-    if (deliveryDateDesktop != null) {
-    deliveryDateDesktop.textContent = deliveryMessageFR;
-    deliveryDateMobile.textContent = deliveryMessageFR;
+    if (deliveryDate != null) {
+    deliveryDate.textContent = deliveryMessageFR;
     }
     deliveryTrashold.textContent = trasholdMessageFR;
     deliveryTime.textContent = deliveryMessageFR;
@@ -789,132 +592,68 @@ switch (href) {
           "lineItem": {}
         }
 
-        if(document.getElementById('buy-button-set-complete-mobile')){
+        if(document.getElementById('buy-button-set-complete')){
           ui.createComponent('product', {
           id: [8623720366405],
-          node: document.getElementById('buy-button-set-complete-mobile'),
+          node: document.getElementById('buy-button-set-complete'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
       }
-        if(document.getElementById('buy-button-set-I-mobile')){
+        if(document.getElementById('buy-button-set-I')){
             ui.createComponent('product', {
             id: [7542825058534],
-            node: document.getElementById('buy-button-set-I-mobile'),
+            node: document.getElementById('buy-button-set-I'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-set-II-mobile')){
+        if(document.getElementById('buy-button-set-II')){
             ui.createComponent('product', {
             id: [8021842854118],
-            node: document.getElementById('buy-button-set-II-mobile'),
+            node: document.getElementById('buy-button-set-II'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-I-mobile')){
+        if(document.getElementById('buy-button-step-I')){
             ui.createComponent('product', {
             id: [7601486758118],
-            node: document.getElementById('buy-button-step-I-mobile'),
+            node: document.getElementById('buy-button-step-I'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-II-mobile')){
+        if(document.getElementById('buy-button-step-II')){
             ui.createComponent('product', {
             id: [7609802686694],
-            node: document.getElementById('buy-button-step-II-mobile'),
+            node: document.getElementById('buy-button-step-II'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-III-mobile')){
+        if(document.getElementById('buy-button-step-III')){
             ui.createComponent('product', {
             id: [7931357692134],
-            node: document.getElementById('buy-button-step-III-mobile'),
+            node: document.getElementById('buy-button-step-III'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-step-IV-mobile')){
+        if(document.getElementById('buy-button-step-IV')){
             ui.createComponent('product', {
             id: [7931360051430],
-            node: document.getElementById('buy-button-step-IV-mobile'),
+            node: document.getElementById('buy-button-step-IV'),
             moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
             options: options
           });
         }
-        if(document.getElementById('buy-button-gift-card-mobile')){
+        if(document.getElementById('buy-button-gift-card')){
           ui.createComponent('product', {
           id: [8578704736581],
-          node: document.getElementById('buy-button-gift-card-mobile'),
+          node: document.getElementById('buy-button-gift-card'),
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
-          });
-        }
-        if(document.getElementById('buy-button-set-complete-desktop')){
-          ui.createComponent('product', {
-          id: [8623720366405],
-          node: document.getElementById('buy-button-set-complete-desktop'),
-          moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-          options: options
-        });
-      }
-        if(document.getElementById('buy-button-set-I-desktop')){
-            ui.createComponent('product', {
-            id: [7542825058534],
-            node: document.getElementById('buy-button-set-I-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-set-II-desktop')){
-            ui.createComponent('product', {
-            id: [8021842854118],
-            node: document.getElementById('buy-button-set-II-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-I-desktop')){
-            ui.createComponent('product', {
-            id: [7601486758118],
-            node: document.getElementById('buy-button-step-I-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-II-desktop')){
-            ui.createComponent('product', {
-            id: [7609802686694],
-            node: document.getElementById('buy-button-step-II-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-III-desktop')){
-            ui.createComponent('product', {
-            id: [7931357692134],
-            node: document.getElementById('buy-button-step-III-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-step-IV-desktop')){
-            ui.createComponent('product', {
-            id: [7931360051430],
-            node: document.getElementById('buy-button-step-IV-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
-          });
-        }
-        if(document.getElementById('buy-button-gift-card-desktop')){
-            ui.createComponent('product', {
-            id: [8578704736581],
-            node: document.getElementById('buy-button-gift-card-desktop'),
-            moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-            options: options
           });
         }
         
@@ -928,9 +667,8 @@ switch (href) {
 // Poland
     case findTermURL('pl.meer.care'):
 
-    if (deliveryDateDesktop != null) {
-      deliveryDateDesktop.textContent = deliveryMessagePL;
-      deliveryDateMobile.textContent = deliveryMessagePL;
+    if (deliveryDate != null) {
+      deliveryDate.textContent = deliveryMessagePL;
     }
     deliveryTrashold.textContent = trasholdMessagePL;
     deliveryTime.textContent = deliveryMessagePL;
@@ -1012,132 +750,68 @@ switch (href) {
       "lineItem": {}
     }
 
-    if(document.getElementById('buy-button-set-complete-mobile')){
+    if(document.getElementById('buy-button-set-complete')){
       ui.createComponent('product', {
       id: [8623720366405],
-      node: document.getElementById('buy-button-set-complete-mobile'),
+      node: document.getElementById('buy-button-set-complete'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-    if(document.getElementById('buy-button-set-I-mobile')){
+    if(document.getElementById('buy-button-set-I')){
         ui.createComponent('product', {
         id: [7542825058534],
-        node: document.getElementById('buy-button-set-I-mobile'),
+        node: document.getElementById('buy-button-set-I'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-set-II-mobile')){
+    if(document.getElementById('buy-button-set-II')){
         ui.createComponent('product', {
         id: [8021842854118],
-        node: document.getElementById('buy-button-set-II-mobile'),
+        node: document.getElementById('buy-button-set-II'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-I-mobile')){
+    if(document.getElementById('buy-button-step-I')){
         ui.createComponent('product', {
         id: [7601486758118],
-        node: document.getElementById('buy-button-step-I-mobile'),
+        node: document.getElementById('buy-button-step-I'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-II-mobile')){
+    if(document.getElementById('buy-button-step-II')){
         ui.createComponent('product', {
         id: [7609802686694],
-        node: document.getElementById('buy-button-step-II-mobile'),
+        node: document.getElementById('buy-button-step-II'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-III-mobile')){
+    if(document.getElementById('buy-button-step-III')){
         ui.createComponent('product', {
         id: [7931357692134],
-        node: document.getElementById('buy-button-step-III-mobile'),
+        node: document.getElementById('buy-button-step-III'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-IV-mobile')){
+    if(document.getElementById('buy-button-step-IV')){
         ui.createComponent('product', {
         id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV-mobile'),
+        node: document.getElementById('buy-button-step-IV'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-gift-card-mobile')){
+    if(document.getElementById('buy-button-gift-card')){
       ui.createComponent('product', {
       id: [8578704736581],
-      node: document.getElementById('buy-button-gift-card-mobile'),
+      node: document.getElementById('buy-button-gift-card'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
-      });
-    }
-    if(document.getElementById('buy-button-set-complete-desktop')){
-      ui.createComponent('product', {
-      id: [8623720366405],
-      node: document.getElementById('buy-button-set-complete-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-    if(document.getElementById('buy-button-set-I-desktop')){
-        ui.createComponent('product', {
-        id: [7542825058534],
-        node: document.getElementById('buy-button-set-I-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-set-II-desktop')){
-        ui.createComponent('product', {
-        id: [8021842854118],
-        node: document.getElementById('buy-button-set-II-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-I-desktop')){
-        ui.createComponent('product', {
-        id: [7601486758118],
-        node: document.getElementById('buy-button-step-I-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-II-desktop')){
-        ui.createComponent('product', {
-        id: [7609802686694],
-        node: document.getElementById('buy-button-step-II-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-III-desktop')){
-        ui.createComponent('product', {
-        id: [7931357692134],
-        node: document.getElementById('buy-button-step-III-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-IV-desktop')){
-        ui.createComponent('product', {
-        id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-gift-card-desktop')){
-        ui.createComponent('product', {
-        id: [8578704736581],
-        node: document.getElementById('buy-button-gift-card-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
       });
     }
 
@@ -1183,9 +857,8 @@ switch (href) {
 
         deliveryTime.textContent = deliveryMessage;
 
-    if (deliveryDateDesktop != null) {
-      deliveryDateDesktop.textContent = deliveryMessage;
-      deliveryDateMobile.textContent = deliveryMessage;
+    if (deliveryDate != null) {
+      deliveryDate.textContent = deliveryMessage;
     }
 
     deliveryTrashold.textContent = deliveryMessageCZ;
@@ -1267,132 +940,68 @@ switch (href) {
       "lineItem": {}
     }
 
-    if(document.getElementById('buy-button-set-complete-mobile')){
+    if(document.getElementById('buy-button-set-complete')){
       ui.createComponent('product', {
       id: [8623720366405],
-      node: document.getElementById('buy-button-set-complete-mobile'),
+      node: document.getElementById('buy-button-set-complete'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
   }
-    if(document.getElementById('buy-button-set-I-mobile')){
+    if(document.getElementById('buy-button-set-I')){
         ui.createComponent('product', {
         id: [7542825058534],
-        node: document.getElementById('buy-button-set-I-mobile'),
+        node: document.getElementById('buy-button-set-I'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-set-II-mobile')){
+    if(document.getElementById('buy-button-set-II')){
         ui.createComponent('product', {
         id: [8021842854118],
-        node: document.getElementById('buy-button-set-II-mobile'),
+        node: document.getElementById('buy-button-set-II'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-I-mobile')){
+    if(document.getElementById('buy-button-step-I')){
         ui.createComponent('product', {
         id: [7601486758118],
-        node: document.getElementById('buy-button-step-I-mobile'),
+        node: document.getElementById('buy-button-step-I'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-II-mobile')){
+    if(document.getElementById('buy-button-step-II')){
         ui.createComponent('product', {
         id: [7609802686694],
-        node: document.getElementById('buy-button-step-II-mobile'),
+        node: document.getElementById('buy-button-step-II'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-III-mobile')){
+    if(document.getElementById('buy-button-step-III')){
         ui.createComponent('product', {
         id: [7931357692134],
-        node: document.getElementById('buy-button-step-III-mobile'),
+        node: document.getElementById('buy-button-step-III'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-step-IV-mobile')){
+    if(document.getElementById('buy-button-step-IV')){
         ui.createComponent('product', {
         id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV-mobile'),
+        node: document.getElementById('buy-button-step-IV'),
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
     }
-    if(document.getElementById('buy-button-gift-card-mobile')){
+    if(document.getElementById('buy-button-gift-card')){
       ui.createComponent('product', {
       id: [8578704736581],
-      node: document.getElementById('buy-button-gift-card-mobile'),
+      node: document.getElementById('buy-button-gift-card'),
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
-      });
-    }
-    if(document.getElementById('buy-button-set-complete-desktop')){
-      ui.createComponent('product', {
-      id: [8623720366405],
-      node: document.getElementById('buy-button-set-complete-desktop'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-      options: options
-    });
-  }
-    if(document.getElementById('buy-button-set-I-desktop')){
-        ui.createComponent('product', {
-        id: [7542825058534],
-        node: document.getElementById('buy-button-set-I-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-set-II-desktop')){
-        ui.createComponent('product', {
-        id: [8021842854118],
-        node: document.getElementById('buy-button-set-II-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-I-desktop')){
-        ui.createComponent('product', {
-        id: [7601486758118],
-        node: document.getElementById('buy-button-step-I-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-II-desktop')){
-        ui.createComponent('product', {
-        id: [7609802686694],
-        node: document.getElementById('buy-button-step-II-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-III-desktop')){
-        ui.createComponent('product', {
-        id: [7931357692134],
-        node: document.getElementById('buy-button-step-III-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-step-IV-desktop')){
-        ui.createComponent('product', {
-        id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
-      });
-    }
-    if(document.getElementById('buy-button-gift-card-desktop')){
-        ui.createComponent('product', {
-        id: [8578704736581],
-        node: document.getElementById('buy-button-gift-card-desktop'),
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-        options: options
       });
     }
 
