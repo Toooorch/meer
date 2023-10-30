@@ -3,7 +3,7 @@ const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDate = document.getElementById("delivery-date");
 
 // Delivery
-const deliveryMessageCZ = "Doprava zdarma od 1100Kč";
+const deliveryMessageCZ = "Doprava nyní zdarma";
 const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
