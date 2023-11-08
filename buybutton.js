@@ -219,7 +219,7 @@ switch (href) {
       function ShopifyBuyInit() {
         var client = ShopifyBuy.buildClient({
           domain: 'meer.sk',
-          storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
+          storefrontAccessToken: '618933109ccee1040151ba599180cfef',
           language: 'sk',
         });
   
@@ -276,65 +276,65 @@ switch (href) {
 
   if(document.getElementById('buy-button-set-complete')){
     ui.createComponent('product', {
-    id: [8623720366405],
+    id: [8592696639827],
     node: document.getElementById('buy-button-set-complete'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
   });
 }
   if(document.getElementById('buy-button-set-I')){
       ui.createComponent('product', {
-      id: [7542825058534],
+      id: [8592695624019],
       node: document.getElementById('buy-button-set-I'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
   }
   if(document.getElementById('buy-button-set-II')){
       ui.createComponent('product', {
-      id: [8021842854118],
+      id: [8592696541523],
       node: document.getElementById('buy-button-set-II'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
   }
   if(document.getElementById('buy-button-step-I')){
       ui.createComponent('product', {
-      id: [7601486758118],
+      id: [8592695886163],
       node: document.getElementById('buy-button-step-I'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
   }
   if(document.getElementById('buy-button-step-II')){
       ui.createComponent('product', {
-      id: [7609802686694],
+      id: [8592696115539],
       node: document.getElementById('buy-button-step-II'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
   }
   if(document.getElementById('buy-button-step-III')){
       ui.createComponent('product', {
-      id: [7931357692134],
+      id: [8592696279379],
       node: document.getElementById('buy-button-step-III'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
   }
   if(document.getElementById('buy-button-step-IV')){
       ui.createComponent('product', {
-      id: [7931360051430],
+      id: [8592696475987],
       node: document.getElementById('buy-button-step-IV'),
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
   }
   if(document.getElementById('buy-button-gift-card')){
     ui.createComponent('product', {
-    id: [8578704736581],
+    id: [8592808051027],
     node: document.getElementById('buy-button-gift-card'),
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
     });
   }
