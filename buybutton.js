@@ -2,17 +2,17 @@ const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDate = document.getElementById("delivery-date");
 
-// Delivery
-const deliveryMessageCZ = "Doprava nyní zdarma";
+// Delivery Time
 const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
 const deliveryMessagePL = "Dostawa w ciągu 1-3 dni";
 const deliveryMessageFR = "Livraison en 2-5 jours";
 // Free Delivery
+const deliveryMessageCZ = "Doprava zdarma od 1100Kč";
 const trasholdMessagePL = "Darmowa wysyłka od 200 zł";
 const trasholdMessageEN = "Free Delivery from $50";
-const trasholdMessageSK = "Doprava teraz zadarmo";
+const trasholdMessageSK = "Doprava zadarmo od €50";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
 const trasholdMessageDE = "Kostenloser Versand ab €60";
 
