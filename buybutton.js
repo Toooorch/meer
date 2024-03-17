@@ -16,19 +16,7 @@ const trasholdMessageSK = "Doprava zadarmo od €50";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
 const trasholdMessageDE = "Kostenloser Versand ab €60";
 
-//User Links
-const linkOrders = document.querySelector('a[href="meer.cz/account"]');
-const linkLogin = document.querySelector('a[href="meer.cz/account/login"]');
-const linkCreate = document.querySelector('a[href="meer.cz/account/register"]');
-const linkForgot = document.querySelector('a[href="meer.cz/account/login#recover"]');
-const linkAddress = document.querySelector('a[href="meer.cz/account/addresses"]');
-
-// User Links EUR
-const linkOrdersEU = linkOrders.setAttribute('href', 'replacedlink.com');
-const linkLoginEU = linkLogin.setAttribute('href', 'replacedlink.com');
-const linkCreateEU = linkCreate.setAttribute('href', 'replacedlink.com');
-const linkForgotEU = linkForgot.setAttribute('href', 'replacedlink.com');
-const linkAddressEU = linkAddress.setAttribute('href', 'replacedlink.com');
+const userMenu = document.getElementById("user-menu");
 
 let deliveryMessage;
 
@@ -52,7 +40,8 @@ switch (href) {
     deliveryTrashold.textContent = trasholdMessageEN;
     deliveryTime.textContent = deliveryMessageEN;
 
-    // User Links
+    // User
+    userMenu.style.display = 'none';
 
         /* Shopify Code Start */
         (function () {
@@ -213,6 +202,9 @@ switch (href) {
   deliveryTrashold.textContent = trasholdMessageSK;
   deliveryTime.textContent = deliveryMessageSK;
 
+    // User
+    userMenu.style.display = 'none';
+
     /* Shopify Code Start */
     (function () {
       var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -371,6 +363,9 @@ switch (href) {
     }
     deliveryTrashold.textContent = trasholdMessageDE;
     deliveryTime.textContent = deliveryMessageDE;
+
+        // User
+        userMenu.style.display = 'none';
 
           /* Shopify Code Start */
           (function () {
@@ -531,6 +526,9 @@ switch (href) {
     deliveryTrashold.textContent = trasholdMessageFR;
     deliveryTime.textContent = deliveryMessageFR;
 
+        // User
+        userMenu.style.display = 'none';
+
           /* Shopify Code Start */
           (function () {
             var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -688,6 +686,9 @@ switch (href) {
     }
     deliveryTrashold.textContent = trasholdMessagePL;
     deliveryTime.textContent = deliveryMessagePL;
+
+        // User
+        userMenu.style.display = 'none';
 
       /* Shopify Code Start */
       (function () {
