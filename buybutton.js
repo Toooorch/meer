@@ -1,6 +1,17 @@
+// Delivery
 const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDate = document.getElementById("delivery-date");
+const userMenu = document.getElementById("user-menu");
+// Product Elements
+const setComplete = document.getElementById("buy-button-set-complete");
+const setI = document.getElementById("buy-button-set-I");
+const setII = document.getElementById("buy-button-set-II");
+const stepI = document.getElementById("buy-button-step-I");
+const stepII = document.getElementById("buy-button-step-II");
+const stepIII = document.getElementById("buy-button-step-III");
+const stepIV = document.getElementById("buy-button-step-IV");
+const giftCard = document.getElementById("buy-button-gift-card");
 
 // Delivery Time
 const deliveryMessageEN = "Fast Delivery";
@@ -8,6 +19,7 @@ const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
 const deliveryMessagePL = "Dostawa w ciągu 1-3 dni";
 const deliveryMessageFR = "Livraison en 2-5 jours";
+
 // Free Delivery
 const deliveryMessageCZ = "Doprava zdarma od 1100Kč";
 const trasholdMessagePL = "Darmowa wysyłka od 200 zł";
@@ -15,8 +27,6 @@ const trasholdMessageEN = "Free Delivery from $50";
 const trasholdMessageSK = "Doprava zadarmo od €50";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
 const trasholdMessageDE = "Kostenloser Versand ab €60";
-
-const userMenu = document.getElementById("user-menu");
 
 let deliveryMessage;
 
@@ -123,7 +133,7 @@ switch (href) {
       if(document.getElementById('buy-button-set-complete')){
         ui.createComponent('product', {
         id: [8623720366405],
-        node: document.getElementById('buy-button-set-complete'),
+        node: setComplete,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -131,7 +141,7 @@ switch (href) {
       if(document.getElementById('buy-button-set-I')){
           ui.createComponent('product', {
           id: [7542825058534],
-          node: document.getElementById('buy-button-set-I'),
+          node: setI,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -139,7 +149,7 @@ switch (href) {
       if(document.getElementById('buy-button-set-II')){
           ui.createComponent('product', {
           id: [8021842854118],
-          node: document.getElementById('buy-button-set-II'),
+          node: setII,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -147,7 +157,7 @@ switch (href) {
       if(document.getElementById('buy-button-step-I')){
           ui.createComponent('product', {
           id: [7601486758118],
-          node: document.getElementById('buy-button-step-I'),
+          node: stepI,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -155,7 +165,7 @@ switch (href) {
       if(document.getElementById('buy-button-step-II')){
           ui.createComponent('product', {
           id: [7609802686694],
-          node: document.getElementById('buy-button-step-II'),
+          node: stepII,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -163,7 +173,7 @@ switch (href) {
       if(document.getElementById('buy-button-step-III')){
           ui.createComponent('product', {
           id: [7931357692134],
-          node: document.getElementById('buy-button-step-III'),
+          node: stepIII,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -171,7 +181,7 @@ switch (href) {
       if(document.getElementById('buy-button-step-IV')){
           ui.createComponent('product', {
           id: [7931360051430],
-          node: document.getElementById('buy-button-step-IV'),
+          node: stepIV,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -179,7 +189,7 @@ switch (href) {
       if(document.getElementById('buy-button-gift-card')){
         ui.createComponent('product', {
         id: [8578704736581],
-        node: document.getElementById('buy-button-gift-card'),
+        node: giftCard,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
         });
@@ -285,7 +295,7 @@ switch (href) {
   if(document.getElementById('buy-button-set-complete')){
     ui.createComponent('product', {
     id: [8592696639827],
-    node: document.getElementById('buy-button-set-complete'),
+    node: setComplete,
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
   });
@@ -293,7 +303,7 @@ switch (href) {
   if(document.getElementById('buy-button-set-I')){
       ui.createComponent('product', {
       id: [8592695624019],
-      node: document.getElementById('buy-button-set-I'),
+      node: setI,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -301,7 +311,7 @@ switch (href) {
   if(document.getElementById('buy-button-set-II')){
       ui.createComponent('product', {
       id: [8592696541523],
-      node: document.getElementById('buy-button-set-II'),
+      node: setII,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -309,7 +319,7 @@ switch (href) {
   if(document.getElementById('buy-button-step-I')){
       ui.createComponent('product', {
       id: [8592695886163],
-      node: document.getElementById('buy-button-step-I'),
+      node: stepI,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -317,7 +327,7 @@ switch (href) {
   if(document.getElementById('buy-button-step-II')){
       ui.createComponent('product', {
       id: [8592696115539],
-      node: document.getElementById('buy-button-step-II'),
+      node: stepII,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -325,7 +335,7 @@ switch (href) {
   if(document.getElementById('buy-button-step-III')){
       ui.createComponent('product', {
       id: [8592696279379],
-      node: document.getElementById('buy-button-step-III'),
+      node: stepIII,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -333,7 +343,7 @@ switch (href) {
   if(document.getElementById('buy-button-step-IV')){
       ui.createComponent('product', {
       id: [8592696475987],
-      node: document.getElementById('buy-button-step-IV'),
+      node: stepIV,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -341,7 +351,7 @@ switch (href) {
   if(document.getElementById('buy-button-gift-card')){
     ui.createComponent('product', {
     id: [8592808051027],
-    node: document.getElementById('buy-button-gift-card'),
+    node: giftCard,
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
     });
@@ -447,7 +457,7 @@ switch (href) {
         if(document.getElementById('buy-button-set-complete')){
           ui.createComponent('product', {
           id: [8592696639827],
-          node: document.getElementById('buy-button-set-complete'),
+          node: setComplete,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
         });
@@ -455,7 +465,7 @@ switch (href) {
         if(document.getElementById('buy-button-set-I')){
             ui.createComponent('product', {
             id: [8592695624019],
-            node: document.getElementById('buy-button-set-I'),
+            node: setI,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -463,7 +473,7 @@ switch (href) {
         if(document.getElementById('buy-button-set-II')){
             ui.createComponent('product', {
             id: [8592696541523],
-            node: document.getElementById('buy-button-set-II'),
+            node: setII,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -471,7 +481,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-I')){
             ui.createComponent('product', {
             id: [8592695886163],
-            node: document.getElementById('buy-button-step-I'),
+            node: stepI,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -479,7 +489,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-II')){
             ui.createComponent('product', {
             id: [8592696115539],
-            node: document.getElementById('buy-button-step-II'),
+            node: stepII,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -487,7 +497,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-III')){
             ui.createComponent('product', {
             id: [8592696279379],
-            node: document.getElementById('buy-button-step-III'),
+            node: stepIII,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -495,7 +505,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-IV')){
             ui.createComponent('product', {
             id: [8592696475987],
-            node: document.getElementById('buy-button-step-IV'),
+            node: stepIV,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -503,7 +513,7 @@ switch (href) {
         if(document.getElementById('buy-button-gift-card')){
           ui.createComponent('product', {
           id: [8592808051027],
-          node: document.getElementById('buy-button-gift-card'),
+          node: giftCard,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
           });
@@ -609,7 +619,7 @@ switch (href) {
         if(document.getElementById('buy-button-set-complete')){
           ui.createComponent('product', {
           id: [8592696639827],
-          node: document.getElementById('buy-button-set-complete'),
+          node: setComplete,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
         });
@@ -617,7 +627,7 @@ switch (href) {
         if(document.getElementById('buy-button-set-I')){
             ui.createComponent('product', {
             id: [8592695624019],
-            node: document.getElementById('buy-button-set-I'),
+            node: setI,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -625,7 +635,7 @@ switch (href) {
         if(document.getElementById('buy-button-set-II')){
             ui.createComponent('product', {
             id: [8592696541523],
-            node: document.getElementById('buy-button-set-II'),
+            node: setII,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -633,7 +643,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-I')){
             ui.createComponent('product', {
             id: [8592695886163],
-            node: document.getElementById('buy-button-step-I'),
+            node: stepI,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -641,7 +651,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-II')){
             ui.createComponent('product', {
             id: [8592696115539],
-            node: document.getElementById('buy-button-step-II'),
+            node: stepII,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -649,7 +659,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-III')){
             ui.createComponent('product', {
             id: [8592696279379],
-            node: document.getElementById('buy-button-step-III'),
+            node: stepIII,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -657,7 +667,7 @@ switch (href) {
         if(document.getElementById('buy-button-step-IV')){
             ui.createComponent('product', {
             id: [8592696475987],
-            node: document.getElementById('buy-button-step-IV'),
+            node: stepIV,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -665,7 +675,7 @@ switch (href) {
         if(document.getElementById('buy-button-gift-card')){
           ui.createComponent('product', {
           id: [8592808051027],
-          node: document.getElementById('buy-button-gift-card'),
+          node: giftCard,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
           });
@@ -770,7 +780,7 @@ switch (href) {
     if(document.getElementById('buy-button-set-complete')){
       ui.createComponent('product', {
       id: [8623720366405],
-      node: document.getElementById('buy-button-set-complete'),
+      node: setComplete,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
@@ -778,7 +788,7 @@ switch (href) {
     if(document.getElementById('buy-button-set-I')){
         ui.createComponent('product', {
         id: [7542825058534],
-        node: document.getElementById('buy-button-set-I'),
+        node: setI,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -786,7 +796,7 @@ switch (href) {
     if(document.getElementById('buy-button-set-II')){
         ui.createComponent('product', {
         id: [8021842854118],
-        node: document.getElementById('buy-button-set-II'),
+        node: setII,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -794,7 +804,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-I')){
         ui.createComponent('product', {
         id: [7601486758118],
-        node: document.getElementById('buy-button-step-I'),
+        node: stepI,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -802,7 +812,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-II')){
         ui.createComponent('product', {
         id: [7609802686694],
-        node: document.getElementById('buy-button-step-II'),
+        node: stepII,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -810,7 +820,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-III')){
         ui.createComponent('product', {
         id: [7931357692134],
-        node: document.getElementById('buy-button-step-III'),
+        node: stepIII,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -818,7 +828,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-IV')){
         ui.createComponent('product', {
         id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV'),
+        node: stepIV,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -826,7 +836,7 @@ switch (href) {
     if(document.getElementById('buy-button-gift-card')){
       ui.createComponent('product', {
       id: [8578704736581],
-      node: document.getElementById('buy-button-gift-card'),
+      node: giftCard,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
       });
@@ -960,7 +970,7 @@ switch (href) {
     if(document.getElementById('buy-button-set-complete')){
       ui.createComponent('product', {
       id: [8623720366405],
-      node: document.getElementById('buy-button-set-complete'),
+      node: setComplete,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
@@ -968,7 +978,7 @@ switch (href) {
     if(document.getElementById('buy-button-set-I')){
         ui.createComponent('product', {
         id: [7542825058534],
-        node: document.getElementById('buy-button-set-I'),
+        node: setI,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -976,7 +986,7 @@ switch (href) {
     if(document.getElementById('buy-button-set-II')){
         ui.createComponent('product', {
         id: [8021842854118],
-        node: document.getElementById('buy-button-set-II'),
+        node: setII,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -984,7 +994,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-I')){
         ui.createComponent('product', {
         id: [7601486758118],
-        node: document.getElementById('buy-button-step-I'),
+        node: stepI,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -992,7 +1002,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-II')){
         ui.createComponent('product', {
         id: [7609802686694],
-        node: document.getElementById('buy-button-step-II'),
+        node: stepII,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1000,7 +1010,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-III')){
         ui.createComponent('product', {
         id: [7931357692134],
-        node: document.getElementById('buy-button-step-III'),
+        node: stepIII,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1008,7 +1018,7 @@ switch (href) {
     if(document.getElementById('buy-button-step-IV')){
         ui.createComponent('product', {
         id: [7931360051430],
-        node: document.getElementById('buy-button-step-IV'),
+        node: stepIV,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1016,7 +1026,7 @@ switch (href) {
     if(document.getElementById('buy-button-gift-card')){
       ui.createComponent('product', {
       id: [8578704736581],
-      node: document.getElementById('buy-button-gift-card'),
+      node: giftCard,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
       });
