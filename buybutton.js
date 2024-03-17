@@ -16,6 +16,13 @@ const trasholdMessageSK = "Doprava zadarmo od €50";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
 const trasholdMessageDE = "Kostenloser Versand ab €60";
 
+//User Links
+var linkOrders = document.querySelector('a[href="meer.cz/account"]');
+var linkLogin = document.querySelector('a[href="meer.cz/account/login"]');
+var linkCreate = document.querySelector('a[href="meer.cz/account/register"]');
+var linkForgot = document.querySelector('a[href="meer.cz/account/login#recover"]');
+var linkAddress = document.querySelector('a[href="meer.cz/account/addresses"]');
+
 let deliveryMessage;
 
 const thehours = new Date().getHours();
@@ -31,6 +38,12 @@ const findTermURL = (term) => {
 switch (href) {
   // English
   case findTermURL('en.meer.care'):
+
+  linkOrders.setAttribute('href', 'replacedlink.com');
+  linkLogin.setAttribute('href', 'replacedlink.com');
+  linkCreate.setAttribute('href', 'replacedlink.com');
+  linkForgot.setAttribute('href', 'replacedlink.com');
+  linkAddress.setAttribute('href', 'replacedlink.com');
 
   if (deliveryDate != null) {
     deliveryDate.textContent = deliveryMessageEN;
