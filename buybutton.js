@@ -28,6 +28,13 @@ const trasholdMessageSK = "Doprava zadarmo od €50";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
 const trasholdMessageDE = "Kostenloser Versand ab €60";
 
+// User Section
+const userOrders = document.getElementById('user-orders');
+const userLogin = document.getElementById('user-login');
+const userCreateAccount = document.getElementById('user-create-account');
+const userForgotPassword = document.getElementById('user-forgot-password');
+const userAddresses = document.getElementById('user-adresses');
+
 let deliveryMessage;
 
 const thehours = new Date().getHours();
@@ -213,7 +220,11 @@ switch (href) {
   deliveryTime.textContent = deliveryMessageSK;
 
     // User
-    userMenu.style.display = 'none';
+    userOrders.setAttribute('href', 'https://www.meer.beauty/account');
+    userLogin.setAttribute('href', 'https://www.meer.beauty/account/login');
+    userCreateAccount.setAttribute('href', 'https://www.meer.beauty/account/register');
+    userForgotPassword.setAttribute('href', 'https://www.meer.beauty/account/login#recover');
+    userAddresses.setAttribute('href', 'https://www.meer.beauty/account/addresses');
 
     /* Shopify Code Start */
     (function () {
@@ -375,7 +386,11 @@ switch (href) {
     deliveryTime.textContent = deliveryMessageDE;
 
         // User
-        userMenu.style.display = 'none';
+        userOrders.setAttribute('href', 'https://www.meer.beauty/account');
+        userLogin.setAttribute('href', 'https://www.meer.beauty/account/login');
+        userCreateAccount.setAttribute('href', 'https://www.meer.beauty/account/register');
+        userForgotPassword.setAttribute('href', 'https://www.meer.beauty/account/login#recover');
+        userAddresses.setAttribute('href', 'https://www.meer.beauty/account/addresses');
 
           /* Shopify Code Start */
           (function () {
@@ -537,7 +552,11 @@ switch (href) {
     deliveryTime.textContent = deliveryMessageFR;
 
         // User
-        userMenu.style.display = 'none';
+        userOrders.setAttribute('href', 'https://www.meer.beauty/account');
+        userLogin.setAttribute('href', 'https://www.meer.beauty/account/login');
+        userCreateAccount.setAttribute('href', 'https://www.meer.beauty/account/register');
+        userForgotPassword.setAttribute('href', 'https://www.meer.beauty/account/login#recover');
+        userAddresses.setAttribute('href', 'https://www.meer.beauty/account/addresses');
 
           /* Shopify Code Start */
           (function () {
