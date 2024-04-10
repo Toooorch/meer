@@ -1,6 +1,7 @@
     #cookiescript_copyright,
     #cookiescript_manageicon,
-    #cookiescript_readmore {
+    #cookiescript_readmore,
+    .cookiescript_pre_header {
         display: none !important;
     }
     #cookiescript_close,
@@ -9,6 +10,9 @@
     #cookiescript_readmore,
     #cookiescript_reject {
         color: #23262d !important;
+    }
+    .cookiescript_pre_header {
+        position: absolute !important;
     }
     #cookiescript_injected {
         font-family: "Avenir Next", Arial, "Trebuchet MS", "Segoe UI", Helvetica, sans-serif !important;
