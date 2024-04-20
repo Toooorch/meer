@@ -742,7 +742,7 @@ switch (href) {
         function ShopifyBuyInit() {
           var client = ShopifyBuy.buildClient({
             domain: 'meercare.pl',
-            storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
+            storefrontAccessToken: 'c4b5fbfff55de13f529ecadc6984f218',
             language: 'pl',
           });
     
@@ -799,65 +799,65 @@ switch (href) {
 
     if(document.getElementById('buy-button-set-complete')){
       ui.createComponent('product', {
-      id: [8623720366405],
+      id: [8566259745033],
       node: setComplete,
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
       options: options
     });
   }
     if(document.getElementById('buy-button-set-I')){
         ui.createComponent('product', {
-        id: [7542825058534],
+        id: [8566259712265],
         node: setI,
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
         options: options
       });
     }
     if(document.getElementById('buy-button-set-II')){
         ui.createComponent('product', {
-        id: [8021842854118],
+        id: [8566259974409],
         node: setII,
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
         options: options
       });
     }
     if(document.getElementById('buy-button-step-I')){
         ui.createComponent('product', {
-        id: [7601486758118],
+        id: [8566260039945],
         node: stepI,
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
         options: options
       });
     }
     if(document.getElementById('buy-button-step-II')){
         ui.createComponent('product', {
-        id: [7609802686694],
+        id: [8566260072713],
         node: stepII,
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
         options: options
       });
     }
     if(document.getElementById('buy-button-step-III')){
         ui.createComponent('product', {
-        id: [7931357692134],
+        id: [8566260105481],
         node: stepIII,
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
         options: options
       });
     }
     if(document.getElementById('buy-button-step-IV')){
         ui.createComponent('product', {
-        id: [7931360051430],
+        id: [8566260171017],
         node: stepIV,
-        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+        moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
         options: options
       });
     }
     if(document.getElementById('buy-button-gift-card')){
       ui.createComponent('product', {
-      id: [8578704736581],
+      id: [8567132815625],
       node: giftCard,
-      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
       options: options
       });
     }
