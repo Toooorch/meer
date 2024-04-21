@@ -3,6 +3,7 @@ const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDate = document.getElementById("delivery-date");
 const userMenu = document.getElementById("user-menu");
+
 // Product Elements
 const setComplete = document.getElementById("buy-button-set-complete");
 const setI = document.getElementById("buy-button-set-I");
@@ -718,7 +719,11 @@ switch (href) {
     deliveryTime.textContent = deliveryMessagePL;
 
         // User
-        userMenu.style.display = 'none';
+        userOrders.setAttribute('href', 'https://meercare.pl/account');
+        userLogin.setAttribute('href', 'https://meercare.pl/account/login');
+        userCreateAccount.setAttribute('href', 'https://meercare.pl/account/register');
+        userForgotPassword.setAttribute('href', 'https://meercare.pl/account/login#recover');
+        userAddresses.setAttribute('href', 'https://meercare.pl/account/addresses');
 
       /* Shopify Code Start */
       (function () {
