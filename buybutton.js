@@ -770,7 +770,7 @@ switch (href) {
             "price": false
           },
           "text": {
-            "button": "Dodaj do koszyka",
+            "button": "Włożyć do koszyka",
             "outOfStock": "Sprzedany",
             "unavailable": "Sprzedany"
           }
