@@ -18,7 +18,7 @@ const giftCard = document.getElementById("buy-button-gift-card");
 const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
-const deliveryMessagePL = "Dostawa w ciągu 1-3 dni";
+const deliveryMessagePL = "Dostawa 1-3 dni";
 const deliveryMessageFR = "Livraison en 2-5 jours";
 
 // Free Delivery
