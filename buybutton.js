@@ -23,7 +23,8 @@ const deliveryMessageFR = "Livraison en 2-5 jours";
 
 // Free Delivery
 const deliveryMessageCZ = "Doprava nyní ZDARMA";
-const trasholdMessagePL = "Darmowa wysyłka od 200 zł";
+// const trasholdMessagePL = "Darmowa wysyłka od 200 zł";
+const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
 const trasholdMessageEN = "Free Delivery from $50";
 const trasholdMessageSK = "Doprava teraz ZADARMO";
 // const trasholdMessageSK = "Doprava zadarmo od €50";
