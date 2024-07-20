@@ -749,7 +749,7 @@ switch (href) {
         function ShopifyBuyInit() {
           var client = ShopifyBuy.buildClient({
             domain: 'meercare.pl',
-            storefrontAccessToken: '618933109ccee1040151ba599180cfef',
+            storefrontAccessToken: 'd0790ee9d09c16714d92224efa9f5882',
             language: 'pl',
           });
     
