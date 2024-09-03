@@ -15,7 +15,7 @@ const stepIV = document.getElementById("buy-button-step-IV");
 const giftCard = document.getElementById("buy-button-gift-card");
 
 // Cart
-const cart = document.getElementById("cart-toggle");
+const cartToggle = document.getElementById("cart-toggle");
 
 // Delivery Time
 const deliveryMessageEN = "Fast Delivery";
@@ -146,7 +146,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8623720366405],
         node: setComplete,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -155,7 +155,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7542825058534],
           node: setI,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -164,7 +164,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8021842854118],
           node: setII,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -173,7 +173,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7601486758118],
           node: stepI,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -182,7 +182,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7609802686694],
           node: stepII,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -191,7 +191,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7931357692134],
           node: stepIII,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -200,7 +200,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7931360051430],
           node: stepIV,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -209,7 +209,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8578704736581],
         node: giftCard,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
         });
@@ -318,7 +318,7 @@ switch (href) {
     ui.createComponent('product', {
     id: [8592696639827],
     node: setComplete,
-    toggles: cart,
+    toggles: [{node: cartToggle}],
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
   });
@@ -327,7 +327,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592695624019],
       node: setI,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -336,7 +336,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696541523],
       node: setII,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -345,7 +345,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592695886163],
       node: stepI,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -354,7 +354,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696115539],
       node: stepII,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -363,7 +363,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696279379],
       node: stepIII,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -372,7 +372,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696475987],
       node: stepIV,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -381,7 +381,7 @@ switch (href) {
     ui.createComponent('product', {
     id: [8592808051027],
     node: giftCard,
-    toggles: cart,
+    toggles: [{node: cartToggle}],
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
     });
@@ -490,7 +490,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592696639827],
           node: setComplete,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
         });
@@ -499,7 +499,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695624019],
             node: setI,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -508,7 +508,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696541523],
             node: setII,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -517,7 +517,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695886163],
             node: stepI,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -526,7 +526,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696115539],
             node: stepII,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -535,7 +535,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696279379],
             node: stepIII,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -544,7 +544,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696475987],
             node: stepIV,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -553,7 +553,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592808051027],
           node: giftCard,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
           });
@@ -662,7 +662,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592696639827],
           node: setComplete,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
         });
@@ -671,7 +671,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695624019],
             node: setI,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -680,7 +680,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696541523],
             node: setII,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -689,7 +689,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695886163],
             node: stepI,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -698,7 +698,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696115539],
             node: stepII,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -707,7 +707,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696279379],
             node: stepIII,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -716,7 +716,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696475987],
             node: stepIV,
-            toggles: cart,
+            toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -725,7 +725,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592808051027],
           node: giftCard,
-          toggles: cart,
+          toggles: [{node: cartToggle}],
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
           });
@@ -833,7 +833,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8623720366405],
       node: setComplete,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
@@ -842,7 +842,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7542825058534],
         node: setI,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -851,7 +851,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8021842854118],
         node: setII,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -860,7 +860,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7601486758118],
         node: stepI,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -869,7 +869,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7609802686694],
         node: stepII,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -878,7 +878,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931357692134],
         node: stepIII,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -887,7 +887,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931360051430],
         node: stepIV,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -896,7 +896,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8578704736581],
       node: giftCard,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
       });
@@ -1029,7 +1029,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8623720366405],
       node: setComplete,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
@@ -1038,7 +1038,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7542825058534],
         node: setI,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1047,7 +1047,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8021842854118],
         node: setII,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1056,7 +1056,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7601486758118],
         node: stepI,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1065,7 +1065,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7609802686694],
         node: stepII,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1074,7 +1074,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931357692134],
         node: stepIII,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1083,7 +1083,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931360051430],
         node: stepIV,
-        toggles: cart,
+        toggles: [{node: cartToggle}],
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1092,7 +1092,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8578704736581],
       node: giftCard,
-      toggles: cart,
+      toggles: [{node: cartToggle}],
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
       });
