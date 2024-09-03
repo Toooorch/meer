@@ -161,5 +161,5 @@
 }
 
 .shopify-buy-frame--toggle:not(.is-sticky) {
-    overflow: visible;
+    overflow: visible !important;;
 }
