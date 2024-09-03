@@ -138,7 +138,9 @@ switch (href) {
         "toggle": {
           "iframe": false,
           "sticky": false,
-          "icon": false
+          "templates": {
+              "icon": '',
+          }
         },
         "lineItem": {}
       }
@@ -311,7 +313,9 @@ switch (href) {
     "toggle": {
       "iframe": false,
       "sticky": false,
-      "icon": false
+      "templates": {
+          "icon": '',
+      }
     },
     "lineItem": {}
   }
@@ -484,7 +488,9 @@ switch (href) {
           "toggle": {
             "iframe": false,
             "sticky": false,
-            "icon": false
+            "templates": {
+                "icon": '',
+            }
           },
           "lineItem": {}
         }
@@ -657,7 +663,9 @@ switch (href) {
           "toggle": {
             "iframe": false,
             "sticky": false,
-            "icon": false
+            "templates": {
+                "icon": '',
+            }
           },
           "lineItem": {}
         }
@@ -829,7 +837,9 @@ switch (href) {
       "toggle": {
         "iframe": false,
         "sticky": false,
-        "icon": false
+        "templates": {
+            "icon": '',
+        }
       },
       "lineItem": {}
     }
@@ -1026,7 +1036,9 @@ switch (href) {
       "toggle": {
         "iframe": false,
         "sticky": false,
-        "icon": false
+        "templates": {
+            "icon": '',
+        }
       },
       "lineItem": {}
     }
