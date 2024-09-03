@@ -14,6 +14,9 @@ const stepIII = document.getElementById("buy-button-step-III");
 const stepIV = document.getElementById("buy-button-step-IV");
 const giftCard = document.getElementById("buy-button-gift-card");
 
+// Cart
+const cart = document.getElementById("cart-toggle");
+
 // Delivery Time
 const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
@@ -134,9 +137,7 @@ switch (href) {
         },
         "toggle": {
           "iframe": false,
-          "templates": {
-              "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
-          }
+          "sticky": false
         },
         "lineItem": {}
       }
@@ -145,6 +146,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8623720366405],
         node: setComplete,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -153,6 +155,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7542825058534],
           node: setI,
+          toggles: cart,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -161,6 +164,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8021842854118],
           node: setII,
+          toggles: cart,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -169,6 +173,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7601486758118],
           node: stepI,
+          toggles: cart,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -177,6 +182,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7609802686694],
           node: stepII,
+          toggles: cart,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -185,6 +191,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7931357692134],
           node: stepIII,
+          toggles: cart,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -193,6 +200,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [7931360051430],
           node: stepIV,
+          toggles: cart,
           moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
           options: options
         });
@@ -201,6 +209,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8578704736581],
         node: giftCard,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
         });
@@ -300,9 +309,7 @@ switch (href) {
     },
     "toggle": {
       "iframe": false,
-      "templates": {
-          "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
-      }
+      "sticky": false
     },
     "lineItem": {}
   }
@@ -311,6 +318,7 @@ switch (href) {
     ui.createComponent('product', {
     id: [8592696639827],
     node: setComplete,
+    toggles: cart,
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
   });
@@ -319,6 +327,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592695624019],
       node: setI,
+      toggles: cart,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -327,6 +336,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696541523],
       node: setII,
+      toggles: cart,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -335,6 +345,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592695886163],
       node: stepI,
+      toggles: cart,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -343,6 +354,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696115539],
       node: stepII,
+      toggles: cart,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -351,6 +363,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696279379],
       node: stepIII,
+      toggles: cart,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -359,6 +372,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8592696475987],
       node: stepIV,
+      toggles: cart,
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
       options: options
     });
@@ -367,6 +381,7 @@ switch (href) {
     ui.createComponent('product', {
     id: [8592808051027],
     node: giftCard,
+    toggles: cart,
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     options: options
     });
@@ -466,9 +481,7 @@ switch (href) {
           },
           "toggle": {
             "iframe": false,
-            "templates": {
-                "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
-            }
+            "sticky": false
           },
           "lineItem": {}
         }
@@ -477,6 +490,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592696639827],
           node: setComplete,
+          toggles: cart,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
         });
@@ -485,6 +499,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695624019],
             node: setI,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -493,6 +508,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696541523],
             node: setII,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -501,6 +517,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695886163],
             node: stepI,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -509,6 +526,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696115539],
             node: stepII,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -517,6 +535,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696279379],
             node: stepIII,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -525,6 +544,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696475987],
             node: stepIV,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -533,6 +553,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592808051027],
           node: giftCard,
+          toggles: cart,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
           });
@@ -632,9 +653,7 @@ switch (href) {
           },
           "toggle": {
             "iframe": false,
-            "templates": {
-                "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
-            }
+            "sticky": false
           },
           "lineItem": {}
         }
@@ -643,6 +662,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592696639827],
           node: setComplete,
+          toggles: cart,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
         });
@@ -651,6 +671,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695624019],
             node: setI,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -659,6 +680,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696541523],
             node: setII,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -667,6 +689,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592695886163],
             node: stepI,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -675,6 +698,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696115539],
             node: stepII,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -683,6 +707,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696279379],
             node: stepIII,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -691,6 +716,7 @@ switch (href) {
             ui.createComponent('product', {
             id: [8592696475987],
             node: stepIV,
+            toggles: cart,
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
             options: options
           });
@@ -699,6 +725,7 @@ switch (href) {
           ui.createComponent('product', {
           id: [8592808051027],
           node: giftCard,
+          toggles: cart,
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: options
           });
@@ -797,9 +824,7 @@ switch (href) {
       },
       "toggle": {
         "iframe": false,
-        "templates": {
-            "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
-        }
+        "sticky": false
       },
       "lineItem": {}
     }
@@ -808,6 +833,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8623720366405],
       node: setComplete,
+      toggles: cart,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
@@ -816,6 +842,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7542825058534],
         node: setI,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -824,6 +851,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8021842854118],
         node: setII,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -832,6 +860,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7601486758118],
         node: stepI,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -840,6 +869,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7609802686694],
         node: stepII,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -848,6 +878,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931357692134],
         node: stepIII,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -856,6 +887,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931360051430],
         node: stepIV,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -864,6 +896,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8578704736581],
       node: giftCard,
+      toggles: cart,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
       });
@@ -987,9 +1020,7 @@ switch (href) {
       },
       "toggle": {
         "iframe": false,
-        "templates": {
-            "icon": '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.3" d="M15 5.70256L9.71031 12.0502C9.26835 12.5806 8.48015 12.6522 7.9498 12.2103C7.41945 11.7683 7.3478 10.9801 7.78975 10.4498L14.0398 2.94977C14.5395 2.35008 15.4606 2.35008 15.9603 2.94977L22.2103 10.4498C22.6523 10.9801 22.5806 11.7683 22.0503 12.2103C21.5199 12.6522 20.7317 12.5806 20.2898 12.0502L15 5.70256Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.37402 11.25C4.82174 11.25 4.37402 11.6977 4.37402 12.25V23.25C4.37402 24.9069 5.71717 26.25 7.37402 26.25H22.625C24.2819 26.25 25.625 24.9069 25.625 23.25V12.25C25.625 11.6977 25.1773 11.25 24.625 11.25H5.37402ZM17.4999 18.75C17.4999 20.1307 16.3806 21.25 14.9999 21.25C13.6192 21.25 12.4999 20.1307 12.4999 18.75C12.4999 17.3693 13.6192 16.25 14.9999 16.25C16.3806 16.25 17.4999 17.3693 17.4999 18.75Z" fill="white"/></svg>',
-        }
+        "sticky": false
       },
       "lineItem": {}
     }
@@ -998,6 +1029,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8623720366405],
       node: setComplete,
+      toggles: cart,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
     });
@@ -1006,6 +1038,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7542825058534],
         node: setI,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1014,6 +1047,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [8021842854118],
         node: setII,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1022,6 +1056,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7601486758118],
         node: stepI,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1030,6 +1065,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7609802686694],
         node: stepII,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1038,6 +1074,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931357692134],
         node: stepIII,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1046,6 +1083,7 @@ switch (href) {
         ui.createComponent('product', {
         id: [7931360051430],
         node: stepIV,
+        toggles: cart,
         moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
         options: options
       });
@@ -1054,6 +1092,7 @@ switch (href) {
       ui.createComponent('product', {
       id: [8578704736581],
       node: giftCard,
+      toggles: cart,
       moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
       options: options
       });
