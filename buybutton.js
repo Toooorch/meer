@@ -25,15 +25,15 @@ const deliveryMessagePL = "Dostawa 1-3 dni";
 const deliveryMessageFR = "Livraison en 2-5 jours";
 
 // Free Delivery
-//const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
+const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
 //const deliveryMessageCZ = "Doprava nyní ZDARMA";
-const deliveryMessageCZ = "Doprava DNES ZDARMA";
+//const deliveryMessageCZ = "Doprava DNES ZDARMA";
 //const trasholdMessagePL = "Darmowa wysyłka od 200zł";
 const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
 const trasholdMessageEN = "Free Delivery from $50";
 //const trasholdMessageSK = "Doprava teraz ZADARMO";
-const trasholdMessageSK = "Doprava dnes ZADARMO";
-//const trasholdMessageSK = "Doprava zadarmo od €50";
+//const trasholdMessageSK = "Doprava dnes ZADARMO";
+const trasholdMessageSK = "Doprava zadarmo od €30";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
 const trasholdMessageDE = "Kostenloser Versand ab €60";
 
@@ -928,8 +928,7 @@ switch (href) {
 
   default:
       // Czech
-        var tomorrow = "ve středu u Vás (Zásilkovna)";
-        //var tomorrow = "zítra u Vás (Zásilkovna)";
+        var tomorrow = "zítra u Vás (Zásilkovna)";
         var nexttomorrow = "pozítří u Vás (Zásilkovna)";
         var monday = "v pondělí u Vás (Zásilkovna)";
         var tuesday = "v úterý u Vás (Zásilkovna)";
