@@ -1,5 +1,5 @@
-// Delivery
-const deliveryTrashold = document.getElementById("delivery-treshold");
+// Delivery Elements
+const deliveryThreshold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDate = document.getElementById("delivery-date");
 const userMenu = document.getElementById("user-menu");
@@ -14,35 +14,34 @@ const stepIII = document.getElementById("buy-button-step-III");
 const stepIV = document.getElementById("buy-button-step-IV");
 const giftCard = document.getElementById("buy-button-gift-card");
 
-// Cart
+// Cart Element
 const cartToggle = document.getElementById("cart-toggle");
 
-// Delivery Time
-const deliveryMessageEN = "Fast Delivery";
-const deliveryMessageSK = "Doručenie za 1-3 dni";
-const deliveryMessageDE = "Lieferung in 2-3 Tagen";
-const deliveryMessagePL = "Dostawa 1-3 dni";
-const deliveryMessageFR = "Livraison en 2-5 jours";
+// Delivery Messages
+const deliveryMessages = {
+  EN: "Fast Delivery",
+  SK: "Doručenie za 1-3 dni",
+  DE: "Lieferung in 2-3 Tagen",
+  PL: "Dostawa 1-3 dni",
+  FR: "Livraison en 2-5 jours"
+};
 
-// Free Delivery
-const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
-//const deliveryMessageCZ = "Doprava nyní ZDARMA";
-//const deliveryMessageCZ = "Doprava DNES ZDARMA";
-//const trasholdMessagePL = "Darmowa wysyłka od 200zł";
-const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
-const trasholdMessageEN = "Free Delivery from $50";
-//const trasholdMessageSK = "Doprava teraz ZADARMO";
-//const trasholdMessageSK = "Doprava dnes ZADARMO";
-const trasholdMessageSK = "Doprava zadarmo od €30";
-const trasholdMessageFR = "Frais de port offerts à partir de €60";
-const trasholdMessageDE = "Kostenloser Versand ab €60";
+// Free Delivery Messages
+const freeDeliveryMessages = {
+  CZ: "Doprava zdarma od 1500Kč",
+  PL: "Teraz z DARMOWĄ WYSYŁKĄ",
+  EN: "Free Delivery from $50",
+  SK: "Doprava zadarmo od €30",
+  FR: "Frais de port offerts à partir de €60",
+  DE: "Kostenloser Versand ab €60"
+};
 
-// User Section
+// User Section Elements
 const userOrders = document.getElementById('user-orders');
 const userLogin = document.getElementById('user-login');
 const userCreateAccount = document.getElementById('user-create-account');
 const userForgotPassword = document.getElementById('user-forgot-password');
-const userAddresses = document.getElementById('user-adresses');
+const userAddresses = document.getElementById('user-addresses');
 
 let deliveryMessage;
 
@@ -61,10 +60,10 @@ switch (href) {
   case findTermURL('en.meer.care'):
 
   if (deliveryDate != null) {
-    deliveryDate.textContent = deliveryMessageEN;
+    deliveryDate.textContent = deliveryMessages.EN;
   }
-    deliveryTrashold.textContent = trasholdMessageEN;
-    deliveryTime.textContent = deliveryMessageEN;
+    deliveryThreshold.textContent = freeDeliveryMessages.EN;
+    deliveryTime.textContent = deliveryMessages.EN;
 
     // User
     userMenu.style.display = 'none';
@@ -232,10 +231,10 @@ switch (href) {
   case findTermURL('sk.meer.care'):
 
   if (deliveryDate != null) {
-    deliveryDate.textContent = deliveryMessageSK;
+    deliveryDate.textContent = deliveryMessages.SK;
   }
-  deliveryTrashold.textContent = trasholdMessageSK;
-  deliveryTime.textContent = deliveryMessageSK;
+  deliveryThreshold.textContent = freeDeliveryMessages.SK;
+  deliveryTime.textContent = deliveryMessages.SK;
 
     // User
     userOrders.setAttribute('href', 'https://www.meer.beauty/account');
@@ -407,10 +406,10 @@ switch (href) {
     case findTermURL('de.meer.care'):
 
     if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessageDE;
+      deliveryDate.textContent = deliveryMessages.DE;
     }
-    deliveryTrashold.textContent = trasholdMessageDE;
-    deliveryTime.textContent = deliveryMessageDE;
+    deliveryThreshold.textContent = freeDeliveryMessages.DE;
+    deliveryTime.textContent = deliveryMessages.DE;
 
         // User
         userOrders.setAttribute('href', 'https://www.meer.beauty/account');
@@ -582,10 +581,10 @@ switch (href) {
     case findTermURL('fr.meer.care'):
 
     if (deliveryDate != null) {
-    deliveryDate.textContent = deliveryMessageFR;
+    deliveryDate.textContent = deliveryMessages.FR;
     }
-    deliveryTrashold.textContent = trasholdMessageFR;
-    deliveryTime.textContent = deliveryMessageFR;
+    deliveryThreshold.textContent = freeDeliveryMessages.FR;
+    deliveryTime.textContent = deliveryMessages.FR;
 
         // User
         userOrders.setAttribute('href', 'https://www.meer.beauty/account');
@@ -756,10 +755,10 @@ switch (href) {
     case findTermURL('pl.meer.care'):
 
     if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessagePL;
+      deliveryDate.textContent = deliveryMessages.PL;
     }
-    deliveryTrashold.textContent = trasholdMessagePL;
-    deliveryTime.textContent = deliveryMessagePL;
+    deliveryThreshold.textContent = freeDeliveryMessages.PL;
+    deliveryTime.textContent = deliveryMessages.PL;
 
         // User
         userOrders.setAttribute('href', 'https://meercare.pl/account');
@@ -965,7 +964,7 @@ switch (href) {
       deliveryDate.textContent = deliveryMessage;
     }
 
-    deliveryTrashold.textContent = deliveryMessageCZ;
+    deliveryThreshold.textContent = freeDeliveryMessages.CZ;
 
       /* Shopify Code Start */
       (function () {
