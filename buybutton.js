@@ -950,14 +950,12 @@ switch (href) {
             deliveryMessage = monday;
         } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 5) { // Friday before 19
             deliveryMessage = monday;
-        //} else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
-        //   deliveryMessage = tuesday;
         } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
             deliveryMessage = monday;
         } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
-            deliveryMessage = tuesday;
+            deliveryMessage = monday;
         } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun 
-            deliveryMessage = tuesday;
+            deliveryMessage = monday;
         }
 
         deliveryTime.textContent = deliveryMessage;
