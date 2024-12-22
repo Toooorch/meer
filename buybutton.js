@@ -927,10 +927,10 @@ switch (href) {
 
   default:
       // Czech
-        var tomorrow = "zítra u Vás (Zásilkovna)";
-        var nexttomorrow = "pozítří u Vás (Zásilkovna)";
-        var monday = "v pondělí u Vás (Zásilkovna)";
-        var tuesday = "v úterý u Vás (Zásilkovna)";
+        var tomorrow = "Pondělí 30.12. u Vás (Zásilkovna)";
+        var nexttomorrow = "Pondělí 30.12. u Vás (Zásilkovna)";
+        var monday = "Pondělí 30.12. u Vás (Zásilkovna)";
+        var tuesday = "Pondělí 30.12. u Vás (Zásilkovna)";
 
         if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
             deliveryMessage = tomorrow;
