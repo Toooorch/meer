@@ -927,10 +927,10 @@ switch (href) {
 
   default:
       // Czech
-        var tomorrow = "Pondělí 30.12. u Vás (Zásilkovna)";
-        var nexttomorrow = "Pondělí 30.12. u Vás (Zásilkovna)";
-        var monday = "Pondělí 30.12. u Vás (Zásilkovna)";
-        var tuesday = "Pondělí 30.12. u Vás (Zásilkovna)";
+      var tomorrow = "zítra u Vás (Zásilkovna)";
+      var nexttomorrow = "pozítří u Vás (Zásilkovna)";
+      var monday = "v pondělí u Vás (Zásilkovna)";
+      var tuesday = "v úterý u Vás (Zásilkovna)";
 
         if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
             deliveryMessage = tomorrow;
@@ -951,11 +951,11 @@ switch (href) {
         } else if (thehours >= 0 && thehours < 19 && dayOfWeek == 5) { // Friday before 19
             deliveryMessage = monday;
         } else if (thehours >= 19 && thehours < 24 && dayOfWeek == 5) { // Friday after 19
-            deliveryMessage = monday;
+            deliveryMessage = tuesday;
         } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 6) { // Sat
-            deliveryMessage = monday;
+            deliveryMessage = tuesday;
         } else if (thehours >= 0 && thehours < 24 && dayOfWeek == 0) { // Sun 
-            deliveryMessage = monday;
+            deliveryMessage = tuesday;
         }
 
         deliveryTime.textContent = deliveryMessage;
