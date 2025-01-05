@@ -1,5 +1,5 @@
-// Delivery Elements
-const deliveryThreshold = document.getElementById("delivery-treshold");
+// Delivery
+const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDate = document.getElementById("delivery-date");
 const userMenu = document.getElementById("user-menu");
@@ -14,34 +14,35 @@ const stepIII = document.getElementById("buy-button-step-III");
 const stepIV = document.getElementById("buy-button-step-IV");
 const giftCard = document.getElementById("buy-button-gift-card");
 
-// Cart Element
+// Cart
 const cartToggle = document.getElementById("cart-toggle");
 
-// Delivery Messages
-const deliveryMessages = {
-  EN: "Fast Delivery",
-  SK: "Doručenie za 1-3 dni",
-  DE: "Lieferung in 2-3 Tagen",
-  PL: "Dostawa 1-3 dni",
-  FR: "Livraison en 2-5 jours"
-};
+// Delivery Time
+const deliveryMessageEN = "Fast Delivery";
+const deliveryMessageSK = "Doručenie za 1-3 dni";
+const deliveryMessageDE = "Lieferung in 2-3 Tagen";
+const deliveryMessagePL = "Dostawa 1-3 dni";
+const deliveryMessageFR = "Livraison en 2-5 jours";
 
-// Free Delivery Messages
-const freeDeliveryMessages = {
-  CZ: "Doprava zdarma od 1500Kč",
-  PL: "Teraz z DARMOWĄ WYSYŁKĄ",
-  EN: "Free Delivery from $50",
-  SK: "Doprava zadarmo od €30",
-  FR: "Frais de port offerts à partir de €60",
-  DE: "Kostenloser Versand ab €60"
-};
+// Free Delivery
+//const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
+const deliveryMessageCZ = "Doprava nyní ZDARMA";
+//const deliveryMessageCZ = "Doprava DNES ZDARMA";
+//const trasholdMessagePL = "Darmowa wysyłka od 200zł";
+const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
+//const trasholdMessageEN = "Free Delivery from $50";
+const trasholdMessageSK = "Doprava teraz ZADARMO";
+//const trasholdMessageSK = "Doprava dnes ZADARMO";
+//const trasholdMessageSK = "Doprava zadarmo od €30";
+const trasholdMessageFR = "Frais de port offerts à partir de €60";
+const trasholdMessageDE = "Kostenloser Versand ab €60";
 
-// User Section Elements
+// User Section
 const userOrders = document.getElementById('user-orders');
 const userLogin = document.getElementById('user-login');
 const userCreateAccount = document.getElementById('user-create-account');
 const userForgotPassword = document.getElementById('user-forgot-password');
-const userAddresses = document.getElementById('user-addresses');
+const userAddresses = document.getElementById('user-adresses');
 
 let deliveryMessage;
 
@@ -60,10 +61,10 @@ switch (href) {
   case findTermURL('en.meer.care'):
 
   if (deliveryDate != null) {
-    deliveryDate.textContent = deliveryMessages.EN;
+    deliveryDate.textContent = deliveryMessageEN;
   }
-    deliveryThreshold.textContent = freeDeliveryMessages.EN;
-    deliveryTime.textContent = deliveryMessages.EN;
+    deliveryTrashold.textContent = trasholdMessageEN;
+    deliveryTime.textContent = deliveryMessageEN;
 
     // User
     userMenu.style.display = 'none';
@@ -231,10 +232,10 @@ switch (href) {
   case findTermURL('sk.meer.care'):
 
   if (deliveryDate != null) {
-    deliveryDate.textContent = deliveryMessages.SK;
+    deliveryDate.textContent = deliveryMessageSK;
   }
-  deliveryThreshold.textContent = freeDeliveryMessages.SK;
-  deliveryTime.textContent = deliveryMessages.SK;
+  deliveryTrashold.textContent = trasholdMessageSK;
+  deliveryTime.textContent = deliveryMessageSK;
 
     // User
     userOrders.setAttribute('href', 'https://www.meer.beauty/account');
@@ -406,10 +407,10 @@ switch (href) {
     case findTermURL('de.meer.care'):
 
     if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessages.DE;
+      deliveryDate.textContent = deliveryMessageDE;
     }
-    deliveryThreshold.textContent = freeDeliveryMessages.DE;
-    deliveryTime.textContent = deliveryMessages.DE;
+    deliveryTrashold.textContent = trasholdMessageDE;
+    deliveryTime.textContent = deliveryMessageDE;
 
         // User
         userOrders.setAttribute('href', 'https://www.meer.beauty/account');
@@ -581,10 +582,10 @@ switch (href) {
     case findTermURL('fr.meer.care'):
 
     if (deliveryDate != null) {
-    deliveryDate.textContent = deliveryMessages.FR;
+    deliveryDate.textContent = deliveryMessageFR;
     }
-    deliveryThreshold.textContent = freeDeliveryMessages.FR;
-    deliveryTime.textContent = deliveryMessages.FR;
+    deliveryTrashold.textContent = trasholdMessageFR;
+    deliveryTime.textContent = deliveryMessageFR;
 
         // User
         userOrders.setAttribute('href', 'https://www.meer.beauty/account');
@@ -755,10 +756,10 @@ switch (href) {
     case findTermURL('pl.meer.care'):
 
     if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessages.PL;
+      deliveryDate.textContent = deliveryMessagePL;
     }
-    deliveryThreshold.textContent = freeDeliveryMessages.PL;
-    deliveryTime.textContent = deliveryMessages.PL;
+    deliveryTrashold.textContent = trasholdMessagePL;
+    deliveryTime.textContent = deliveryMessagePL;
 
         // User
         userOrders.setAttribute('href', 'https://meercare.pl/account');
@@ -927,10 +928,10 @@ switch (href) {
 
   default:
       // Czech
-      var tomorrow = "zítra u Vás (Zásilkovna)";
-      var nexttomorrow = "pozítří u Vás (Zásilkovna)";
-      var monday = "v pondělí u Vás (Zásilkovna)";
-      var tuesday = "v úterý u Vás (Zásilkovna)";
+        var tomorrow = "zítra u Vás (Zásilkovna)";
+        var nexttomorrow = "pozítří u Vás (Zásilkovna)";
+        var monday = "v pondělí u Vás (Zásilkovna)";
+        var tuesday = "v úterý u Vás (Zásilkovna)";
 
         if (thehours >= 0 && thehours < 19 && dayOfWeek == 1) {
             deliveryMessage = tomorrow;
@@ -964,7 +965,7 @@ switch (href) {
       deliveryDate.textContent = deliveryMessage;
     }
 
-    deliveryThreshold.textContent = freeDeliveryMessages.CZ;
+    deliveryTrashold.textContent = deliveryMessageCZ;
 
       /* Shopify Code Start */
       (function () {
