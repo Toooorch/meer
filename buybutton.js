@@ -920,11 +920,13 @@ switch (href) {
     }
 
       
-      });
-    })
-    }
-    })();
-    break;
+              
+  });
+})
+}
+})();
+
+break;
 
   default:
       // Czech
