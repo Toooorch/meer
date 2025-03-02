@@ -35,7 +35,8 @@ const trasholdMessageSK = "Doprava teraz ZADARMO";
 //const trasholdMessageSK = "Doprava dnes ZADARMO";
 //const trasholdMessageSK = "Doprava zadarmo od €30";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
-const trasholdMessageDE = "Kostenloser Versand ab €60";
+//const trasholdMessageDE = "Kostenloser Versand ab €60";
+const trasholdMessageDE = "Jetzt kostenloser Versand";
 
 // User Section
 const userOrders = document.getElementById('user-orders');
@@ -43,6 +44,9 @@ const userLogin = document.getElementById('user-login');
 const userCreateAccount = document.getElementById('user-create-account');
 const userForgotPassword = document.getElementById('user-forgot-password');
 const userAddresses = document.getElementById('user-adresses');
+
+// Random elements
+const alzaButton = document.getElementById('alza-button');
 
 let deliveryMessage;
 
@@ -411,6 +415,11 @@ switch (href) {
     }
     deliveryTrashold.textContent = trasholdMessageDE;
     deliveryTime.textContent = deliveryMessageDE;
+
+    // Hide alza-button if it exists
+    if (alzaButton) {
+      alzaButton.style.display = 'none';
+    }
 
         // User
         userOrders.setAttribute('href', 'https://www.meer.beauty/account');
