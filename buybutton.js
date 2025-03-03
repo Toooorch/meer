@@ -508,7 +508,7 @@ switch (href) {
 
         if(document.getElementById('buy-button-set-complete')){
           ui.createComponent('product', {
-          id: [8592696639827],
+          id: [9792222462291],
           node: setComplete,
           toggles: [{node: cartToggle}],
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -517,7 +517,7 @@ switch (href) {
       }
         if(document.getElementById('buy-button-set-I')){
             ui.createComponent('product', {
-            id: [8592695624019],
+            id: [9792209256787],
             node: setI,
             toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -526,7 +526,7 @@ switch (href) {
         }
         if(document.getElementById('buy-button-set-II')){
             ui.createComponent('product', {
-            id: [8592696541523],
+            id: [9792221315411],
             node: setII,
             toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -535,7 +535,7 @@ switch (href) {
         }
         if(document.getElementById('buy-button-step-I')){
             ui.createComponent('product', {
-            id: [8592695886163],
+            id: [9792209650003],
             node: stepI,
             toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -544,7 +544,7 @@ switch (href) {
         }
         if(document.getElementById('buy-button-step-II')){
             ui.createComponent('product', {
-            id: [8592696115539],
+            id: [9792209977683],
             node: stepII,
             toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -553,7 +553,7 @@ switch (href) {
         }
         if(document.getElementById('buy-button-step-III')){
             ui.createComponent('product', {
-            id: [8592696279379],
+            id: [9792218235219],
             node: stepIII,
             toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -562,7 +562,7 @@ switch (href) {
         }
         if(document.getElementById('buy-button-step-IV')){
             ui.createComponent('product', {
-            id: [8592696475987],
+            id: [9792220135763],
             node: stepIV,
             toggles: [{node: cartToggle}],
             moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
