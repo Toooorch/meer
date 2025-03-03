@@ -474,22 +474,22 @@ switch (href) {
               },
               "text": {
                 "button": "In den Einkaufswagen",
-                "outOfStock": "Verkauft",
-                "unavailable": "Verkauft"
+                "outOfStock": "Ausverkauft",
+                "unavailable": "Ausverkauft"
               }
             },
             "productSet": {},
             "cart": {
                 "iframe": false,
                 "text": {
-                  "title": "Einkaufswagen",
-                    "total": "Summe",
-                    "empty": "Ihr Einkaufswagen ist leer",
+                  "title": "Warenkorb",
+                    "total": "Zwischensumme",
+                    "empty": "Ihr Warenkorb ist leer",
                     "notice": "",
                     "button": "Zur Kasse gehen",
                     "noteDescription": "Bestellhinweis",
-                    "outOfStock": "Verkauft",
-                    "unavailable": "Verkauft",
+                    "outOfStock": "Ausverkauft",
+                    "unavailable": "Ausverkauft",
                 },
                 "contents": {
                   "note": true
