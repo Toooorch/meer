@@ -970,7 +970,7 @@ break;
         }
 
       // Change text in 'complete-save-tag-text' div if it exists
-      const completeSaveTagText = document.getElementById('com100K   plete-save-tag-text');
+      const completeSaveTagText = document.getElementById('complete-save-tag-text');
       if (completeSaveTagText) {
           completeSaveTagText.textContent = "Sada - ušetříte 100Kč";
       }
