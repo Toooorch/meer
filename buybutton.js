@@ -49,6 +49,9 @@ const userAddresses = document.getElementById('user-adresses');
 // Random elements
 const alzaButton = document.getElementById('alza-button');
 
+const completeSaveTagText = document.getElementById('complete-save-tag-text');
+const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
+
 let deliveryMessage;
 
 const thehours = new Date().getHours();
@@ -970,13 +973,11 @@ break;
         }
 
       // Change text in 'complete-save-tag-text' div if it exists
-      const completeSaveTagText = document.getElementById('complete-save-tag-text');
       if (completeSaveTagText) {
           completeSaveTagText.textContent = "Sada - ušetříte 100Kč";
       }
 
       // Hide all divs with the class 'free-shipping-tag'
-      const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
       freeShippingTags.forEach(tag => {
           tag.style.display = 'none';
       });
