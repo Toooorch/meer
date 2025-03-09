@@ -21,11 +21,10 @@ jobs:
           R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
           R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
           BUCKET_NAME: "meer"
-          REGION: "auto"  # R2 uses "auto" as the default region
+          REGION: "eeur"  # Ensure the region is correctly set
         run: |
           sudo apt-get install -y openssl jq
 
-          # SigV4 Signing Function
           sign_request() {
             local method=$1
             local url_path=$2
@@ -35,10 +34,10 @@ jobs:
             local date=$(date -u "+%Y%m%dT%H%M%SZ")
             local short_date=$(date -u "+%Y%m%d")
             local service="s3"
-            local region="auto"
-            local host="${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${BUCKET_NAME}"
+            local region="eeur"  # Ensure the region is correctly set
+            local host="${BUCKET_NAME}.${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
 
-            local canonical_uri="/${BUCKET_NAME}/${url_path}"
+            local canonical_uri="/${url_path}"
             local canonical_querystring=""
             local canonical_headers="host:${host}\nx-amz-content-sha256:UNSIGNED-PAYLOAD\nx-amz-date:${date}\n"
             local signed_headers="host;x-amz-content-sha256;x-amz-date"
@@ -61,10 +60,9 @@ jobs:
               -H "x-amz-content-sha256: UNSIGNED-PAYLOAD" \
               -H "x-amz-date: ${date}" \
               -H "Content-Type: ${content_type}" \
-              --data-binary "@${file_path}"
+              --data-binary "@${file_path}" || { echo "Upload failed for ${file_path}"; exit 1; }
           }
 
-          # Upload all files in the repository
           for file in $(find . -type f ! -path "./.git/*"); do
             file_relative_path=$(echo $file | sed 's|^\./||')  # Remove ./ from the path
             echo "Uploading $file_relative_path to R2..."
