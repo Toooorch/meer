@@ -10,20 +10,63 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🚀 Checkout Repository (with Auth)
+      - name: 🚀 Checkout Repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
 
-      - name: 📤 Upload Files to Cloudflare R2
+      - name: 📤 Upload Files to Cloudflare R2 (Using SigV4)
         env:
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
           R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
           BUCKET_NAME: "meer"
+          REGION: "auto"  # R2 uses "auto" as the default region
         run: |
-          for file in $(find . -type f); do
-            curl -X PUT "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${BUCKET_NAME}/${file}" \
-              -H "Authorization: AWS ${R2_ACCESS_KEY}:${R2_SECRET_KEY}" \
-              --data-binary "@${file}"
+          sudo apt-get install -y openssl jq
+
+          # SigV4 Signing Function
+          sign_request() {
+            local method=$1
+            local url_path=$2
+            local file_path=$3
+            local content_type="application/octet-stream"
+
+            local date=$(date -u "+%Y%m%dT%H%M%SZ")
+            local short_date=$(date -u "+%Y%m%d")
+            local service="s3"
+            local region="auto"
+            local host="${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+
+            local canonical_uri="/${BUCKET_NAME}/${url_path}"
+            local canonical_querystring=""
+            local canonical_headers="host:${host}\nx-amz-content-sha256:UNSIGNED-PAYLOAD\nx-amz-date:${date}\n"
+            local signed_headers="host;x-amz-content-sha256;x-amz-date"
+            local payload_hash="UNSIGNED-PAYLOAD"
+
+            local canonical_request="${method}\n${canonical_uri}\n${canonical_querystring}\n${canonical_headers}\n${signed_headers}\n${payload_hash}"
+            local algorithm="AWS4-HMAC-SHA256"
+            local string_to_sign="${algorithm}\n${date}\n${short_date}/${region}/${service}/aws4_request\n$(echo -n "${canonical_request}" | openssl dgst -sha256 -hex | awk '{print $2}')"
+
+            local k_date=$(echo -n "${short_date}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:$(echo -n "AWS4${R2_SECRET_KEY}" | xxd -p -c 256) | awk '{print $2}')
+            local k_region=$(echo -n "${region}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_date} | awk '{print $2}')
+            local k_service=$(echo -n "${service}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_region} | awk '{print $2}')
+            local k_signing=$(echo -n "aws4_request" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_service} | awk '{print $2}')
+            local signature=$(echo -n "${string_to_sign}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_signing} | awk '{print $2}')
+
+            local authorization_header="${algorithm} Credential=${R2_ACCESS_KEY}/${short_date}/${region}/${service}/aws4_request, SignedHeaders=${signed_headers}, Signature=${signature}"
+
+            curl -X ${method} "https://${host}${canonical_uri}" \
+              -H "Authorization: ${authorization_header}" \
+              -H "x-amz-content-sha256: UNSIGNED-PAYLOAD" \
+              -H "x-amz-date: ${date}" \
+              -H "Content-Type: ${content_type}" \
+              --data-binary "@${file_path}"
+          }
+
+          # Upload all files in the repository
+          for file in $(find . -type f ! -path "./.git/*"); do
+            file_relative_path=$(echo $file | sed 's|^\./||')  # Remove ./ from the path
+            echo "Uploading $file_relative_path to R2..."
+            sign_request "PUT" "$file_relative_path" "$file"
           done
