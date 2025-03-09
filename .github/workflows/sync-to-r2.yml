@@ -13,15 +13,17 @@ jobs:
       - name: 🚀 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 📤 Upload Files to R2 using API
+      - name: 📤 Upload Files to Cloudflare R2
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           BUCKET_NAME: "meer"
         run: |
           for file in $(find . -type f ! -path "./.git/*"); do
-            echo "Uploading $file to R2..."
-            curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$R2_ACCOUNT_ID/r2/buckets/$BUCKET_NAME/objects/$file" \
+            file_path=$(echo $file | sed 's|^\./||')  # Remove ./ from path
+            echo "Uploading $file_path to R2..."
+
+            curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$R2_ACCOUNT_ID/r2/buckets/$BUCKET_NAME/objects/$file_path" \
               -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
               -H "Content-Type: application/octet-stream" \
               --data-binary "@$file"
