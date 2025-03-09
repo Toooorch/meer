@@ -21,7 +21,7 @@ jobs:
           R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
           R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
           BUCKET_NAME: "meer"
-          REGION: "auto"  # Cloudflare R2 uses "auto" for region
+          REGION: "auto"
         run: |
           sudo apt-get install -y openssl jq
 
@@ -34,7 +34,7 @@ jobs:
             local date=$(date -u "+%Y%m%dT%H%M%SZ")
             local short_date=$(date -u "+%Y%m%d")
             local service="s3"
-            local region="auto"
+            local region="us-east-1"  # ✅ Use "us-east-1" for key derivation
             local host="${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
 
             local canonical_uri="/${BUCKET_NAME}/${url_path}"
@@ -46,12 +46,12 @@ jobs:
             # ✅ Fix: Correct AWS SigV4 String-to-Sign Computation
             local canonical_request="${method}\n${canonical_uri}\n${canonical_querystring}\n${canonical_headers}\n${signed_headers}\n${payload_hash}"
             local algorithm="AWS4-HMAC-SHA256"
-            local string_to_sign="${algorithm}\n${date}\n${short_date}/auto/${service}/aws4_request\n$(echo -n "${canonical_request}" | openssl dgst -sha256 -hex | awk '{print $2}')"
+            local string_to_sign="${algorithm}\n${date}\n${short_date}/${region}/${service}/aws4_request\n$(echo -n "${canonical_request}" | openssl dgst -sha256 -hex | awk '{print $2}')"
 
-            # ✅ Fix: Correct HMAC Key Derivation
+            # ✅ Fix: Correct HMAC Key Derivation for Cloudflare R2
             local k_secret="AWS4${R2_SECRET_KEY}"
             local k_date=$(echo -n "${short_date}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:$(echo -n "${k_secret}" | xxd -p -c 256) | awk '{print $2}')
-            local k_region=$(echo -n "auto" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_date} | awk '{print $2}')
+            local k_region=$(echo -n "${region}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_date} | awk '{print $2}')
             local k_service=$(echo -n "${service}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_region} | awk '{print $2}')
             local k_signing=$(echo -n "aws4_request" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_service} | awk '{print $2}')
             local signature=$(echo -n "${string_to_sign}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_signing} | awk '{print $2}')
