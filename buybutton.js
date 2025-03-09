@@ -973,14 +973,14 @@ break;
         }
 
       // Change text in 'complete-save-tag-text' div if it exists
-      if (completeSaveTagText) {
-          completeSaveTagText.textContent = "Sada - ušetříte 100Kč";
-      }
+      //if (completeSaveTagText) {
+          //completeSaveTagText.textContent = "Sada - ušetříte 100Kč";
+      //}
 
       // Hide all divs with the class 'free-shipping-tag'
-      freeShippingTags.forEach(tag => {
-          tag.style.display = 'none';
-      });
+      //freeShippingTags.forEach(tag => {
+          //tag.style.display = 'none';
+      //});
 
       deliveryTime.textContent = deliveryMessage;
 
