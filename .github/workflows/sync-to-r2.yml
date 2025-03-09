@@ -15,13 +15,13 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
 
-      - name: 📤 Upload Files to Cloudflare R2 (Using SigV4)
+      - name: 📤 Upload Files to Cloudflare R2 (Using Correct SigV4)
         env:
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
           R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
           BUCKET_NAME: "meer"
-          REGION: "auto"
+          REGION: "us-east-1"  # ✅ Use "us-east-1" for signing
         run: |
           sudo apt-get install -y openssl jq
 
@@ -34,8 +34,9 @@ jobs:
             local date=$(date -u "+%Y%m%dT%H%M%SZ")
             local short_date=$(date -u "+%Y%m%d")
             local service="s3"
-            local region="us-east-1"  # ✅ Use "us-east-1" for key derivation
+            local region="us-east-1"  # ✅ Use for key derivation
             local host="${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+            local endpoint="https://${host}/${BUCKET_NAME}/${url_path}"
 
             local canonical_uri="/${BUCKET_NAME}/${url_path}"
             local canonical_querystring=""
@@ -43,12 +44,11 @@ jobs:
             local signed_headers="host;x-amz-content-sha256;x-amz-date"
             local payload_hash="UNSIGNED-PAYLOAD"
 
-            # ✅ Fix: Correct AWS SigV4 String-to-Sign Computation
             local canonical_request="${method}\n${canonical_uri}\n${canonical_querystring}\n${canonical_headers}\n${signed_headers}\n${payload_hash}"
             local algorithm="AWS4-HMAC-SHA256"
             local string_to_sign="${algorithm}\n${date}\n${short_date}/${region}/${service}/aws4_request\n$(echo -n "${canonical_request}" | openssl dgst -sha256 -hex | awk '{print $2}')"
 
-            # ✅ Fix: Correct HMAC Key Derivation for Cloudflare R2
+            # ✅ Correct HMAC Key Derivation for Cloudflare R2
             local k_secret="AWS4${R2_SECRET_KEY}"
             local k_date=$(echo -n "${short_date}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:$(echo -n "${k_secret}" | xxd -p -c 256) | awk '{print $2}')
             local k_region=$(echo -n "${region}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_date} | awk '{print $2}')
@@ -56,11 +56,11 @@ jobs:
             local k_signing=$(echo -n "aws4_request" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_service} | awk '{print $2}')
             local signature=$(echo -n "${string_to_sign}" | openssl dgst -sha256 -mac HMAC -macopt hexkey:${k_signing} | awk '{print $2}')
 
-            # ✅ Fix: Correct Authorization Header Formatting
+            # ✅ Correct Authorization Header
             local authorization_header="${algorithm} Credential=${R2_ACCESS_KEY}/${short_date}/auto/${service}/aws4_request, SignedHeaders=${signed_headers}, Signature=${signature}"
 
-            # ✅ Fix: Ensure curl properly sends the request
-            curl -X ${method} "https://${host}${canonical_uri}" \
+            # ✅ Correct curl command
+            curl -X ${method} "${endpoint}" \
               -H "Authorization: ${authorization_header}" \
               -H "x-amz-content-sha256: UNSIGNED-PAYLOAD" \
               -H "x-amz-date: ${date}" \
@@ -68,7 +68,7 @@ jobs:
               --data-binary "@${file_path}" || { echo "Upload failed for ${file_path}"; exit 1; }
           }
 
-          # ✅ Fix: Ensure correct file paths are used in uploads
+          # ✅ Upload files correctly
           for file in $(find . -type f ! -path "./.git/*"); do
             file_relative_path=$(echo $file | sed 's|^\./||')  # Remove ./ from the path
             echo "Uploading $file_relative_path to R2..."
