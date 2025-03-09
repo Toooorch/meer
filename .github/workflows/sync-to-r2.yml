@@ -1,4 +1,4 @@
-name: Sync to Cloudflare R2
+name: Sync to Cloudflare R2 (API)
 
 on:
   push:
@@ -13,18 +13,16 @@ jobs:
       - name: 🚀 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 📥 Install rclone
-        run: curl https://rclone.org/install.sh | sudo bash
-
-      - name: 📂 Configure rclone
+      - name: 📤 Upload Files to R2 using API
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          BUCKET_NAME: "meer"
         run: |
-          echo "[r2]
-          type = s3
-          provider = Cloudflare
-          access_key_id = ${{ secrets.R2_ACCESS_KEY }}
-          secret_access_key = ${{ secrets.R2_SECRET_KEY }}
-          endpoint = https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
-          region = auto" > ~/.config/rclone/rclone.conf
-
-      - name: 📤 Upload Files to R2
-        run: rclone sync . r2:meer/ --progress --exclude ".git/**"
+          for file in $(find . -type f ! -path "./.git/*"); do
+            echo "Uploading $file to R2..."
+            curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$R2_ACCOUNT_ID/r2/buckets/$BUCKET_NAME/objects/$file" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/octet-stream" \
+              --data-binary "@$file"
+          done
