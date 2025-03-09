@@ -36,7 +36,7 @@ jobs:
             local short_date=$(date -u "+%Y%m%d")
             local service="s3"
             local region="auto"
-            local host="${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+            local host="${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${BUCKET_NAME}"
 
             local canonical_uri="/${BUCKET_NAME}/${url_path}"
             local canonical_querystring=""
