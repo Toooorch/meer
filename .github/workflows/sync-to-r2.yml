@@ -54,4 +54,17 @@ jobs:
 
             local authorization_header="${algorithm} Credential=${R2_ACCESS_KEY}/${short_date}/${region}/${service}/aws4_request, SignedHeaders=${signed_headers}, Signature=${signature}"
 
-            curl -X ${method} "https://${host}${
+            # ✅ Corrected `curl` command
+            curl -X ${method} "https://${host}${canonical_uri}" \
+              -H "Authorization: ${authorization_header}" \
+              -H "x-amz-content-sha256: UNSIGNED-PAYLOAD" \
+              -H "x-amz-date: ${date}" \
+              -H "Content-Type: ${content_type}" \
+              --data-binary "@${file_path}" || { echo "Upload failed for ${file_path}"; exit 1; }
+          }
+
+          for file in $(find . -type f ! -path "./.git/*"); do
+            file_relative_path=$(echo $file | sed 's|^\./||')  # Remove ./ from the path
+            echo "Uploading $file_relative_path to R2..."
+            sign_request "PUT" "$file_relative_path" "$file"
+          done
