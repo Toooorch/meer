@@ -962,6 +962,22 @@ break;
             deliveryMessage = tuesday;
         }
 
+
+      // Přidání widgetu heureka
+      (function() {
+        var ho = document.createElement('script');
+        ho.type = 'text/javascript';
+        ho.async = true;
+        ho.src = 'https://cz.im9.cz/direct/i/gjs.php?n=wdgt&sak=DE44F0D5D122B2322E7114114A9957A9';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ho, s);
+        window._hwq = window._hwq || [];
+        _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
+        _hwq.push(['setTopPos', '152']);
+        _hwq.push(['showWidget', '21']);
+      })();
+
+
       // Change text in 'complete-save-tag-text' div if it exists
       //if (completeSaveTagText) {
           //completeSaveTagText.textContent = "Sada - ušetříte 100Kč";
