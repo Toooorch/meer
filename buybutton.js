@@ -1163,7 +1163,10 @@ break;
 
     setTimeout(() => {
         document.querySelectorAll('.shopify-buy__btn').forEach(button => {
-            if (button.textContent.includes('Přidat do košíku')) {
+            if (button.textContent.includes('Přidat do košíku') && !button.hasAttribute('data-zaraz-tracked')) {
+                // Označíme tlačítko jako už trackované
+                button.setAttribute('data-zaraz-tracked', 'true');
+                
                 button.addEventListener('click', function() {
                     const shopifyWrapper = this.closest('.shopify-button');
                     
