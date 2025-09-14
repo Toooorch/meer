@@ -1161,6 +1161,27 @@ break;
       });
     }
 
+    setTimeout(() => {
+        document.querySelectorAll('.shopify-buy__btn').forEach(button => {
+            if (button.textContent.includes('Přidat do košíku')) {
+                button.addEventListener('click', function() {
+                    const shopifyWrapper = this.closest('.shopify-button');
+                    
+                    if (shopifyWrapper) {
+                        const eventData = {
+                            product_id: shopifyWrapper.getAttribute('data-product-id'),
+                            product_name: shopifyWrapper.getAttribute('data-product-name'),
+                            price: parseFloat(shopifyWrapper.getAttribute('data-price')),
+                            quantity: 1
+                        };
+                        
+                        zaraz.track("add_to_cart", eventData);
+                    }
+                });
+            }
+        });
+    }, 1000);
+
       });
     })
     }
