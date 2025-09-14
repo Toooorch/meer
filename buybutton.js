@@ -228,6 +228,29 @@ switch (href) {
         });
       }
 
+      setTimeout(() => {
+          document.querySelectorAll('.shopify-buy__btn').forEach(button => {
+              if (button.textContent.includes('Add to Basket') && !button.hasAttribute('data-zaraz-tracked')) {
+                  button.setAttribute('data-zaraz-tracked', 'true');
+                  
+                  button.addEventListener('click', function() {
+                      const shopifyWrapper = this.closest('.shopify-button');
+                      
+                      if (shopifyWrapper) {
+                          const eventData = {
+                              product_id: shopifyWrapper.getAttribute('data-product-id'),
+                              product_name: shopifyWrapper.getAttribute('data-product-name'),
+                              price: parseFloat(shopifyWrapper.getAttribute('data-price')),
+                              quantity: 1
+                          };
+                          
+                          zaraz.track("add_to_cart", eventData);
+                      }
+                  });
+              }
+          });
+      }, 1000);
+
       
         });
       })
@@ -417,6 +440,28 @@ switch (href) {
     });
   }
 
+  setTimeout(() => {
+      document.querySelectorAll('.shopify-buy__btn').forEach(button => {
+          if (button.textContent.includes('Pridať do košíka') && !button.hasAttribute('data-zaraz-tracked')) {
+              button.setAttribute('data-zaraz-tracked', 'true');
+              
+              button.addEventListener('click', function() {
+                  const shopifyWrapper = this.closest('.shopify-button');
+                  
+                  if (shopifyWrapper) {
+                      const eventData = {
+                          product_id: shopifyWrapper.getAttribute('data-product-id'),
+                          product_name: shopifyWrapper.getAttribute('data-product-name'),
+                          price: parseFloat(shopifyWrapper.getAttribute('data-price')),
+                          quantity: 1
+                      };
+                      
+                      zaraz.track("add_to_cart", eventData);
+                  }
+              });
+          }
+      });
+  }, 1000);
   
     });
   })
@@ -596,6 +641,29 @@ switch (href) {
           options: options
           });
         }
+
+        setTimeout(() => {
+            document.querySelectorAll('.shopify-buy__btn').forEach(button => {
+                if (button.textContent.includes('In den Einkaufswagen') && !button.hasAttribute('data-zaraz-tracked')) {
+                    button.setAttribute('data-zaraz-tracked', 'true');
+                    
+                    button.addEventListener('click', function() {
+                        const shopifyWrapper = this.closest('.shopify-button');
+                        
+                        if (shopifyWrapper) {
+                            const eventData = {
+                                product_id: shopifyWrapper.getAttribute('data-product-id'),
+                                product_name: shopifyWrapper.getAttribute('data-product-name'),
+                                price: parseFloat(shopifyWrapper.getAttribute('data-price')),
+                                quantity: 1
+                            };
+                            
+                            zaraz.track("add_to_cart", eventData);
+                        }
+                    });
+                }
+            });
+        }, 1000);
         
         
           });
@@ -771,6 +839,29 @@ switch (href) {
           options: options
           });
         }
+
+        setTimeout(() => {
+            document.querySelectorAll('.shopify-buy__btn').forEach(button => {
+                if (button.textContent.includes('Ajouter au panier') && !button.hasAttribute('data-zaraz-tracked')) {
+                    button.setAttribute('data-zaraz-tracked', 'true');
+                    
+                    button.addEventListener('click', function() {
+                        const shopifyWrapper = this.closest('.shopify-button');
+                        
+                        if (shopifyWrapper) {
+                            const eventData = {
+                                product_id: shopifyWrapper.getAttribute('data-product-id'),
+                                product_name: shopifyWrapper.getAttribute('data-product-name'),
+                                price: parseFloat(shopifyWrapper.getAttribute('data-price')),
+                                quantity: 1
+                            };
+                            
+                            zaraz.track("add_to_cart", eventData);
+                        }
+                    });
+                }
+            });
+        }, 1000);
               
           });
         })
@@ -945,6 +1036,29 @@ switch (href) {
       options: options
       });
     }
+
+    setTimeout(() => {
+        document.querySelectorAll('.shopify-buy__btn').forEach(button => {
+            if (button.textContent.includes('Włożyć do koszyka') && !button.hasAttribute('data-zaraz-tracked')) {
+                button.setAttribute('data-zaraz-tracked', 'true');
+                
+                button.addEventListener('click', function() {
+                    const shopifyWrapper = this.closest('.shopify-button');
+                    
+                    if (shopifyWrapper) {
+                        const eventData = {
+                            product_id: shopifyWrapper.getAttribute('data-product-id'),
+                            product_name: shopifyWrapper.getAttribute('data-product-name'),
+                            price: parseFloat(shopifyWrapper.getAttribute('data-price')),
+                            quantity: 1
+                        };
+                        
+                        zaraz.track("add_to_cart", eventData);
+                    }
+                });
+            }
+        });
+    }, 1000);
               
   });
 })
@@ -1164,7 +1278,7 @@ break;
     setTimeout(() => {
         document.querySelectorAll('.shopify-buy__btn').forEach(button => {
             if (button.textContent.includes('Přidat do košíku') && !button.hasAttribute('data-zaraz-tracked')) {
-                // Označíme tlačítko jako už trackované
+
                 button.setAttribute('data-zaraz-tracked', 'true');
                 
                 button.addEventListener('click', function() {
