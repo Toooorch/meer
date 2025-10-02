@@ -234,6 +234,63 @@ const localeConfigs = {
 };
 
 // 6. POTOM - Utility functions
+const getLanguage = () => {
+  const config = localeConfigs[locale];
+  return config ? config.language : 'cs';
+};
+
+const getCountry = () => {
+  const config = localeConfigs[locale];
+  return config ? config.countryCode : 'CZ';
+};
+
+const getDomain = () => {
+  const config = localeConfigs[locale];
+  return config ? config.domain : 'meer-care.myshopify.com';
+};
+
+const getAccessToken = () => {
+  const config = localeConfigs[locale];
+  return config ? config.accessToken : 'd0790ee9d09c16714d92224efa9f5882';
+};
+
+const getButtonText = () => {
+  const config = localeConfigs[locale];
+  return config ? config.buttonText : 'Přidat do košíku';
+};
+
+const getCart = () => {
+  const config = localeConfigs[locale];
+  return config ? config.cart : {
+    title: "Košík",
+    total: "Mezisoučet",
+    empty: "Váš košík je prázdný.",
+    button: "Pokračovat k pokladně",
+    noteDescription: "Poznámka k objednávce",
+    outOfStock: "Vyprodáno",
+    unavailable: "Vyprodáno"
+  };
+};
+
+const getMoneyFormat = () => {
+  const config = localeConfigs[locale];
+  return config ? config.moneyFormat : '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D';
+};
+
+const getProductIds = () => {
+  const config = localeConfigs[locale];
+  return config ? config.productIds : {
+    setComplete: 8623720366405,
+    setI: 7542825058534,
+    setII: 8021842854118,
+    stepI: 7601486758118,
+    stepII: 7609802686694,
+    stepIII: 7931357692134,
+    stepIV: 7931360051430,
+    giftCard: 8578704736581
+  };
+};
+
 const loadHeurekaWidget = () => {
   if (!document.querySelector('script[src*="heureka"]')) {
     const script = document.createElement('script');
@@ -293,8 +350,9 @@ const setupTracking = (buttonText) => {
   setTimeout(() => observer.disconnect(), 30000);
 };
 
-const initializeShopify = (config) => {
-  if (!config) {
+const initializeShopify = () => {
+  const currentConfig = localeConfigs[locale];
+  if (!currentConfig) {
     console.error('Shopify config is missing for locale:', locale);
     return;
   }
@@ -318,18 +376,24 @@ const initializeShopify = (config) => {
   function ShopifyBuyInit() {
     try {
       const client = ShopifyBuy.buildClient({
-        domain: config.domain,
-        storefrontAccessToken: config.accessToken,
-        language: config.language,
+        domain: getDomain(),
+        storefrontAccessToken: getAccessToken(),
+        language: getLanguage(),
       });
 
       const input = {
         buyerIdentity: {
-          countryCode: config.countryCode,
+          countryCode: getCountry(),
         },
       };
 
+      // Klíč pro localStorage
+      const localStorageCheckoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
+
       client.checkout.create(input).then((checkout) => {
+        // Uložení checkout ID do localStorage
+        localStorage.setItem(localStorageCheckoutKey, checkout.id);
+        
         ShopifyBuy.UI.onReady(client).then(function (ui) {
           const options = {
             product: {
@@ -342,14 +406,14 @@ const initializeShopify = (config) => {
                 price: false
               },
               text: {
-                button: config.buttonText,
-                outOfStock: config.cart.outOfStock,
-                unavailable: config.cart.unavailable
+                button: getButtonText(),
+                outOfStock: getCart().outOfStock,
+                unavailable: getCart().unavailable
               }
             },
             cart: {
               iframe: false,
-              text: config.cart,
+              text: getCart(),
               contents: { note: true },
               popup: false
             },
@@ -361,7 +425,7 @@ const initializeShopify = (config) => {
           };
 
           // Vytvoření komponent s error handling
-          Object.entries(config.productIds).forEach(([key, productId]) => {
+          Object.entries(getProductIds()).forEach(([key, productId]) => {
             const element = productElements[key];
             if (element && cartToggle) {
               try {
@@ -369,7 +433,7 @@ const initializeShopify = (config) => {
                   id: [productId],
                   node: element,
                   toggles: [{node: cartToggle}],
-                  moneyFormat: config.moneyFormat,
+                  moneyFormat: getMoneyFormat(),
                   options: options
                 });
               } catch (error) {
@@ -379,7 +443,7 @@ const initializeShopify = (config) => {
           });
 
           // Tracking s optimalizací
-          setupTracking(config.buttonText);
+          setupTracking(getButtonText());
         }).catch(error => console.error('Shopify UI initialization failed:', error));
       }).catch(error => console.error('Shopify checkout creation failed:', error));
     } catch (error) {
@@ -404,7 +468,7 @@ switch (locale) {
     // User
     userMenu.style.display = 'none';
 
-    initializeShopify(localeConfigs.en);
+    initializeShopify();
     break;
   
   // Slovakia
@@ -425,7 +489,7 @@ switch (locale) {
     // Heureka widget
     loadHeurekaWidget();
     
-    initializeShopify(localeConfigs.sk);
+    initializeShopify();
     break;
     
   // Germany
@@ -448,7 +512,7 @@ switch (locale) {
     Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
     Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
 
-    initializeShopify(localeConfigs.de);
+    initializeShopify();
     break;
 
   // France
@@ -466,7 +530,7 @@ switch (locale) {
     Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
     Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
 
-    initializeShopify(localeConfigs.fr);
+    initializeShopify();
     break;
   // Poland
   case 'pl':
@@ -483,7 +547,7 @@ switch (locale) {
     Object.assign(userForgotPassword, {href: 'https://meercare.pl/account/login#recover'});
     Object.assign(userAddresses, {href: 'https://meercare.pl/account/addresses'});
 
-    initializeShopify(localeConfigs.pl);
+    initializeShopify();
     break;
 
   default:
@@ -507,6 +571,6 @@ switch (locale) {
     deliveryTime.textContent = deliveryMessage;
 
     loadHeurekaWidget();
-    initializeShopify(localeConfigs.cz);
+    initializeShopify();
     break;
 }
