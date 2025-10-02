@@ -291,6 +291,29 @@ const getProductIds = () => {
   };
 };
 
+// Funkce pro vyčištění starých localStorage záznamů
+const cleanupOldCheckouts = () => {
+  try {
+    // Najdi všechny klíče obsahující checkoutId
+    const keysToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.includes('checkoutId')) {
+        keysToRemove.push(key);
+      }
+    }
+    
+    // Odstraň staré klíče
+    keysToRemove.forEach(key => {
+      localStorage.removeItem(key);
+    });
+    
+    console.log('Cleaned up old checkout IDs from localStorage');
+  } catch (error) {
+    console.warn('Could not clean localStorage:', error);
+  }
+};
+
 const loadHeurekaWidget = () => {
   if (!document.querySelector('script[src*="heureka"]')) {
     const script = document.createElement('script');
@@ -357,6 +380,9 @@ const initializeShopify = () => {
     return;
   }
 
+  // Vyčištění starých localStorage záznamů
+  cleanupOldCheckouts();
+
   const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
   
   if (window.ShopifyBuy?.UI) {
@@ -389,10 +415,22 @@ const initializeShopify = () => {
 
       // Klíč pro localStorage
       const localStorageCheckoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
+      console.log('Creating checkout for:', {
+        locale,
+        domain: client.config.domain,
+        accessToken: client.config.storefrontAccessToken,
+        language: getLanguage(),
+        country: getCountry()
+      });
 
       client.checkout.create(input).then((checkout) => {
         // Uložení checkout ID do localStorage
-        localStorage.setItem(localStorageCheckoutKey, checkout.id);
+        try {
+          localStorage.setItem(localStorageCheckoutKey, checkout.id);
+          console.log('Checkout created successfully:', checkout.id);
+        } catch (error) {
+          console.warn('Could not save to localStorage:', error);
+        }
         
         ShopifyBuy.UI.onReady(client).then(function (ui) {
           const options = {
