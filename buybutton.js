@@ -162,11 +162,11 @@ const localeConfigs = {
     productIds: {
       setComplete: 10180475715923,
       setI: 10180474405203,
-      setII: 8592696541523,
-      stepI: 9792209650003,
+      setII: 10180482498899,
+      stepI: 10180486824275,
       stepII: 8592696115539,
-      stepIII: 8592696279379,
-      stepIV: 8592696475987,
+      stepIII: 10180484628819,
+      stepIV: 10180484301139,
       giftCard: 8578704736581
     },
     cart: {
