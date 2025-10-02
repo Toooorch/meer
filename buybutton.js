@@ -164,7 +164,7 @@ const localeConfigs = {
       setI: 10180474405203,
       setII: 10180482498899,
       stepI: 10180486824275,
-      stepII: 8592696115539,
+      stepII: 10180486005075,
       stepIII: 10180484628819,
       stepIV: 10180484301139,
       giftCard: 8578704736581
