@@ -380,6 +380,11 @@ const initializeShopify = () => {
     return;
   }
 
+  // Kontrola základních elementů
+  if (!cartToggle) {
+    console.warn('Cart toggle element not found - buy buttons may not work properly');
+  }
+
   // Vyčištění starých localStorage záznamů
   cleanupOldCheckouts();
 
@@ -397,6 +402,13 @@ const initializeShopify = () => {
     script.onload = ShopifyBuyInit;
     script.onerror = () => console.error('Failed to load Shopify SDK');
     document.head.appendChild(script);
+    
+    // Timeout pro loading Shopify SDK
+    setTimeout(() => {
+      if (!window.ShopifyBuy) {
+        console.error('Shopify SDK failed to load within 10 seconds timeout');
+      }
+    }, 10000);
   }
   
   function ShopifyBuyInit() {
@@ -465,18 +477,25 @@ const initializeShopify = () => {
           // Vytvoření komponent s error handling
           Object.entries(getProductIds()).forEach(([key, productId]) => {
             const element = productElements[key];
-            if (element && cartToggle) {
-              try {
-                ui.createComponent('product', {
-                  id: [productId],
-                  node: element,
-                  toggles: [{node: cartToggle}],
-                  moneyFormat: getMoneyFormat(),
-                  options: options
-                });
-              } catch (error) {
-                console.error(`Failed to create Shopify component for ${key}:`, error);
-              }
+            if (!element) {
+              console.warn(`Element for ${key} (ID: buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}) not found`);
+              return;
+            }
+            if (!cartToggle) {
+              console.warn('Cart toggle element missing - component may not work properly');
+            }
+            
+            try {
+              ui.createComponent('product', {
+                id: [productId],
+                node: element,
+                toggles: cartToggle ? [{node: cartToggle}] : [],
+                moneyFormat: getMoneyFormat(),
+                options: options
+              });
+              console.log(`Successfully created component for ${key}`);
+            } catch (error) {
+              console.error(`Failed to create Shopify component for ${key}:`, error);
             }
           });
 
@@ -579,11 +598,11 @@ switch (locale) {
     deliveryTime.textContent = deliveryMessagePL;
 
     // User links
-    Object.assign(userOrders, {href: 'https://meercare.pl/account'});
-    Object.assign(userLogin, {href: 'https://meercare.pl/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://meercare.pl/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://meercare.pl/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://meercare.pl/account/addresses'});
+    Object.assign(userOrders, {href: 'https://meercarepl.cz/account'});
+    Object.assign(userLogin, {href: 'https://meercarepl.cz/account/login'});
+    Object.assign(userCreateAccount, {href: 'https://meercarepl.cz/account/register'});
+    Object.assign(userForgotPassword, {href: 'https://meercarepl.cz/account/login#recover'});
+    Object.assign(userAddresses, {href: 'https://meercarepl.cz/account/addresses'});
 
     initializeShopify();
     break;
