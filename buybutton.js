@@ -72,6 +72,7 @@ const localeConfigs = {
   en: {
     domain: 'meer-care.myshopify.com',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+    language: 'en',
     countryCode: 'US',
     moneyFormat: '$%7B%7Bamount%7D%7D',
     buttonText: 'Add to Basket',
@@ -98,6 +99,7 @@ const localeConfigs = {
   sk: {
     domain: 'meer.sk',
     accessToken: '618933109ccee1040151ba599180cfef',
+    language: 'sk',
     countryCode: 'SK',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'Pridať do košíka',
@@ -123,7 +125,8 @@ const localeConfigs = {
   },
   de: {
     domain: 'meercarede.cz',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+    accessToken: '618933109ccee1040151ba599180cfef',
+    language: 'de',
     countryCode: 'DE',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'In den Warenkorb',
@@ -149,7 +152,8 @@ const localeConfigs = {
   },
   fr: {
     domain: 'meercarefr.cz',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+    accessToken: '618933109ccee1040151ba599180cfef',
+    language: 'fr',
     countryCode: 'FR',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'Ajouter au panier',
@@ -176,6 +180,7 @@ const localeConfigs = {
   pl: {
     domain: 'meercarepl.cz',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+    language: 'pl',
     countryCode: 'PL',
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
     buttonText: 'Włożyć do koszyka',
@@ -200,8 +205,9 @@ const localeConfigs = {
     }
   },
   cz: {
-    domain: 'meer-care.myshopify.com',
+    domain: 'meer.cz',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+    language: 'cs',
     countryCode: 'CZ',
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
     buttonText: 'Přidat do košíku',
@@ -314,7 +320,7 @@ const initializeShopify = (config) => {
       const client = ShopifyBuy.buildClient({
         domain: config.domain,
         storefrontAccessToken: config.accessToken,
-        language: locale,
+        language: config.language,
       });
 
       const input = {
