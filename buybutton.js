@@ -160,8 +160,8 @@ const localeConfigs = {
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'Ajouter au panier',
     productIds: {
-      setComplete: 8592696639827,
-      setI: 8592695624019,
+      setComplete: 10180475715923,
+      setI: 10180474405203,
       setII: 8592696541523,
       stepI: 9792209650003,
       stepII: 8592696115539,
