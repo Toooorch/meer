@@ -1,4 +1,3 @@
-// 1. NEJDŘÍVE - URL a locale detection
 const href = window.location.href;
 const getLocale = () => {
   if (href.includes('en.meer.care')) return 'en';
@@ -11,11 +10,11 @@ const getLocale = () => {
 
 const locale = getLocale();
 
-// 2. POTOM - Date/time constants
+// - Date/time constants
 const thehours = new Date().getHours();
 const dayOfWeek = new Date().getDay();
 
-// 3. POTOM - DOM elements
+// DOM elements
 const deliveryTrashold = document.getElementById("delivery-treshold");
 const deliveryTime = document.getElementById("delivery-speed");
 const deliveryDate = document.getElementById("delivery-date");
@@ -44,7 +43,7 @@ const alzaButton = document.getElementById('alza-button');
 const completeSaveTagText = document.getElementById('complete-save-tag-text');
 const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
 
-// 4. POTOM - Message constants
+// Message constants
 // Delivery Time
 const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
@@ -67,7 +66,7 @@ const trasholdMessageFR = "Frais de port offerts à partir de €60";
 //const trasholdMessageDE = "Kostenloser Versand ab €60";
 const trasholdMessageDE = "Jetzt kostenloser Versand";
 
-// 5. POTOM - Configuration objects
+// Configuration objects
 const localeConfigs = {
   en: {
     domain: 'meer-care.myshopify.com',
@@ -92,6 +91,7 @@ const localeConfigs = {
       empty: "Your cart is empty.",
       button: "Proceed to Checkout",
       noteDescription: "Order Note",
+      notice: "Shipping and discount codes are added at checkout.",
       outOfStock: "Sold Out",
       unavailable: "Sold Out"
     }
@@ -119,6 +119,7 @@ const localeConfigs = {
       empty: "Momentálne nemáte v košíku vložený žiadny tovar.",
       button: "Pokračovať k pokladni",
       noteDescription: "Poznámka k objednávke",
+      notice: "Doprava a zľavové kódy sa pridávajú pri pokladni.",
       outOfStock: "Vypredané",
       unavailable: "Vypredané"
     }
@@ -146,6 +147,7 @@ const localeConfigs = {
       empty: "Ihr Warenkorb ist leer.",
       button: "Zur Kasse gehen",
       noteDescription: "Bestellnotiz",
+      notice: "Versand und Rabattcodes werden an der Kasse hinzugefügt.",
       outOfStock: "Ausverkauft",
       unavailable: "Ausverkauft"
     }
@@ -173,6 +175,7 @@ const localeConfigs = {
       empty: "Votre panier est vide.",
       button: "Procéder au paiement",
       noteDescription: "Note de commande",
+      notice: "Les frais de livraison et les codes de réduction sont ajoutés lors du paiement.",
       outOfStock: "Épuisé",
       unavailable: "Épuisé"
     }
@@ -200,6 +203,7 @@ const localeConfigs = {
       empty: "Obecnie nie masz żadnych produktów w koszyku.",
       button: "Przejdź do finalizacji zakupu",
       noteDescription: "Uwaga do zamówienia",
+      notice: "Koszty wysyłki i kody rabatowe są dodawane przy kasie.",
       outOfStock: "Sprzedany",
       unavailable: "Sprzedany"
     }
@@ -227,6 +231,7 @@ const localeConfigs = {
       empty: "Váš košík je prázdný.",
       button: "Pokračovat k pokladně",
       noteDescription: "Poznámka k objednávce",
+      notice: "Slevové kódy se přidávají u pokladny.",
       outOfStock: "Vyprodáno",
       unavailable: "Vyprodáno"
     }
@@ -267,6 +272,7 @@ const getCart = () => {
     empty: "Váš košík je prázdný.",
     button: "Pokračovat k pokladně",
     noteDescription: "Poznámka k objednávce",
+    notice: "Slevové kódy se přidávají u pokladny.",
     outOfStock: "Vyprodáno",
     unavailable: "Vyprodáno"
   };
