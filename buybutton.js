@@ -122,7 +122,7 @@ const localeConfigs = {
     }
   },
   de: {
-    domain: 'meer-care.myshopify.com',
+    domain: 'meercarede.cz',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
     countryCode: 'DE',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -148,7 +148,7 @@ const localeConfigs = {
     }
   },
   fr: {
-    domain: 'meer-care.myshopify.com',
+    domain: 'meercarefr.cz',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
     countryCode: 'FR',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -174,7 +174,7 @@ const localeConfigs = {
     }
   },
   pl: {
-    domain: 'meercare.pl',
+    domain: 'meercarepl.cz',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
     countryCode: 'PL',
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
