@@ -131,13 +131,13 @@ const localeConfigs = {
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'In den Warenkorb',
     productIds: {
-      setComplete: 8592696639827,
-      setI: 8592695624019,
-      setII: 8592696541523,
+      setComplete: 9792222462291,
+      setI: 9792209256787,
+      setII: 9792221315411,
       stepI: 9792209650003,
-      stepII: 8592696115539,
-      stepIII: 8592696279379,
-      stepIV: 8592696475987,
+      stepII: 9792209977683,
+      stepIII: 9792218235219,
+      stepIV: 9792220135763,
       giftCard: 8578704736581
     },
     cart: {
@@ -158,13 +158,13 @@ const localeConfigs = {
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'Ajouter au panier',
     productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
+      setComplete: 8592696639827,
+      setI: 8592695624019,
+      setII: 8592696541523,
+      stepI: 9792209650003,
+      stepII: 8592696115539,
+      stepIII: 8592696279379,
+      stepIV: 8592696475987,
       giftCard: 8578704736581
     },
     cart: {
