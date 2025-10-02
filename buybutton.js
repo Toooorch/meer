@@ -188,13 +188,13 @@ const localeConfigs = {
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
     buttonText: 'Włożyć do koszyka',
     productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
+      setComplete: 15337577349445,
+      setI: 15337570500933,
+      setII: 15337576497477,
+      stepI: 15337572991301,
+      stepII: 15337573220677,
+      stepIII: 15337574072645,
+      stepIV: 15337575874885,
       giftCard: 8578704736581
     },
     cart: {
