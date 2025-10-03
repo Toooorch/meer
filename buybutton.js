@@ -386,6 +386,13 @@ const initializeShopify = () => {
     return;
   }
 
+  // Kontrola existence alespoň jednoho produktového elementu
+  const hasAnyProductElement = Object.values(productElements).some(element => element !== null);
+  if (!hasAnyProductElement) {
+    console.log('No product elements found - skipping Shopify initialization');
+    return;
+  }
+
   // Kontrola základních elementů
   if (!cartToggle) {
     console.warn('Cart toggle element not found - buy buttons may not work properly');
