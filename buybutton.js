@@ -11,13 +11,14 @@ const getLocale = () => {
 const locale = getLocale();
 
 // - Date/time constants
-const thehours = new Date().getHours();
 const dayOfWeek = new Date().getDay();
 
 // DOM elements
-const deliveryTrashold = document.querySelectorAll(".delivery-treshold");
-const deliveryTime = document.querySelectorAll(".delivery-speed");
-const deliveryDate = document.querySelectorAll(".delivery-date");
+const deliveryTrashold = document.getElementById("delivery-treshold");
+const deliveryTime = document.getElementById("delivery-speed");
+const deliveryDate = document.getElementById("delivery-date");
+const navDeliveryTrashold = document.getElementById("nav-delivery-treshold");
+const navDeliveryTime = document.getElementById("nav-delivery-speed");
 const userMenu = document.getElementById("user-menu");
 
 // Utility function for updating multiple elements
@@ -25,6 +26,12 @@ const updateElements = (elements, text) => {
   elements.forEach(element => {
     if (element) element.textContent = text;
   });
+};
+
+// Helper function to update both nav and footer elements
+const updateDeliveryElements = (navElement, footerElement, text) => {
+  if (navElement) navElement.textContent = text;
+  if (footerElement) footerElement.textContent = text;
 };
 
 const productElements = {
@@ -47,7 +54,6 @@ const userForgotPassword = document.getElementById('user-forgot-password');
 const userAddresses = document.getElementById('user-adresses');
 
 const alzaButton = document.getElementById('alza-button');
-const completeSaveTagText = document.getElementById('complete-save-tag-text');
 const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
 
 // Message constants
@@ -536,9 +542,9 @@ let deliveryMessage;
 switch (locale) {
   // English
   case 'en':
-    updateElements(deliveryDate, deliveryMessageEN);
-    updateElements(deliveryTrashold, trasholdMessageEN);
-    updateElements(deliveryTime, deliveryMessageEN);
+    if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
 
     // User
     if (userMenu) userMenu.style.display = 'none';
@@ -548,9 +554,9 @@ switch (locale) {
   
   // Slovakia
   case 'sk':
-    updateElements(deliveryDate, deliveryMessageSK);
-    updateElements(deliveryTrashold, trasholdMessageSK);
-    updateElements(deliveryTime, deliveryMessageSK);
+    if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
 
     // User links
     Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
@@ -567,9 +573,9 @@ switch (locale) {
     
   // Germany
   case 'de':
-    updateElements(deliveryDate, deliveryMessageDE);
-    updateElements(deliveryTrashold, trasholdMessageDE);
-    updateElements(deliveryTime, deliveryMessageDE);
+    if (deliveryDate) deliveryDate.textContent = deliveryMessageDE;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageDE);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageDE);
 
     // Hide alza-button if it exists
     if (alzaButton) {
@@ -588,9 +594,9 @@ switch (locale) {
 
   // France
   case 'fr':
-    updateElements(deliveryDate, deliveryMessageFR);
-    updateElements(deliveryTrashold, trasholdMessageFR);
-    updateElements(deliveryTime, deliveryMessageFR);
+    if (deliveryDate) deliveryDate.textContent = deliveryMessageFR;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
 
     // User links
     Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
@@ -603,9 +609,9 @@ switch (locale) {
     break;
   // Poland
   case 'pl':
-    updateElements(deliveryDate, deliveryMessagePL);
-    updateElements(deliveryTrashold, trasholdMessagePL);
-    updateElements(deliveryTime, deliveryMessagePL);
+    if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
 
     // User links
     Object.assign(userOrders, {href: 'https://meercarepl.cz/account'});
@@ -633,9 +639,9 @@ switch (locale) {
 
     deliveryMessage = getDeliveryMessage();
     
-    updateElements(deliveryDate, deliveryMessage);
-    updateElements(deliveryTrashold, deliveryMessageCZ);
-    updateElements(deliveryTime, deliveryMessage);
+    if (deliveryDate) deliveryDate.textContent = deliveryMessage;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
 
     loadHeurekaWidget();
     initializeShopify();
