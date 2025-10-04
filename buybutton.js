@@ -15,10 +15,17 @@ const thehours = new Date().getHours();
 const dayOfWeek = new Date().getDay();
 
 // DOM elements
-const deliveryTrashold = document.getElementById("delivery-treshold");
-const deliveryTime = document.getElementById("delivery-speed");
-const deliveryDate = document.getElementById("delivery-date");
+const deliveryTrashold = document.querySelectorAll(".delivery-treshold");
+const deliveryTime = document.querySelectorAll(".delivery-speed");
+const deliveryDate = document.querySelectorAll(".delivery-date");
 const userMenu = document.getElementById("user-menu");
+
+// Utility function for updating multiple elements
+const updateElements = (elements, text) => {
+  elements.forEach(element => {
+    if (element) element.textContent = text;
+  });
+};
 
 const productElements = {
   setComplete: document.getElementById('buy-button-set-complete'),
@@ -529,25 +536,21 @@ let deliveryMessage;
 switch (locale) {
   // English
   case 'en':
-    if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessageEN;
-    }
-    deliveryTrashold.textContent = trasholdMessageEN;
-    deliveryTime.textContent = deliveryMessageEN;
+    updateElements(deliveryDate, deliveryMessageEN);
+    updateElements(deliveryTrashold, trasholdMessageEN);
+    updateElements(deliveryTime, deliveryMessageEN);
 
     // User
-    userMenu.style.display = 'none';
+    if (userMenu) userMenu.style.display = 'none';
 
     initializeShopify();
     break;
   
   // Slovakia
   case 'sk':
-    if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessageSK;
-    }
-    deliveryTrashold.textContent = trasholdMessageSK;
-    deliveryTime.textContent = deliveryMessageSK;
+    updateElements(deliveryDate, deliveryMessageSK);
+    updateElements(deliveryTrashold, trasholdMessageSK);
+    updateElements(deliveryTime, deliveryMessageSK);
 
     // User links
     Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
@@ -564,11 +567,9 @@ switch (locale) {
     
   // Germany
   case 'de':
-    if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessageDE;
-    }
-    deliveryTrashold.textContent = trasholdMessageDE;
-    deliveryTime.textContent = deliveryMessageDE;
+    updateElements(deliveryDate, deliveryMessageDE);
+    updateElements(deliveryTrashold, trasholdMessageDE);
+    updateElements(deliveryTime, deliveryMessageDE);
 
     // Hide alza-button if it exists
     if (alzaButton) {
@@ -587,11 +588,9 @@ switch (locale) {
 
   // France
   case 'fr':
-    if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessageFR;
-    }
-    deliveryTrashold.textContent = trasholdMessageFR;
-    deliveryTime.textContent = deliveryMessageFR;
+    updateElements(deliveryDate, deliveryMessageFR);
+    updateElements(deliveryTrashold, trasholdMessageFR);
+    updateElements(deliveryTime, deliveryMessageFR);
 
     // User links
     Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
@@ -604,11 +603,9 @@ switch (locale) {
     break;
   // Poland
   case 'pl':
-    if (deliveryDate != null) {
-      deliveryDate.textContent = deliveryMessagePL;
-    }
-    deliveryTrashold.textContent = trasholdMessagePL;
-    deliveryTime.textContent = deliveryMessagePL;
+    updateElements(deliveryDate, deliveryMessagePL);
+    updateElements(deliveryTrashold, trasholdMessagePL);
+    updateElements(deliveryTime, deliveryMessagePL);
 
     // User links
     Object.assign(userOrders, {href: 'https://meercarepl.cz/account'});
@@ -636,9 +633,9 @@ switch (locale) {
 
     deliveryMessage = getDeliveryMessage();
     
-    if (deliveryDate) deliveryDate.textContent = deliveryMessage;
-    deliveryTrashold.textContent = deliveryMessageCZ;
-    deliveryTime.textContent = deliveryMessage;
+    updateElements(deliveryDate, deliveryMessage);
+    updateElements(deliveryTrashold, deliveryMessageCZ);
+    updateElements(deliveryTime, deliveryMessage);
 
     loadHeurekaWidget();
     initializeShopify();
