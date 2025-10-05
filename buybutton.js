@@ -16,6 +16,7 @@ const getLocale = (() => {
 })();
 
 const locale = getLocale();
+console.log('🌍 Detected locale:', locale, 'for URL:', href);
 
 // Date/time constants
 const dayOfWeek = new Date().getDay();
@@ -551,11 +552,18 @@ const setupTracking = (buttonText) => {
 };
 
 const initializeShopify = async () => {
+  console.log('🚀 Shopify initialization started for locale:', locale);
   try {
     if (!currentLocaleConfig) {
-      console.error('Shopify config is missing for locale:', locale);
+      console.error('❌ Shopify config is missing for locale:', locale);
       return;
     }
+    
+    console.log('✅ Config found:', {
+      domain: getDomain(),
+      locale: locale,
+      hasProductIds: !!getProductIds()
+    });
 
     // Quick check using lazy-loaded elements
     const hasAnyProductElement = Object.keys(productElements).some(key => {
@@ -563,8 +571,14 @@ const initializeShopify = async () => {
       return element !== null;
     });
     
+    console.log('🔍 Product elements check:', {
+      hasAnyProductElement,
+      elementIds: Object.keys(productElements),
+      foundElements: Object.keys(productElements).filter(key => productElements[key] !== null)
+    });
+    
     if (!hasAnyProductElement) {
-      console.log('No product elements found initially - waiting for DOM...');
+      console.log('⏳ No product elements found initially - waiting for DOM...');
       
       try {
         // Attempt to wait for product elements
