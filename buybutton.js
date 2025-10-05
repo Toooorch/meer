@@ -18,6 +18,60 @@ const getLocale = (() => {
 const locale = getLocale();
 console.log('🌍 Detected locale:', locale, 'for URL:', href);
 
+// Zaraz fallback for subdomains where Zaraz is not available
+const initializeTracking = () => {
+  // Check if Zaraz is available (usually works on main domain)
+  if (typeof zaraz !== 'undefined' && zaraz.track) {
+    console.log('✅ Zaraz tracking available');
+    return zaraz;
+  }
+  
+  // Fallback tracking for subdomains
+  console.warn('⚠️ Zaraz not available, using fallback tracking');
+  
+  // Create fallback zaraz object
+  window.zaraz = {
+    track: (event, data) => {
+      console.log('📊 Fallback tracking:', event, data);
+      
+      // Try to use gtag if available
+      if (typeof gtag !== 'undefined') {
+        try {
+          gtag('event', event, {
+            custom_parameters: data
+          });
+          console.log('✅ Sent via gtag:', event);
+        } catch (error) {
+          console.warn('❌ gtag failed:', error);
+        }
+      }
+      
+      // Try to use dataLayer
+      if (typeof dataLayer !== 'undefined') {
+        try {
+          dataLayer.push({
+            event: event,
+            ...data
+          });
+          console.log('✅ Sent via dataLayer:', event);
+        } catch (error) {
+          console.warn('❌ dataLayer failed:', error);
+        }
+      }
+      
+      // Fallback to console for debugging
+      if (typeof gtag === 'undefined' && typeof dataLayer === 'undefined') {
+        console.log('📝 Tracking event (no analytics available):', { event, data });
+      }
+    }
+  };
+  
+  return window.zaraz;
+};
+
+// Initialize tracking system
+initializeTracking();
+
 // Date/time constants
 const dayOfWeek = new Date().getDay();
 
@@ -488,11 +542,12 @@ const setupTracking = (buttonText) => {
                   quantity: 1
                 };
                 
-                if (typeof zaraz !== 'undefined') {
+                // Use our guaranteed zaraz object (either real or fallback)
+                try {
                   zaraz.track("add_to_cart", eventData);
-                  console.log('Tracking event sent:', eventData);
-                } else {
-                  console.warn('Zaraz tracking not available');
+                  console.log('📊 Tracking event sent:', eventData);
+                } catch (error) {
+                  console.error('❌ Tracking failed:', error);
                 }
               }
             } catch (error) {
