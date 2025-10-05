@@ -1,7 +1,6 @@
 // Cache href for performance
 const href = window.location.href;
 const getLocale = (() => {
-  // Cache locale result to avoid repeated calculations
   let cachedLocale = null;
   return () => {
     if (cachedLocale) return cachedLocale;
@@ -11,88 +10,76 @@ const getLocale = (() => {
     if (href.includes('de.meer.care')) return cachedLocale = 'de';
     if (href.includes('fr.meer.care')) return cachedLocale = 'fr';
     if (href.includes('pl.meer.care')) return cachedLocale = 'pl';
-    return cachedLocale = 'cz'; // default
+    return cachedLocale = 'cz';
   };
 })();
 
 const locale = getLocale();
-console.log('🌍 Detected locale:', locale, 'for URL:', href);
+console.log('Detected locale:', locale, 'for URL:', href);
 
-// Zaraz fallback for subdomains where Zaraz is not available
+// Tracking system initialization with fallback
 const initializeTracking = () => {
-  // Check if Zaraz is available (usually works on main domain)
   if (typeof zaraz !== 'undefined' && zaraz.track) {
-    console.log('✅ Zaraz tracking available');
+    console.log('Zaraz tracking available');
     return zaraz;
   }
   
-  // Fallback tracking for subdomains
-  console.warn('⚠️ Zaraz not available, using fallback tracking');
+  console.warn('Zaraz not available, using fallback tracking');
   
-  // Create fallback zaraz object
-  window.zaraz = {
+  // Don't override global zaraz - just provide fallback tracking function
+  return {
     track: (event, data) => {
-      console.log('📊 Fallback tracking:', event, data);
+      console.log('Fallback tracking:', event, data);
       
-      // Try to use gtag if available
       if (typeof gtag !== 'undefined') {
         try {
-          gtag('event', event, {
-            custom_parameters: data
-          });
-          console.log('✅ Sent via gtag:', event);
+          gtag('event', event, { custom_parameters: data });
+          console.log('Sent via gtag:', event);
         } catch (error) {
-          console.warn('❌ gtag failed:', error);
+          console.warn('gtag failed:', error);
         }
-      }
-      
-      // Try to use dataLayer
-      if (typeof dataLayer !== 'undefined') {
+      } else if (typeof dataLayer !== 'undefined') {
         try {
-          dataLayer.push({
-            event: event,
-            ...data
-          });
-          console.log('✅ Sent via dataLayer:', event);
+          dataLayer.push({ event, ...data });
+          console.log('Sent via dataLayer:', event);
         } catch (error) {
-          console.warn('❌ dataLayer failed:', error);
+          console.warn('dataLayer failed:', error);
         }
-      }
-      
-      // Fallback to console for debugging
-      if (typeof gtag === 'undefined' && typeof dataLayer === 'undefined') {
-        console.log('📝 Tracking event (no analytics available):', { event, data });
+      } else {
+        console.log('Tracking event (no analytics available):', { event, data });
       }
     }
   };
-  
-  return window.zaraz;
 };
 
-// Initialize tracking system
-initializeTracking();
+// Get tracking system reference
+const trackingSystem = initializeTracking();
 
 // Date/time constants
 const dayOfWeek = new Date().getDay();
 
 // Optimized timeout constants
 const TIMEOUTS = {
-  OBSERVER_CLEANUP: 30000,
-  SHOPIFY_SDK_LOAD: 8000,   // Reduced for faster feedback
-  DOM_READY_CHECK: 50,      // Reduced interval for faster DOM checks
-  MAX_DOM_WAIT: 3000,       // Reduced max wait time
-  RETRY_DELAY: 500,         // Faster retry attempts
-  MAX_RETRIES: 2,           // Fewer retries for faster failure detection
-  DEBOUNCE_DELAY: 250       // Debouncing for performance
+  OBSERVER_CLEANUP: null, // Don't auto-cleanup, clean on unload
+  SHOPIFY_SDK_LOAD: 8000,
+  DOM_READY_CHECK: 50,
+  MAX_DOM_WAIT: 3000,
+  RETRY_DELAY: 500,
+  MAX_RETRIES: 2,
+  DEBOUNCE_DELAY: 250
 };
 
-// Optimized DOM element caching with lazy loading
+// Improved DOM element caching - doesn't cache null values
 const domCache = new Map();
 const getElement = (id) => {
-  if (!domCache.has(id)) {
-    domCache.set(id, document.getElementById(id));
+  if (domCache.has(id)) {
+    return domCache.get(id);
   }
-  return domCache.get(id);
+  const element = document.getElementById(id);
+  if (element) {
+    domCache.set(id, element);
+  }
+  return element;
 };
 
 // Critical DOM elements - loaded immediately
@@ -105,7 +92,6 @@ const userMenu = getElement("user-menu");
 
 // Utility function for updating multiple elements with performance optimization
 const updateElements = (elements, text) => {
-  // Use requestAnimationFrame for smooth DOM updates
   requestAnimationFrame(() => {
     elements.forEach(element => {
       if (element && element.textContent !== text) {
@@ -154,26 +140,17 @@ const getFreeShippingTags = () => {
 };
 
 // Message constants
-// Delivery Time Messages
 const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
 const deliveryMessagePL = "Dostawa 1-3 dni";
 const deliveryMessageFR = "Livraison en 2-5 jours";
 
-// Free Delivery Messages
-//const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
-//const deliveryMessageCZ = "Rychlé odeslání";
 const deliveryMessageCZ = "Doprava nyní ZDARMA";
-//const deliveryMessageCZ = "Doprava DNES ZDARMA";
-//const trasholdMessagePL = "Darmowa wysyłka od 200zł";
 const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
 const trasholdMessageEN = "Free Delivery from $50";
 const trasholdMessageSK = "Doprava teraz ZADARMO";
-//const trasholdMessageSK = "Doprava dnes ZADARMO";
-//const trasholdMessageSK = "Doprava zadarmo od €30";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
-//const trasholdMessageDE = "Kostenloser Versand ab €60";
 const trasholdMessageDE = "Jetzt kostenloser Versand";
 
 // Configuration objects
@@ -331,7 +308,7 @@ const localeConfigs = {
       setII: 8021842854118,
       stepI: 7601486758118,
       stepII: 7609802686694,
-      stepIII: 7931357692134,
+      stepIIII: 7931357692134,
       stepIV: 7931360051430,
       giftCard: 8578704736581
     },
@@ -348,20 +325,34 @@ const localeConfigs = {
   }
 };
 
-// Cache current locale config for performance
-const currentLocaleConfig = localeConfigs[locale] || localeConfigs.cz;
+// Validate configuration
+const validateConfig = (config) => {
+  if (!config) return false;
+  const required = ['domain', 'accessToken', 'language', 'countryCode', 'productIds', 'cart', 'buttonText'];
+  return required.every(key => config[key] !== undefined && config[key] !== null);
+};
+
+// Cache current locale config with validation
+const currentLocaleConfig = (() => {
+  const config = localeConfigs[locale] || localeConfigs.cz;
+  if (!validateConfig(config)) {
+    console.error('Invalid configuration for locale:', locale);
+    return null;
+  }
+  return config;
+})();
 
 // Optimized utility functions with caching
-const getLanguage = () => currentLocaleConfig.language;
-const getCountry = () => currentLocaleConfig.countryCode;
-const getDomain = () => currentLocaleConfig.domain;
-const getAccessToken = () => currentLocaleConfig.accessToken;
-const getButtonText = () => currentLocaleConfig.buttonText;
-const getCart = () => currentLocaleConfig.cart;
-const getMoneyFormat = () => currentLocaleConfig.moneyFormat;
-const getProductIds = () => currentLocaleConfig.productIds;
+const getLanguage = () => currentLocaleConfig?.language || 'cs';
+const getCountry = () => currentLocaleConfig?.countryCode || 'CZ';
+const getDomain = () => currentLocaleConfig?.domain || 'meer-care.myshopify.com';
+const getAccessToken = () => currentLocaleConfig?.accessToken || 'd0790ee9d09c16714d92224efa9f5882';
+const getButtonText = () => currentLocaleConfig?.buttonText || 'Přidat do košíku';
+const getCart = () => currentLocaleConfig?.cart || localeConfigs.cz.cart;
+const getMoneyFormat = () => currentLocaleConfig?.moneyFormat || '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D';
+const getProductIds = () => currentLocaleConfig?.productIds || localeConfigs.cz.productIds;
 
-// Optimized function for waiting for DOM elements with performance improvements
+// Improved waitForElements with better timeout handling
 const waitForElements = async (selectors, maxWait = TIMEOUTS.MAX_DOM_WAIT) => {
   const startTime = Date.now();
   
@@ -371,13 +362,11 @@ const waitForElements = async (selectors, maxWait = TIMEOUTS.MAX_DOM_WAIT) => {
       return;
     }
     
-    // Use Set for O(1) lookup performance
     const pendingSelectors = new Set(selectors);
     const foundElements = new Map();
     
     const checkElements = () => {
       try {
-        // Only check pending selectors for better performance
         for (const selector of pendingSelectors) {
           const element = getElement(selector);
           if (element) {
@@ -386,15 +375,20 @@ const waitForElements = async (selectors, maxWait = TIMEOUTS.MAX_DOM_WAIT) => {
           }
         }
         
-        // Early termination when all elements found
         if (pendingSelectors.size === 0) {
           resolve(selectors.map(selector => foundElements.get(selector)));
           return;
         }
         
         if ((Date.now() - startTime) >= maxWait) {
-          console.warn(`Timeout waiting for elements: ${Array.from(pendingSelectors).join(', ')}`);
-          resolve(selectors.map(selector => foundElements.get(selector) || null));
+          const missing = Array.from(pendingSelectors);
+          console.warn(`Timeout waiting for elements. Missing: ${missing.join(', ')}`);
+          // Return partial results with info about missing elements
+          resolve({
+            elements: selectors.map(selector => foundElements.get(selector) || null),
+            missing: missing,
+            partial: true
+          });
           return;
         }
         
@@ -409,53 +403,82 @@ const waitForElements = async (selectors, maxWait = TIMEOUTS.MAX_DOM_WAIT) => {
   });
 };
 
-// Optimized Shopify SDK preloading with performance improvements
+// Improved Shopify SDK preloading with better race condition handling
 const preloadShopifySDK = (() => {
-  let isLoading = false;
-  let isLoaded = false;
+  let loadPromise = null;
   
-  return (retryCount = 0) => {
-    if (isLoaded || isLoading) return;
+  return () => {
+    if (loadPromise) return loadPromise;
+    if (window.ShopifyBuy) {
+      return Promise.resolve();
+    }
     
     const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     
-    if (window.ShopifyBuy) {
-      isLoaded = true;
-      return;
+    if (document.querySelector(`script[src="${scriptURL}"]`)) {
+      loadPromise = new Promise((resolve) => {
+        const checkLoaded = () => {
+          if (window.ShopifyBuy) {
+            resolve();
+          } else {
+            setTimeout(checkLoaded, 100);
+          }
+        };
+        checkLoaded();
+      });
+      return loadPromise;
     }
     
-    if (!document.querySelector(`script[src="${scriptURL}"]`)) {
-      isLoading = true;
+    loadPromise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.async = true;
       script.src = scriptURL;
       
-      script.onerror = () => {
-        isLoading = false;
-        console.error(`Failed to preload Shopify SDK (attempt ${retryCount + 1})`);
-        if (retryCount < TIMEOUTS.MAX_RETRIES) {
-          setTimeout(() => {
-            script.remove();
-            preloadShopifySDK(retryCount + 1);
-          }, TIMEOUTS.RETRY_DELAY * (retryCount + 1));
-        } else {
-          console.error('Max retries reached for Shopify SDK preload');
-        }
+      const cleanup = () => {
+        script.removeEventListener('load', onLoad);
+        script.removeEventListener('error', onError);
       };
       
-      script.onload = () => {
-        isLoaded = true;
-        isLoading = false;
+      const onLoad = () => {
+        cleanup();
         console.log('Shopify SDK preloaded successfully');
+        resolve();
       };
       
-      document.head.appendChild(script);
-      console.log(`Shopify SDK preloading started (attempt ${retryCount + 1})`);
-    }
+      const onError = (error) => {
+        cleanup();
+        loadPromise = null; // Reset so retry is possible
+        console.error('Failed to preload Shopify SDK:', error);
+        reject(error);
+      };
+      
+      script.addEventListener('load', onLoad);
+      script.addEventListener('error', onError);
+      
+      try {
+        document.head.appendChild(script);
+        console.log('Shopify SDK preloading started');
+      } catch (error) {
+        cleanup();
+        loadPromise = null;
+        reject(error);
+      }
+      
+      // Timeout handling
+      setTimeout(() => {
+        if (!window.ShopifyBuy) {
+          cleanup();
+          const timeoutError = new Error('Shopify SDK load timeout');
+          reject(timeoutError);
+        }
+      }, TIMEOUTS.SHOPIFY_SDK_LOAD);
+    });
+    
+    return loadPromise;
   };
 })();
 
-// Function to clean up old localStorage records with improved error handling
+// Improved localStorage cleanup with specific key format validation
 const cleanupOldCheckouts = () => {
   try {
     if (typeof Storage === 'undefined') {
@@ -463,16 +486,18 @@ const cleanupOldCheckouts = () => {
       return;
     }
     
-    // Find all keys containing checkoutId
+    const accessToken = getAccessToken();
+    const domain = getDomain();
+    const validKeyPattern = new RegExp(`^${accessToken}\\.${domain}\\.checkoutId$`);
+    
     const keysToRemove = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.includes('checkoutId')) {
+      if (key && validKeyPattern.test(key)) {
         keysToRemove.push(key);
       }
     }
     
-    // Remove old keys with individual error handling
     let removedCount = 0;
     keysToRemove.forEach(key => {
       try {
@@ -483,7 +508,9 @@ const cleanupOldCheckouts = () => {
       }
     });
     
-    console.log(`Cleaned up ${removedCount} old checkout IDs from localStorage`);
+    if (removedCount > 0) {
+      console.log(`Cleaned up ${removedCount} old checkout IDs from localStorage`);
+    }
   } catch (error) {
     console.warn('Could not clean localStorage:', error);
   }
@@ -516,11 +543,12 @@ const loadHeurekaWidget = () => {
   }
 };
 
-// Optimized analytics and tracking setup with performance improvements
+// Improved tracking setup with proper cleanup
 const setupTracking = (buttonText) => {
   try {
-    // Debounced tracking function for better performance
     const trackedButtons = new WeakSet();
+    let debounceTimer = null;
+    let observer = null;
     
     const processButton = (button) => {
       if (trackedButtons.has(button)) return;
@@ -542,26 +570,23 @@ const setupTracking = (buttonText) => {
                   quantity: 1
                 };
                 
-                // Use our guaranteed zaraz object (either real or fallback)
                 try {
-                  zaraz.track("add_to_cart", eventData);
-                  console.log('📊 Tracking event sent:', eventData);
+                  trackingSystem.track("add_to_cart", eventData);
+                  console.log('Tracking event sent:', eventData);
                 } catch (error) {
-                  console.error('❌ Tracking failed:', error);
+                  console.error('Tracking failed:', error);
                 }
               }
             } catch (error) {
               console.error('Error in tracking click handler:', error);
             }
-          }, { passive: true }); // Use passive listener for better performance
+          }, { passive: true });
         }
       } catch (error) {
         console.error('Error processing button for tracking:', error);
       }
     };
     
-    // Debounced mutation handler
-    let debounceTimer;
     const debouncedHandler = (mutations) => {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
@@ -580,70 +605,81 @@ const setupTracking = (buttonText) => {
           }
         });
         
-        // Process buttons in batches for better performance
         requestAnimationFrame(() => {
           buttonsToProcess.forEach(processButton);
         });
       }, TIMEOUTS.DEBOUNCE_DELAY);
     };
     
-    const observer = new MutationObserver(debouncedHandler);
+    observer = new MutationObserver(debouncedHandler);
     observer.observe(document.body, { childList: true, subtree: true });
     
-    // Cleanup after defined timeout
-    setTimeout(() => {
+    // Cleanup on page unload instead of timeout
+    const cleanup = () => {
       try {
-        observer.disconnect();
-        clearTimeout(debounceTimer);
+        if (observer) {
+          observer.disconnect();
+          observer = null;
+        }
+        if (debounceTimer) {
+          clearTimeout(debounceTimer);
+          debounceTimer = null;
+        }
         console.log('Tracking observer cleaned up');
       } catch (error) {
-        console.error('Error disconnecting tracking observer:', error);
+        console.error('Error during tracking cleanup:', error);
       }
-    }, TIMEOUTS.OBSERVER_CLEANUP);
+    };
+    
+    window.addEventListener('beforeunload', cleanup, { once: true });
+    
+    return cleanup;
     
   } catch (error) {
     console.error('Error setting up tracking:', error);
+    return () => {}; // Return no-op cleanup function
   }
 };
 
 const initializeShopify = async () => {
-  console.log('🚀 Shopify initialization started for locale:', locale);
+  console.log('Shopify initialization started for locale:', locale);
   try {
     if (!currentLocaleConfig) {
-      console.error('❌ Shopify config is missing for locale:', locale);
+      console.error('Shopify config is missing or invalid for locale:', locale);
       return;
     }
     
-    console.log('✅ Config found:', {
+    console.log('Config found:', {
       domain: getDomain(),
       locale: locale,
       hasProductIds: !!getProductIds()
     });
 
-    // Quick check using lazy-loaded elements
     const hasAnyProductElement = Object.keys(productElements).some(key => {
       const element = productElements[key];
       return element !== null;
     });
     
-    console.log('🔍 Product elements check:', {
+    console.log('Product elements check:', {
       hasAnyProductElement,
       elementIds: Object.keys(productElements),
       foundElements: Object.keys(productElements).filter(key => productElements[key] !== null)
     });
     
     if (!hasAnyProductElement) {
-      console.log('⏳ No product elements found initially - waiting for DOM...');
+      console.log('No product elements found initially - waiting for DOM...');
       
       try {
-        // Attempt to wait for product elements
         const productElementIds = Object.keys(productElements).map(key => 
           `buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`
         );
         
-        await waitForElements(productElementIds, TIMEOUTS.MAX_DOM_WAIT);
+        const result = await waitForElements(productElementIds, TIMEOUTS.MAX_DOM_WAIT);
         
-        // Final check after waiting
+        if (result.partial) {
+          console.warn('Some product elements not found:', result.missing);
+        }
+        
         const hasAnyProductElementFinal = Object.keys(productElements).some(key => {
           return productElements[key] !== null;
         });
@@ -658,162 +694,158 @@ const initializeShopify = async () => {
       }
     }
 
-    // Clean up old localStorage records
     cleanupOldCheckouts();
 
-  const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-  
-  if (window.ShopifyBuy?.UI) {
-    ShopifyBuyInit();
-    return;
-  }
-  
-  if (!document.querySelector(`script[src="${scriptURL}"]`)) {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = scriptURL;
-    script.onload = ShopifyBuyInit;
-    script.onerror = () => console.error('Failed to load Shopify SDK');
-    document.head.appendChild(script);
+    const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     
-    // Timeout for loading Shopify SDK
-    setTimeout(() => {
-      if (!window.ShopifyBuy) {
-        console.error(`Shopify SDK failed to load within ${TIMEOUTS.SHOPIFY_SDK_LOAD / 1000} seconds timeout`);
-      }
-    }, TIMEOUTS.SHOPIFY_SDK_LOAD);
-  }
-  
-  function ShopifyBuyInit() {
-    try {
-      const client = ShopifyBuy.buildClient({
-        domain: getDomain(),
-        storefrontAccessToken: getAccessToken(),
-        language: getLanguage(),
-      });
-
-      const input = {
-        buyerIdentity: {
-          countryCode: getCountry(),
-        },
-      };
-
-      // localStorage key
-      const localStorageCheckoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
-      console.log('Creating checkout for:', {
-        locale,
-        domain: client.config.domain,
-        accessToken: client.config.storefrontAccessToken,
-        language: getLanguage(),
-        country: getCountry()
-      });
-
-      client.checkout.create(input).then((checkout) => {
-        // Save checkout ID to localStorage
-        try {
-          localStorage.setItem(localStorageCheckoutKey, checkout.id);
-          console.log('Checkout created successfully:', checkout.id);
-        } catch (error) {
-          console.warn('Could not save to localStorage:', error);
-        }
-        
-        ShopifyBuy.UI.onReady(client).then(function (ui) {
-          const options = {
-            product: {
-              iframe: false,
-              contents: {
-                img: false,
-                button: false,
-                buttonWithQuantity: true,
-                title: false,
-                price: false
-              },
-              text: {
-                button: getButtonText(),
-                outOfStock: getCart().outOfStock,
-                unavailable: getCart().unavailable
-              }
-            },
-            cart: {
-              iframe: false,
-              text: getCart(),
-              contents: { note: true },
-              popup: false
-            },
-            toggle: {
-              iframe: false,
-              sticky: false,
-              templates: { icon: '' }
-            }
-          };
-
-          // Create components with optimized error handling
-          const productIds = getProductIds();
-          const cartToggle = getCartToggle();
-          
-          Object.entries(productIds).forEach(([key, productId]) => {
-            const element = productElements[key];
-            if (!element) {
-              console.warn(`Element for ${key} not found`);
-              return;
-            }
-            
-            try {
-              ui.createComponent('product', {
-                id: [productId],
-                node: element,
-                toggles: cartToggle ? [{node: cartToggle}] : [],
-                moneyFormat: getMoneyFormat(),
-                options: options
-              });
-              console.log(`Successfully created component for ${key}`);
-            } catch (error) {
-              console.error(`Failed to create Shopify component for ${key}:`, error);
-            }
-          });
-
-          // Optimized tracking setup
-          setupTracking(getButtonText());
-        }).catch(error => console.error('Shopify UI initialization failed:', error));
-      }).catch(error => console.error('Shopify checkout creation failed:', error));
-    } catch (error) {
-      console.error('Shopify initialization failed:', error);
+    if (window.ShopifyBuy?.UI) {
+      ShopifyBuyInit();
+      return;
     }
-  }
+    
+    if (!document.querySelector(`script[src="${scriptURL}"]`)) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      script.onload = ShopifyBuyInit;
+      script.onerror = () => console.error('Failed to load Shopify SDK');
+      
+      try {
+        document.head.appendChild(script);
+      } catch (error) {
+        console.error('Failed to append Shopify SDK script:', error);
+        return;
+      }
+      
+      setTimeout(() => {
+        if (!window.ShopifyBuy) {
+          console.error(`Shopify SDK failed to load within ${TIMEOUTS.SHOPIFY_SDK_LOAD / 1000} seconds timeout`);
+        }
+      }, TIMEOUTS.SHOPIFY_SDK_LOAD);
+    }
+    
+    function ShopifyBuyInit() {
+      try {
+        const client = ShopifyBuy.buildClient({
+          domain: getDomain(),
+          storefrontAccessToken: getAccessToken(),
+          language: getLanguage(),
+        });
+
+        const input = {
+          buyerIdentity: {
+            countryCode: getCountry(),
+          },
+        };
+
+        const localStorageCheckoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
+        console.log('Creating checkout for:', {
+          locale,
+          domain: client.config.domain,
+          accessToken: client.config.storefrontAccessToken,
+          language: getLanguage(),
+          country: getCountry()
+        });
+
+        client.checkout.create(input).then((checkout) => {
+          try {
+            localStorage.setItem(localStorageCheckoutKey, checkout.id);
+            console.log('Checkout created successfully:', checkout.id);
+          } catch (error) {
+            console.warn('Could not save to localStorage:', error);
+          }
+          
+          ShopifyBuy.UI.onReady(client).then(function (ui) {
+            const options = {
+              product: {
+                iframe: false,
+                contents: {
+                  img: false,
+                  button: false,
+                  buttonWithQuantity: true,
+                  title: false,
+                  price: false
+                },
+                text: {
+                  button: getButtonText(),
+                  outOfStock: getCart().outOfStock,
+                  unavailable: getCart().unavailable
+                }
+              },
+              cart: {
+                iframe: false,
+                text: getCart(),
+                contents: { note: true },
+                popup: false
+              },
+              toggle: {
+                iframe: false,
+                sticky: false,
+                templates: { icon: '' }
+              }
+            };
+
+            const productIds = getProductIds();
+            const cartToggle = getCartToggle();
+            
+            Object.entries(productIds).forEach(([key, productId]) => {
+              const element = productElements[key];
+              if (!element) {
+                console.warn(`Element for ${key} not found`);
+                return;
+              }
+              
+              try {
+                ui.createComponent('product', {
+                  id: [productId],
+                  node: element,
+                  toggles: cartToggle ? [{node: cartToggle}] : [],
+                  moneyFormat: getMoneyFormat(),
+                  options: options
+                });
+                console.log(`Successfully created component for ${key}`);
+              } catch (error) {
+                console.error(`Failed to create Shopify component for ${key}:`, error);
+              }
+            });
+
+            setupTracking(getButtonText());
+          }).catch(error => console.error('Shopify UI initialization failed:', error));
+        }).catch(error => console.error('Shopify checkout creation failed:', error));
+      } catch (error) {
+        console.error('Shopify initialization failed:', error);
+      }
+    }
   } catch (error) {
     console.error('Critical error in initializeShopify:', error);
   }
 };
 
 // Preload Shopify SDK immediately on script load
-preloadShopifySDK();
+preloadShopifySDK().catch(error => {
+  console.warn('Shopify SDK preload failed, will try again during initialization:', error);
+});
 
 // Variables that depend on other calculations
 let deliveryMessage;
 
 // Main execution - Locale-specific initialization
 switch (locale) {
-  // English
   case 'en':
     if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
 
-    // User menu optimization
-    const userMenuEl = userMenu;
-    if (userMenuEl) userMenuEl.style.display = 'none';
+    if (userMenu) userMenu.style.display = 'none';
 
-    // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for EN locale:', error));
     break;
   
-  // Slovakia
   case 'sk':
     if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
 
-    // User links - optimized with lazy loading
     const userOrders = getUserOrders();
     const userLogin = getUserLogin();
     const userCreateAccount = getUserCreateAccount();
@@ -828,21 +860,17 @@ switch (locale) {
     
     loadHeurekaWidget();
     
-    // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for SK locale:', error));
     break;
     
-  // Germany
   case 'de':
     if (deliveryDate) deliveryDate.textContent = deliveryMessageDE;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageDE);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageDE);
 
-    // Hide alza-button if it exists
     const alzaButton = getAlzaButton();
     if (alzaButton) alzaButton.style.display = 'none';
 
-    // User links - optimized with lazy loading
     const userOrdersDE = getUserOrders();
     const userLoginDE = getUserLogin();
     const userCreateAccountDE = getUserCreateAccount();
@@ -855,17 +883,14 @@ switch (locale) {
     if (userForgotPasswordDE) userForgotPasswordDE.href = 'https://www.meer.beauty/account/login#recover';
     if (userAddressesDE) userAddressesDE.href = 'https://www.meer.beauty/account/addresses';
 
-    // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for DE locale:', error));
     break;
 
-  // France
   case 'fr':
     if (deliveryDate) deliveryDate.textContent = deliveryMessageFR;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
 
-    // User links - optimized with lazy loading
     const userOrdersFR = getUserOrders();
     const userLoginFR = getUserLogin();
     const userCreateAccountFR = getUserCreateAccount();
@@ -878,17 +903,14 @@ switch (locale) {
     if (userForgotPasswordFR) userForgotPasswordFR.href = 'https://www.meer.beauty/account/login#recover';
     if (userAddressesFR) userAddressesFR.href = 'https://www.meer.beauty/account/addresses';
 
-    // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for FR locale:', error));
     break;
     
-  // Poland
   case 'pl':
     if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
 
-    // User links - optimized with lazy loading
     const userOrdersPL = getUserOrders();
     const userLoginPL = getUserLogin();
     const userCreateAccountPL = getUserCreateAccount();
@@ -901,20 +923,19 @@ switch (locale) {
     if (userForgotPasswordPL) userForgotPasswordPL.href = 'https://meercarepl.cz/account/login#recover';
     if (userAddressesPL) userAddressesPL.href = 'https://meercarepl.cz/account/addresses';
 
-    // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for PL locale:', error));
     break;
 
   default:
     const getDeliveryMessage = () => {
       const dayMessages = {
-        1: "pozítří u Vás", // Monday
-        2: "pozítří u Vás", // Tuesday  
-        3: "pozítří u Vás", // Wednesday
-        4: "v pondělí u Vás", // Thursday
-        5: "v úterý u Vás", // Friday
-        6: "v úterý u Vás", // Saturday
-        0: "v úterý u Vás"  // Sunday
+        1: "pozítří u Vás",
+        2: "pozítří u Vás",  
+        3: "pozítří u Vás",
+        4: "v pondělí u Vás",
+        5: "v úterý u Vás",
+        6: "v úterý u Vás",
+        0: "v úterý u Vás"
       };
       return dayMessages[dayOfWeek] || "pozítří u Vás";
     };
@@ -927,7 +948,6 @@ switch (locale) {
 
     loadHeurekaWidget();
     
-    // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for CZ locale:', error));
     break;
 }
