@@ -1,70 +1,102 @@
+// Cache href for performance
 const href = window.location.href;
-const getLocale = () => {
-  if (href.includes('en.meer.care')) return 'en';
-  if (href.includes('sk.meer.care')) return 'sk';
-  if (href.includes('de.meer.care')) return 'de';
-  if (href.includes('fr.meer.care')) return 'fr';
-  if (href.includes('pl.meer.care')) return 'pl';
-  return 'cz'; // default
-};
+const getLocale = (() => {
+  // Cache locale result to avoid repeated calculations
+  let cachedLocale = null;
+  return () => {
+    if (cachedLocale) return cachedLocale;
+    
+    if (href.includes('en.meer.care')) return cachedLocale = 'en';
+    if (href.includes('sk.meer.care')) return cachedLocale = 'sk';
+    if (href.includes('de.meer.care')) return cachedLocale = 'de';
+    if (href.includes('fr.meer.care')) return cachedLocale = 'fr';
+    if (href.includes('pl.meer.care')) return cachedLocale = 'pl';
+    return cachedLocale = 'cz'; // default
+  };
+})();
 
 const locale = getLocale();
 
 // Date/time constants
 const dayOfWeek = new Date().getDay();
 
-// Timeout constants
+// Optimized timeout constants
 const TIMEOUTS = {
   OBSERVER_CLEANUP: 30000,
-  SHOPIFY_SDK_LOAD: 10000,
-  DOM_READY_CHECK: 100, // Interval for DOM elements check
-  MAX_DOM_WAIT: 5000,   // Maximum wait time for DOM elements
-  RETRY_DELAY: 1000,    // Delay between retry attempts
-  MAX_RETRIES: 3        // Maximum number of retry attempts
+  SHOPIFY_SDK_LOAD: 8000,   // Reduced for faster feedback
+  DOM_READY_CHECK: 50,      // Reduced interval for faster DOM checks
+  MAX_DOM_WAIT: 3000,       // Reduced max wait time
+  RETRY_DELAY: 500,         // Faster retry attempts
+  MAX_RETRIES: 2,           // Fewer retries for faster failure detection
+  DEBOUNCE_DELAY: 250       // Debouncing for performance
 };
 
-// DOM elements
-const deliveryTrashold = document.getElementById("delivery-treshold");
-const deliveryTime = document.getElementById("delivery-speed");
-const deliveryDate = document.getElementById("delivery-date");
-const navDeliveryTrashold = document.getElementById("nav-delivery-treshold");
-const navDeliveryTime = document.getElementById("nav-delivery-speed");
-const userMenu = document.getElementById("user-menu");
+// Optimized DOM element caching with lazy loading
+const domCache = new Map();
+const getElement = (id) => {
+  if (!domCache.has(id)) {
+    domCache.set(id, document.getElementById(id));
+  }
+  return domCache.get(id);
+};
 
-// Utility function for updating multiple elements
+// Critical DOM elements - loaded immediately
+const deliveryTrashold = getElement("delivery-treshold");
+const deliveryTime = getElement("delivery-speed");
+const deliveryDate = getElement("delivery-date");
+const navDeliveryTrashold = getElement("nav-delivery-treshold");
+const navDeliveryTime = getElement("nav-delivery-speed");
+const userMenu = getElement("user-menu");
+
+// Utility function for updating multiple elements with performance optimization
 const updateElements = (elements, text) => {
-  elements.forEach(element => {
-    if (element) element.textContent = text;
+  // Use requestAnimationFrame for smooth DOM updates
+  requestAnimationFrame(() => {
+    elements.forEach(element => {
+      if (element && element.textContent !== text) {
+        element.textContent = text;
+      }
+    });
   });
 };
 
-// Helper function to update both nav and footer elements
+// Optimized helper function with batched updates
 const updateDeliveryElements = (navElement, footerElement, text) => {
-  if (navElement) navElement.textContent = text;
-  if (footerElement) footerElement.textContent = text;
+  requestAnimationFrame(() => {
+    if (navElement && navElement.textContent !== text) navElement.textContent = text;
+    if (footerElement && footerElement.textContent !== text) footerElement.textContent = text;
+  });
 };
 
+// Lazy-loaded product elements with caching
 const productElements = {
-  setComplete: document.getElementById('buy-button-set-complete'),
-  setI: document.getElementById('buy-button-set-I'),
-  setII: document.getElementById('buy-button-set-II'),
-  stepI: document.getElementById('buy-button-step-I'),
-  stepII: document.getElementById('buy-button-step-II'),
-  stepIII: document.getElementById('buy-button-step-III'),
-  stepIV: document.getElementById('buy-button-step-IV'),
-  giftCard: document.getElementById('buy-button-gift-card')
+  get setComplete() { return getElement('buy-button-set-complete'); },
+  get setI() { return getElement('buy-button-set-I'); },
+  get setII() { return getElement('buy-button-set-II'); },
+  get stepI() { return getElement('buy-button-step-I'); },
+  get stepII() { return getElement('buy-button-step-II'); },
+  get stepIII() { return getElement('buy-button-step-III'); },
+  get stepIV() { return getElement('buy-button-step-IV'); },
+  get giftCard() { return getElement('buy-button-gift-card'); }
 };
 
-const cartToggle = document.getElementById("cart-toggle");
+// Other DOM elements - lazy loaded
+const getCartToggle = () => getElement("cart-toggle");
+const getUserOrders = () => getElement('user-orders');
+const getUserLogin = () => getElement('user-login');
+const getUserCreateAccount = () => getElement('user-create-account');
+const getUserForgotPassword = () => getElement('user-forgot-password');
+const getUserAddresses = () => getElement('user-addresses');
+const getAlzaButton = () => getElement('alza-button');
 
-const userOrders = document.getElementById('user-orders');
-const userLogin = document.getElementById('user-login');
-const userCreateAccount = document.getElementById('user-create-account');
-const userForgotPassword = document.getElementById('user-forgot-password');
-const userAddresses = document.getElementById('user-addresses');
-
-const alzaButton = document.getElementById('alza-button');
-const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
+// Cache free shipping tags query
+let freeShippingTags = null;
+const getFreeShippingTags = () => {
+  if (!freeShippingTags) {
+    freeShippingTags = document.querySelectorAll('.free-shipping-tag');
+  }
+  return freeShippingTags;
+};
 
 // Message constants
 // Delivery Time Messages
@@ -261,66 +293,20 @@ const localeConfigs = {
   }
 };
 
-// Utility functions
-const getLanguage = () => {
-  const config = localeConfigs[locale];
-  return config ? config.language : 'cs';
-};
+// Cache current locale config for performance
+const currentLocaleConfig = localeConfigs[locale] || localeConfigs.cz;
 
-const getCountry = () => {
-  const config = localeConfigs[locale];
-  return config ? config.countryCode : 'CZ';
-};
+// Optimized utility functions with caching
+const getLanguage = () => currentLocaleConfig.language;
+const getCountry = () => currentLocaleConfig.countryCode;
+const getDomain = () => currentLocaleConfig.domain;
+const getAccessToken = () => currentLocaleConfig.accessToken;
+const getButtonText = () => currentLocaleConfig.buttonText;
+const getCart = () => currentLocaleConfig.cart;
+const getMoneyFormat = () => currentLocaleConfig.moneyFormat;
+const getProductIds = () => currentLocaleConfig.productIds;
 
-const getDomain = () => {
-  const config = localeConfigs[locale];
-  return config ? config.domain : 'meer-care.myshopify.com';
-};
-
-const getAccessToken = () => {
-  const config = localeConfigs[locale];
-  return config ? config.accessToken : 'd0790ee9d09c16714d92224efa9f5882';
-};
-
-const getButtonText = () => {
-  const config = localeConfigs[locale];
-  return config ? config.buttonText : 'Přidat do košíku';
-};
-
-const getCart = () => {
-  const config = localeConfigs[locale];
-  return config ? config.cart : {
-    title: "Košík",
-    total: "Mezisoučet",
-    empty: "Váš košík je prázdný.",
-    button: "Pokračovat k pokladně",
-    noteDescription: "Poznámka k objednávce",
-    notice: "Slevové kódy se přidávají u pokladny.",
-    outOfStock: "Vyprodáno",
-    unavailable: "Vyprodáno"
-  };
-};
-
-const getMoneyFormat = () => {
-  const config = localeConfigs[locale];
-  return config ? config.moneyFormat : '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D';
-};
-
-const getProductIds = () => {
-  const config = localeConfigs[locale];
-  return config ? config.productIds : {
-    setComplete: 8623720366405,
-    setI: 7542825058534,
-    setII: 8021842854118,
-    stepI: 7601486758118,
-    stepII: 7609802686694,
-    stepIII: 7931357692134,
-    stepIV: 7931360051430,
-    giftCard: 8578704736581
-  };
-};
-
-// Optimized function for waiting for DOM elements with error handling
+// Optimized function for waiting for DOM elements with performance improvements
 const waitForElements = async (selectors, maxWait = TIMEOUTS.MAX_DOM_WAIT) => {
   const startTime = Date.now();
   
@@ -330,19 +316,30 @@ const waitForElements = async (selectors, maxWait = TIMEOUTS.MAX_DOM_WAIT) => {
       return;
     }
     
+    // Use Set for O(1) lookup performance
+    const pendingSelectors = new Set(selectors);
+    const foundElements = new Map();
+    
     const checkElements = () => {
       try {
-        const elements = selectors.map(selector => document.getElementById(selector));
-        const allFound = elements.every(el => el !== null);
+        // Only check pending selectors for better performance
+        for (const selector of pendingSelectors) {
+          const element = getElement(selector);
+          if (element) {
+            foundElements.set(selector, element);
+            pendingSelectors.delete(selector);
+          }
+        }
         
-        if (allFound) {
-          resolve(elements);
+        // Early termination when all elements found
+        if (pendingSelectors.size === 0) {
+          resolve(selectors.map(selector => foundElements.get(selector)));
           return;
         }
         
         if ((Date.now() - startTime) >= maxWait) {
-          console.warn(`Timeout waiting for elements: ${selectors.join(', ')}`);
-          resolve(elements); // Resolve with partial results instead of rejecting
+          console.warn(`Timeout waiting for elements: ${Array.from(pendingSelectors).join(', ')}`);
+          resolve(selectors.map(selector => foundElements.get(selector) || null));
           return;
         }
         
@@ -357,36 +354,51 @@ const waitForElements = async (selectors, maxWait = TIMEOUTS.MAX_DOM_WAIT) => {
   });
 };
 
-// Preload Shopify SDK for faster initialization with retry mechanism
-const preloadShopifySDK = (retryCount = 0) => {
-  const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+// Optimized Shopify SDK preloading with performance improvements
+const preloadShopifySDK = (() => {
+  let isLoading = false;
+  let isLoaded = false;
   
-  if (!document.querySelector(`script[src="${scriptURL}"]`) && !window.ShopifyBuy) {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = scriptURL;
+  return (retryCount = 0) => {
+    if (isLoaded || isLoading) return;
     
-    script.onerror = () => {
-      console.error(`Failed to preload Shopify SDK (attempt ${retryCount + 1})`);
-      if (retryCount < TIMEOUTS.MAX_RETRIES) {
-        setTimeout(() => {
-          // Remove failed script
-          script.remove();
-          preloadShopifySDK(retryCount + 1);
-        }, TIMEOUTS.RETRY_DELAY * (retryCount + 1));
-      } else {
-        console.error('Max retries reached for Shopify SDK preload');
-      }
-    };
+    const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     
-    script.onload = () => {
-      console.log('Shopify SDK preloaded successfully');
-    };
+    if (window.ShopifyBuy) {
+      isLoaded = true;
+      return;
+    }
     
-    document.head.appendChild(script);
-    console.log(`Shopify SDK preloading started (attempt ${retryCount + 1})`);
-  }
-};
+    if (!document.querySelector(`script[src="${scriptURL}"]`)) {
+      isLoading = true;
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      
+      script.onerror = () => {
+        isLoading = false;
+        console.error(`Failed to preload Shopify SDK (attempt ${retryCount + 1})`);
+        if (retryCount < TIMEOUTS.MAX_RETRIES) {
+          setTimeout(() => {
+            script.remove();
+            preloadShopifySDK(retryCount + 1);
+          }, TIMEOUTS.RETRY_DELAY * (retryCount + 1));
+        } else {
+          console.error('Max retries reached for Shopify SDK preload');
+        }
+      };
+      
+      script.onload = () => {
+        isLoaded = true;
+        isLoading = false;
+        console.log('Shopify SDK preloaded successfully');
+      };
+      
+      document.head.appendChild(script);
+      console.log(`Shopify SDK preloading started (attempt ${retryCount + 1})`);
+    }
+  };
+})();
 
 // Function to clean up old localStorage records with improved error handling
 const cleanupOldCheckouts = () => {
@@ -449,63 +461,84 @@ const loadHeurekaWidget = () => {
   }
 };
 
-// Main functions - Analytics and tracking setup
+// Optimized analytics and tracking setup with performance improvements
 const setupTracking = (buttonText) => {
   try {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === 1) {
-              const buttons = node.querySelectorAll ? 
-                node.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])') : 
-                [];
-              
-              buttons.forEach(button => {
-                try {
-                  if (button.textContent && button.textContent.includes(buttonText)) {
-                    button.setAttribute('data-zaraz-tracked', 'true');
-                    
-                    button.addEventListener('click', function() {
-                      try {
-                        const shopifyWrapper = this.closest('.shopify-button');
-                        
-                        if (shopifyWrapper) {
-                          const eventData = {
-                            product_id: shopifyWrapper.getAttribute('data-product-id'),
-                            product_name: shopifyWrapper.getAttribute('data-product-name'),
-                            price: parseFloat(shopifyWrapper.getAttribute('data-price')) || 0,
-                            quantity: 1
-                          };
-                          
-                          if (typeof zaraz !== 'undefined') {
-                            zaraz.track("add_to_cart", eventData);
-                            console.log('Tracking event sent:', eventData);
-                          } else {
-                            console.warn('Zaraz tracking not available');
-                          }
-                        }
-                      } catch (error) {
-                        console.error('Error in tracking click handler:', error);
-                      }
-                    });
-                  }
-                } catch (error) {
-                  console.error('Error processing button for tracking:', error);
-                }
-              });
-            }
-          });
-        }
-      });
-    });
+    // Debounced tracking function for better performance
+    const trackedButtons = new WeakSet();
     
+    const processButton = (button) => {
+      if (trackedButtons.has(button)) return;
+      
+      try {
+        if (button.textContent && button.textContent.includes(buttonText)) {
+          button.setAttribute('data-zaraz-tracked', 'true');
+          trackedButtons.add(button);
+          
+          button.addEventListener('click', function() {
+            try {
+              const shopifyWrapper = this.closest('.shopify-button');
+              
+              if (shopifyWrapper) {
+                const eventData = {
+                  product_id: shopifyWrapper.getAttribute('data-product-id'),
+                  product_name: shopifyWrapper.getAttribute('data-product-name'),
+                  price: parseFloat(shopifyWrapper.getAttribute('data-price')) || 0,
+                  quantity: 1
+                };
+                
+                if (typeof zaraz !== 'undefined') {
+                  zaraz.track("add_to_cart", eventData);
+                  console.log('Tracking event sent:', eventData);
+                } else {
+                  console.warn('Zaraz tracking not available');
+                }
+              }
+            } catch (error) {
+              console.error('Error in tracking click handler:', error);
+            }
+          }, { passive: true }); // Use passive listener for better performance
+        }
+      } catch (error) {
+        console.error('Error processing button for tracking:', error);
+      }
+    };
+    
+    // Debounced mutation handler
+    let debounceTimer;
+    const debouncedHandler = (mutations) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const buttonsToProcess = [];
+        
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === 1) {
+                const buttons = node.querySelectorAll ? 
+                  node.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])') : 
+                  [];
+                buttonsToProcess.push(...buttons);
+              }
+            });
+          }
+        });
+        
+        // Process buttons in batches for better performance
+        requestAnimationFrame(() => {
+          buttonsToProcess.forEach(processButton);
+        });
+      }, TIMEOUTS.DEBOUNCE_DELAY);
+    };
+    
+    const observer = new MutationObserver(debouncedHandler);
     observer.observe(document.body, { childList: true, subtree: true });
     
     // Cleanup after defined timeout
     setTimeout(() => {
       try {
         observer.disconnect();
+        clearTimeout(debounceTimer);
         console.log('Tracking observer cleaned up');
       } catch (error) {
         console.error('Error disconnecting tracking observer:', error);
@@ -519,14 +552,17 @@ const setupTracking = (buttonText) => {
 
 const initializeShopify = async () => {
   try {
-    const currentConfig = localeConfigs[locale];
-    if (!currentConfig) {
+    if (!currentLocaleConfig) {
       console.error('Shopify config is missing for locale:', locale);
       return;
     }
 
-    // Quick check - if no product elements exist, exit early
-    const hasAnyProductElement = Object.values(productElements).some(element => element !== null);
+    // Quick check using lazy-loaded elements
+    const hasAnyProductElement = Object.keys(productElements).some(key => {
+      const element = productElements[key];
+      return element !== null;
+    });
+    
     if (!hasAnyProductElement) {
       console.log('No product elements found initially - waiting for DOM...');
       
@@ -538,14 +574,11 @@ const initializeShopify = async () => {
         
         await waitForElements(productElementIds, TIMEOUTS.MAX_DOM_WAIT);
         
-        // Re-populate productElements after waiting
-        Object.keys(productElements).forEach(key => {
-          const elementId = `buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
-          productElements[key] = document.getElementById(elementId);
+        // Final check after waiting
+        const hasAnyProductElementFinal = Object.keys(productElements).some(key => {
+          return productElements[key] !== null;
         });
         
-        // Final check
-        const hasAnyProductElementFinal = Object.values(productElements).some(element => element !== null);
         if (!hasAnyProductElementFinal) {
           console.log('No product elements found after waiting - skipping Shopify initialization');
           return;
@@ -645,15 +678,15 @@ const initializeShopify = async () => {
             }
           };
 
-          // Create components with error handling
-          Object.entries(getProductIds()).forEach(([key, productId]) => {
+          // Create components with optimized error handling
+          const productIds = getProductIds();
+          const cartToggle = getCartToggle();
+          
+          Object.entries(productIds).forEach(([key, productId]) => {
             const element = productElements[key];
             if (!element) {
-              console.warn(`Element for ${key} (ID: buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}) not found`);
+              console.warn(`Element for ${key} not found`);
               return;
-            }
-            if (!cartToggle) {
-              console.warn('Cart toggle element missing - component may not work properly');
             }
             
             try {
@@ -670,7 +703,7 @@ const initializeShopify = async () => {
             }
           });
 
-          // Tracking with optimization
+          // Optimized tracking setup
           setupTracking(getButtonText());
         }).catch(error => console.error('Shopify UI initialization failed:', error));
       }).catch(error => console.error('Shopify checkout creation failed:', error));
@@ -697,8 +730,9 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
 
-    // User
-    userMenu && (userMenu.style.display = 'none');
+    // User menu optimization
+    const userMenuEl = userMenu;
+    if (userMenuEl) userMenuEl.style.display = 'none';
 
     // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for EN locale:', error));
@@ -710,12 +744,18 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
 
-    // User links - optimized for performance
-    userOrders && (userOrders.href = 'https://www.meer.beauty/account');
-    userLogin && (userLogin.href = 'https://www.meer.beauty/account/login');
-    userCreateAccount && (userCreateAccount.href = 'https://www.meer.beauty/account/register');
-    userForgotPassword && (userForgotPassword.href = 'https://www.meer.beauty/account/login#recover');
-    userAddresses && (userAddresses.href = 'https://www.meer.beauty/account/addresses');
+    // User links - optimized with lazy loading
+    const userOrders = getUserOrders();
+    const userLogin = getUserLogin();
+    const userCreateAccount = getUserCreateAccount();
+    const userForgotPassword = getUserForgotPassword();
+    const userAddresses = getUserAddresses();
+    
+    if (userOrders) userOrders.href = 'https://www.meer.beauty/account';
+    if (userLogin) userLogin.href = 'https://www.meer.beauty/account/login';
+    if (userCreateAccount) userCreateAccount.href = 'https://www.meer.beauty/account/register';
+    if (userForgotPassword) userForgotPassword.href = 'https://www.meer.beauty/account/login#recover';
+    if (userAddresses) userAddresses.href = 'https://www.meer.beauty/account/addresses';
     
     loadHeurekaWidget();
     
@@ -730,14 +770,21 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageDE);
 
     // Hide alza-button if it exists
-    alzaButton && (alzaButton.style.display = 'none');
+    const alzaButton = getAlzaButton();
+    if (alzaButton) alzaButton.style.display = 'none';
 
-    // User links - optimized for performance
-    userOrders && (userOrders.href = 'https://www.meer.beauty/account');
-    userLogin && (userLogin.href = 'https://www.meer.beauty/account/login');
-    userCreateAccount && (userCreateAccount.href = 'https://www.meer.beauty/account/register');
-    userForgotPassword && (userForgotPassword.href = 'https://www.meer.beauty/account/login#recover');
-    userAddresses && (userAddresses.href = 'https://www.meer.beauty/account/addresses');
+    // User links - optimized with lazy loading
+    const userOrdersDE = getUserOrders();
+    const userLoginDE = getUserLogin();
+    const userCreateAccountDE = getUserCreateAccount();
+    const userForgotPasswordDE = getUserForgotPassword();
+    const userAddressesDE = getUserAddresses();
+    
+    if (userOrdersDE) userOrdersDE.href = 'https://www.meer.beauty/account';
+    if (userLoginDE) userLoginDE.href = 'https://www.meer.beauty/account/login';
+    if (userCreateAccountDE) userCreateAccountDE.href = 'https://www.meer.beauty/account/register';
+    if (userForgotPasswordDE) userForgotPasswordDE.href = 'https://www.meer.beauty/account/login#recover';
+    if (userAddressesDE) userAddressesDE.href = 'https://www.meer.beauty/account/addresses';
 
     // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for DE locale:', error));
@@ -749,28 +796,41 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
 
-    // User links - optimized for performance
-    userOrders && (userOrders.href = 'https://www.meer.beauty/account');
-    userLogin && (userLogin.href = 'https://www.meer.beauty/account/login');
-    userCreateAccount && (userCreateAccount.href = 'https://www.meer.beauty/account/register');
-    userForgotPassword && (userForgotPassword.href = 'https://www.meer.beauty/account/login#recover');
-    userAddresses && (userAddresses.href = 'https://www.meer.beauty/account/addresses');
+    // User links - optimized with lazy loading
+    const userOrdersFR = getUserOrders();
+    const userLoginFR = getUserLogin();
+    const userCreateAccountFR = getUserCreateAccount();
+    const userForgotPasswordFR = getUserForgotPassword();
+    const userAddressesFR = getUserAddresses();
+    
+    if (userOrdersFR) userOrdersFR.href = 'https://www.meer.beauty/account';
+    if (userLoginFR) userLoginFR.href = 'https://www.meer.beauty/account/login';
+    if (userCreateAccountFR) userCreateAccountFR.href = 'https://www.meer.beauty/account/register';
+    if (userForgotPasswordFR) userForgotPasswordFR.href = 'https://www.meer.beauty/account/login#recover';
+    if (userAddressesFR) userAddressesFR.href = 'https://www.meer.beauty/account/addresses';
 
     // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for FR locale:', error));
     break;
+    
   // Poland
   case 'pl':
     if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
 
-    // User links - optimized for performance
-    userOrders && (userOrders.href = 'https://meercarepl.cz/account');
-    userLogin && (userLogin.href = 'https://meercarepl.cz/account/login');
-    userCreateAccount && (userCreateAccount.href = 'https://meercarepl.cz/account/register');
-    userForgotPassword && (userForgotPassword.href = 'https://meercarepl.cz/account/login#recover');
-    userAddresses && (userAddresses.href = 'https://meercarepl.cz/account/addresses');
+    // User links - optimized with lazy loading
+    const userOrdersPL = getUserOrders();
+    const userLoginPL = getUserLogin();
+    const userCreateAccountPL = getUserCreateAccount();
+    const userForgotPasswordPL = getUserForgotPassword();
+    const userAddressesPL = getUserAddresses();
+    
+    if (userOrdersPL) userOrdersPL.href = 'https://meercarepl.cz/account';
+    if (userLoginPL) userLoginPL.href = 'https://meercarepl.cz/account/login';
+    if (userCreateAccountPL) userCreateAccountPL.href = 'https://meercarepl.cz/account/register';
+    if (userForgotPasswordPL) userForgotPasswordPL.href = 'https://meercarepl.cz/account/login#recover';
+    if (userAddressesPL) userAddressesPL.href = 'https://meercarepl.cz/account/addresses';
 
     // Asynchronous initialization with error handling
     initializeShopify().catch(error => console.error('Shopify initialization failed for PL locale:', error));
