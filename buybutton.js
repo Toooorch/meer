@@ -1,11 +1,12 @@
+// Environment detection (for console logging)
+if (typeof process === 'undefined') {
+  globalThis.process = { env: { NODE_ENV: 'production' } };
+}
+
 const href = window.location.href;
 const getLocale = () => {
-  if (href.includes('en.meer.care')) return 'en';
-  if (href.includes('sk.meer.care')) return 'sk';
-  if (href.includes('de.meer.care')) return 'de';
-  if (href.includes('fr.meer.care')) return 'fr';
-  if (href.includes('pl.meer.care')) return 'pl';
-  return 'cz'; // default
+  const match = href.match(/\/\/(en|sk|de|fr|pl)\.meer\./);
+  return match ? match[1] : 'cz';
 };
 
 const locale = getLocale();
@@ -20,13 +21,6 @@ const deliveryDate = document.getElementById("delivery-date");
 const navDeliveryTrashold = document.getElementById("nav-delivery-treshold");
 const navDeliveryTime = document.getElementById("nav-delivery-speed");
 const userMenu = document.getElementById("user-menu");
-
-// Utility function for updating multiple elements
-const updateElements = (elements, text) => {
-  elements.forEach(element => {
-    if (element) element.textContent = text;
-  });
-};
 
 // Helper function to update both nav and footer elements
 const updateDeliveryElements = (navElement, footerElement, text) => {
@@ -54,7 +48,6 @@ const userForgotPassword = document.getElementById('user-forgot-password');
 const userAddresses = document.getElementById('user-addresses');
 
 const alzaButton = document.getElementById('alza-button');
-const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
 
 // Message constants
 // Delivery Time
@@ -65,18 +58,11 @@ const deliveryMessagePL = "Dostawa 1-3 dni";
 const deliveryMessageFR = "Livraison en 2-5 jours";
 
 // Free Delivery
-//const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
-//const deliveryMessageCZ = "Rychlé odeslání";
 const deliveryMessageCZ = "Doprava nyní ZDARMA";
-//const deliveryMessageCZ = "Doprava DNES ZDARMA";
-//const trasholdMessagePL = "Darmowa wysyłka od 200zł";
 const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
 const trasholdMessageEN = "Free Delivery from $50";
 const trasholdMessageSK = "Doprava teraz ZADARMO";
-//const trasholdMessageSK = "Doprava dnes ZADARMO";
-//const trasholdMessageSK = "Doprava zadarmo od €30";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
-//const trasholdMessageDE = "Kostenloser Versand ab €60";
 const trasholdMessageDE = "Jetzt kostenloser Versand";
 
 // Configuration objects
@@ -251,63 +237,26 @@ const localeConfigs = {
   }
 };
 
-// 6. POTOM - Utility functions
-const getLanguage = () => {
-  const config = localeConfigs[locale];
-  return config ? config.language : 'cs';
-};
+// Get current config (with fallback)
+const getCurrentConfig = () => localeConfigs[locale] || localeConfigs.cz;
 
-const getCountry = () => {
-  const config = localeConfigs[locale];
-  return config ? config.countryCode : 'CZ';
-};
+// 6. POTOM - Utility functions (direct access to config)
+const getLanguage = () => getCurrentConfig().language;
+const getCountry = () => getCurrentConfig().countryCode;
+const getDomain = () => getCurrentConfig().domain;
+const getAccessToken = () => getCurrentConfig().accessToken;
+const getButtonText = () => getCurrentConfig().buttonText;
+const getCart = () => getCurrentConfig().cart;
+const getMoneyFormat = () => getCurrentConfig().moneyFormat;
+const getProductIds = () => getCurrentConfig().productIds;
 
-const getDomain = () => {
-  const config = localeConfigs[locale];
-  return config ? config.domain : 'meer-care.myshopify.com';
-};
-
-const getAccessToken = () => {
-  const config = localeConfigs[locale];
-  return config ? config.accessToken : 'd0790ee9d09c16714d92224efa9f5882';
-};
-
-const getButtonText = () => {
-  const config = localeConfigs[locale];
-  return config ? config.buttonText : 'Přidat do košíku';
-};
-
-const getCart = () => {
-  const config = localeConfigs[locale];
-  return config ? config.cart : {
-    title: "Košík",
-    total: "Mezisoučet",
-    empty: "Váš košík je prázdný.",
-    button: "Pokračovat k pokladně",
-    noteDescription: "Poznámka k objednávce",
-    notice: "Slevové kódy se přidávají u pokladny.",
-    outOfStock: "Vyprodáno",
-    unavailable: "Vyprodáno"
-  };
-};
-
-const getMoneyFormat = () => {
-  const config = localeConfigs[locale];
-  return config ? config.moneyFormat : '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D';
-};
-
-const getProductIds = () => {
-  const config = localeConfigs[locale];
-  return config ? config.productIds : {
-    setComplete: 8623720366405,
-    setI: 7542825058534,
-    setII: 8021842854118,
-    stepI: 7601486758118,
-    stepII: 7609802686694,
-    stepIII: 7931357692134,
-    stepIV: 7931360051430,
-    giftCard: 8578704736581
-  };
+// Helper function to update user account links
+const updateUserLinks = (baseUrl) => {
+  if (userOrders) userOrders.href = `${baseUrl}/account`;
+  if (userLogin) userLogin.href = `${baseUrl}/account/login`;
+  if (userCreateAccount) userCreateAccount.href = `${baseUrl}/account/register`;
+  if (userForgotPassword) userForgotPassword.href = `${baseUrl}/account/login#recover`;
+  if (userAddresses) userAddresses.href = `${baseUrl}/account/addresses`;
 };
 
 // Funkce pro vyčištění starých localStorage záznamů
@@ -327,83 +276,23 @@ const cleanupOldCheckouts = () => {
       localStorage.removeItem(key);
     });
     
-    console.log('Cleaned up old checkout IDs from localStorage');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Cleaned up old checkout IDs from localStorage');
+    }
   } catch (error) {
-    console.warn('Could not clean localStorage:', error);
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('Could not clean localStorage:', error);
+    }
   }
-};
-
-const loadHeurekaWidget = () => {
-  console.log('loadHeurekaWidget called');
-  
-  // Najdi a odstraň starý Heureka script
-  const existingScripts = document.querySelectorAll('script[src*="heureka"], script[src*="im9.cz"]');
-  if (existingScripts.length > 0) {
-    console.log('Found', existingScripts.length, 'existing Heureka scripts, removing them...');
-    existingScripts.forEach(script => {
-      script.remove();
-      console.log('Removed old Heureka script:', script.src);
-    });
-  }
-  
-  // Vyčisti i starý widget element, pokud existuje
-  const oldWidget = document.getElementById('hw-87kwowifjjowiklsadh666');
-  if (oldWidget) {
-    oldWidget.remove();
-    console.log('Removed old Heureka widget element');
-  }
-  
-  console.log('Loading new Heureka widget...');
-  
-  // Inicializace fronty před načtením scriptu
-  window._hwq = window._hwq || [];
-  console.log('_hwq initialized:', window._hwq);
-  
-  // Responzivní pozice podle velikosti obrazovky
-  const isMobile = window.innerWidth <= 768;
-  const topPosition = isMobile ? '80' : '152';
-  console.log('Device:', isMobile ? 'mobile' : 'desktop', 'topPosition:', topPosition);
-  
-  // Přidání příkazů do fronty
-  _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
-  _hwq.push(['setTopPos', topPosition]);
-  _hwq.push(['showWidget']); // Bez parametru - zobrazí na všech zařízeních
-  console.log('Commands pushed to _hwq:', _hwq);
-  
-  // Načtení scriptu - zkusíme nejdřív jsDelivr, pak fallback na Heureka CDN
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://cdn.jsdelivr.net/gh/Toooorch/meer@d16912119b4b5b26b9d03fdfb583105baa6a7060/heureka-widget.min.js';
-  
-  script.onload = () => {
-    console.log('Heureka widget loaded successfully from jsDelivr');
-  };
-  
-  script.onerror = () => {
-    console.warn('Heureka widget from jsDelivr failed, trying original CDN');
-    // Fallback na původní Heureka CDN
-    const fallbackScript = document.createElement('script');
-    fallbackScript.async = true;
-    fallbackScript.src = 'https://cz.im9.cz/direct/i/gjs.php?n=wdgt&sak=DE44F0D5D122B2322E7114114A9957A9';
-    
-    fallbackScript.onload = () => {
-      console.log('Heureka widget loaded successfully from original CDN');
-    };
-    
-    fallbackScript.onerror = () => {
-      console.error('Heureka widget failed to load from both CDNs');
-    };
-    
-    document.head.appendChild(fallbackScript);
-  };
-  
-  document.head.appendChild(script);
-  console.log('New Heureka script added to head');
 };
 
 // 7. POTOM - Main functions
 const setupTracking = (buttonText) => {
+  let isTrackingComplete = false;
+  
   const observer = new MutationObserver((mutations) => {
+    if (isTrackingComplete) return;
+    
     mutations.forEach((mutation) => {
       if (mutation.type === 'childList') {
         mutation.addedNodes.forEach((node) => {
@@ -434,6 +323,12 @@ const setupTracking = (buttonText) => {
                 });
               }
             });
+            
+            // Pokud jsme našli tlačítka, můžeme ukončit sledování
+            if (buttons.length > 0) {
+              isTrackingComplete = true;
+              observer.disconnect();
+            }
           }
         });
       }
@@ -442,26 +337,38 @@ const setupTracking = (buttonText) => {
   
   observer.observe(document.body, { childList: true, subtree: true });
   
-  // Cleanup po 30 sekundách
-  setTimeout(() => observer.disconnect(), 30000);
+  // Fallback cleanup po 30 sekundách
+  setTimeout(() => {
+    if (!isTrackingComplete) {
+      observer.disconnect();
+    }
+  }, 30000);
+  
+  // Cleanup při opuštění stránky
+  window.addEventListener('beforeunload', () => observer.disconnect(), { once: true });
 };
 
 const initializeShopify = () => {
-  const currentConfig = localeConfigs[locale];
+  const currentConfig = getCurrentConfig();
+  
   if (!currentConfig) {
-    console.error('Shopify config is missing for locale:', locale);
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('Shopify config is missing for locale:', locale);
+    }
     return;
   }
 
   // Kontrola existence alespoň jednoho produktového elementu
   const hasAnyProductElement = Object.values(productElements).some(element => element !== null);
   if (!hasAnyProductElement) {
-    console.log('No product elements found - skipping Shopify initialization');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('No product elements found - skipping Shopify initialization');
+    }
     return;
   }
 
   // Kontrola základních elementů
-  if (!cartToggle) {
+  if (!cartToggle && process.env.NODE_ENV !== 'production') {
     console.warn('Cart toggle element not found - buy buttons may not work properly');
   }
 
@@ -480,12 +387,16 @@ const initializeShopify = () => {
     script.async = true;
     script.src = scriptURL;
     script.onload = ShopifyBuyInit;
-    script.onerror = () => console.error('Failed to load Shopify SDK');
+    script.onerror = () => {
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Failed to load Shopify SDK');
+      }
+    };
     document.head.appendChild(script);
     
     // Timeout pro loading Shopify SDK
     setTimeout(() => {
-      if (!window.ShopifyBuy) {
+      if (!window.ShopifyBuy && process.env.NODE_ENV !== 'production') {
         console.error('Shopify SDK failed to load within 10 seconds timeout');
       }
     }, 10000);
@@ -507,21 +418,28 @@ const initializeShopify = () => {
 
       // Klíč pro localStorage
       const localStorageCheckoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
-      console.log('Creating checkout for:', {
-        locale,
-        domain: client.config.domain,
-        accessToken: client.config.storefrontAccessToken,
-        language: getLanguage(),
-        country: getCountry()
-      });
+      
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Creating checkout for:', {
+          locale,
+          domain: client.config.domain,
+          accessToken: client.config.storefrontAccessToken,
+          language: getLanguage(),
+          country: getCountry()
+        });
+      }
 
       client.checkout.create(input).then((checkout) => {
         // Uložení checkout ID do localStorage
         try {
           localStorage.setItem(localStorageCheckoutKey, checkout.id);
-          console.log('Checkout created successfully:', checkout.id);
+          if (process.env.NODE_ENV !== 'production') {
+            console.log('Checkout created successfully:', checkout.id);
+          }
         } catch (error) {
-          console.warn('Could not save to localStorage:', error);
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn('Could not save to localStorage:', error);
+          }
         }
         
         ShopifyBuy.UI.onReady(client).then(function (ui) {
@@ -558,10 +476,12 @@ const initializeShopify = () => {
           Object.entries(getProductIds()).forEach(([key, productId]) => {
             const element = productElements[key];
             if (!element) {
-              console.warn(`Element for ${key} (ID: buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}) not found`);
+              if (process.env.NODE_ENV !== 'production') {
+                console.warn(`Element for ${key} (ID: buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}) not found`);
+              }
               return;
             }
-            if (!cartToggle) {
+            if (!cartToggle && process.env.NODE_ENV !== 'production') {
               console.warn('Cart toggle element missing - component may not work properly');
             }
             
@@ -573,18 +493,32 @@ const initializeShopify = () => {
                 moneyFormat: getMoneyFormat(),
                 options: options
               });
-              console.log(`Successfully created component for ${key}`);
+              if (process.env.NODE_ENV !== 'production') {
+                console.log(`Successfully created component for ${key}`);
+              }
             } catch (error) {
-              console.error(`Failed to create Shopify component for ${key}:`, error);
+              if (process.env.NODE_ENV !== 'production') {
+                console.error(`Failed to create Shopify component for ${key}:`, error);
+              }
             }
           });
 
           // Tracking s optimalizací
           setupTracking(getButtonText());
-        }).catch(error => console.error('Shopify UI initialization failed:', error));
-      }).catch(error => console.error('Shopify checkout creation failed:', error));
+        }).catch(error => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.error('Shopify UI initialization failed:', error);
+          }
+        });
+      }).catch(error => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('Shopify checkout creation failed:', error);
+        }
+      });
     } catch (error) {
-      console.error('Shopify initialization failed:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Shopify initialization failed:', error);
+      }
     }
   }
 };
@@ -593,11 +527,16 @@ const initializeShopify = () => {
 let deliveryMessage;
 
 // 9. EXECUTION - Switch statement na konci
-console.log('Current locale:', locale);
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Current locale:', locale);
+}
+
 switch (locale) {
   // English
   case 'en':
-    console.log('Locale: English');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Locale: English');
+    }
     if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
@@ -610,20 +549,15 @@ switch (locale) {
   
   // Slovakia
   case 'sk':
-    console.log('Locale: Slovakia - Heureka should load');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Locale: Slovakia');
+    }
     if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
 
     // User links
-    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
-    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
-    
-    // Heureka widget
-    loadHeurekaWidget();
+    updateUserLinks('https://www.meer.beauty');
     
     initializeShopify();
     break;
@@ -640,11 +574,7 @@ switch (locale) {
     }
 
     // User links
-    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
-    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
+    updateUserLinks('https://www.meer.beauty');
 
     initializeShopify();
     break;
@@ -656,14 +586,11 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
 
     // User links
-    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
-    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
+    updateUserLinks('https://www.meer.beauty');
 
     initializeShopify();
     break;
+  
   // Poland
   case 'pl':
     if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
@@ -671,17 +598,15 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
 
     // User links
-    Object.assign(userOrders, {href: 'https://meercarepl.cz/account'});
-    Object.assign(userLogin, {href: 'https://meercarepl.cz/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://meercarepl.cz/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://meercarepl.cz/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://meercarepl.cz/account/addresses'});
+    updateUserLinks('https://meercarepl.cz');
 
     initializeShopify();
     break;
 
   default:
-    console.log('Locale: Default (Czech) - Heureka should load');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Locale: Default (Czech)');
+    }
     const getDeliveryMessage = () => {
       const dayMessages = {
         1: "pozítří u Vás", // Mon
@@ -701,7 +626,6 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
 
-    loadHeurekaWidget();
     initializeShopify();
     break;
 }
