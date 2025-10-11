@@ -334,23 +334,32 @@ const cleanupOldCheckouts = () => {
 };
 
 const loadHeurekaWidget = () => {
-  if (!document.querySelector('script[src*="heureka"]')) {
-    const script = document.createElement('script');
-    script.async = true;
-    // Použití skriptu z GitHub přes jsDelivr CDN pro lepší výkon
-    script.src = 'https://cdn.jsdelivr.net/gh/Toooorch/meer@main/heureka-widget.js';
-    document.head.appendChild(script);
-    
+  if (!document.querySelector('script[src*="heureka"]') && !document.querySelector('script[src*="im9.cz"]')) {
+    // Inicializace fronty před načtením scriptu
     window._hwq = window._hwq || [];
-    _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
     
     // Responzivní pozice podle velikosti obrazovky
     const isMobile = window.innerWidth <= 768;
     const topPosition = isMobile ? '80' : '152';
-    _hwq.push(['setTopPos', topPosition]);
     
-    // Zobrazení widgetu bez omezení (odstraněno '21' které blokovalo mobily)
-    _hwq.push(['showWidget']);
+    // Přidání příkazů do fronty
+    _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
+    _hwq.push(['setTopPos', topPosition]);
+    _hwq.push(['showWidget']); // Bez parametru - zobrazí na všech zařízeních
+    
+    // Načtení scriptu - zkusíme nejdřív jsDelivr, pak fallback na Heureka CDN
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://cdn.jsdelivr.net/gh/Toooorch/meer@main/heureka-widget.js';
+    script.onerror = () => {
+      console.warn('Heureka widget from jsDelivr failed, trying original CDN');
+      // Fallback na původní Heureka CDN
+      const fallbackScript = document.createElement('script');
+      fallbackScript.async = true;
+      fallbackScript.src = 'https://cz.im9.cz/direct/i/gjs.php?n=wdgt&sak=DE44F0D5D122B2322E7114114A9957A9';
+      document.head.appendChild(fallbackScript);
+    };
+    document.head.appendChild(script);
   }
 };
 
