@@ -1,39 +1,43 @@
-// Environment & Locale Setup
-typeof process === 'undefined' && (globalThis.process = { env: { NODE_ENV: 'production' } });
-const isDev = process.env.NODE_ENV !== 'production';
-const localeMatch = window.location.href.match(/\/\/(en|sk|de|fr|pl)\.meer\./);
-const locale = localeMatch ? localeMatch[1] : 'cz';
-const dayOfWeek = new Date().getDay();
+// Wrap in IIFE to avoid global namespace pollution
+(function() {
+  'use strict';
 
-// DOM Cache
-const $ = id => document.getElementById(id);
-const dom = {
-  deliveryTrashold: $("delivery-treshold"),
-  deliveryTime: $("delivery-speed"),
-  deliveryDate: $("delivery-date"),
-  navDeliveryTrashold: $("nav-delivery-treshold"),
-  navDeliveryTime: $("nav-delivery-speed"),
-  userMenu: $("user-menu"),
-  cartToggle: $("cart-toggle"),
-  alzaButton: $("alza-button"),
-  userLinks: {
-    orders: $('user-orders'),
-    login: $('user-login'),
-    createAccount: $('user-create-account'),
-    forgotPassword: $('user-forgot-password'),
-    addresses: $('user-addresses')
-  },
-  products: {
-    setComplete: $('buy-button-set-complete'),
-    setI: $('buy-button-set-I'),
-    setII: $('buy-button-set-II'),
-    stepI: $('buy-button-step-I'),
-    stepII: $('buy-button-step-II'),
-    stepIII: $('buy-button-step-III'),
-    stepIV: $('buy-button-step-IV'),
-    giftCard: $('buy-button-gift-card')
-  }
-};
+  // Environment & Locale Setup
+  typeof process === 'undefined' && (globalThis.process = { env: { NODE_ENV: 'production' } });
+  const isDev = process.env.NODE_ENV !== 'production';
+  const localeMatch = window.location.href.match(/\/\/(en|sk|de|fr|pl)\.meer\./);
+  const locale = localeMatch ? localeMatch[1] : 'cz';
+  const dayOfWeek = new Date().getDay();
+
+  // DOM Cache helper (renamed to avoid jQuery conflict)
+  const getEl = id => document.getElementById(id);
+  const dom = {
+    deliveryTrashold: getEl("delivery-treshold"),
+    deliveryTime: getEl("delivery-speed"),
+    deliveryDate: getEl("delivery-date"),
+    navDeliveryTrashold: getEl("nav-delivery-treshold"),
+    navDeliveryTime: getEl("nav-delivery-speed"),
+    userMenu: getEl("user-menu"),
+    cartToggle: getEl("cart-toggle"),
+    alzaButton: getEl("alza-button"),
+    userLinks: {
+      orders: getEl('user-orders'),
+      login: getEl('user-login'),
+      createAccount: getEl('user-create-account'),
+      forgotPassword: getEl('user-forgot-password'),
+      addresses: getEl('user-addresses')
+    },
+    products: {
+      setComplete: getEl('buy-button-set-complete'),
+      setI: getEl('buy-button-set-I'),
+      setII: getEl('buy-button-set-II'),
+      stepI: getEl('buy-button-step-I'),
+      stepII: getEl('buy-button-step-II'),
+      stepIII: getEl('buy-button-step-III'),
+      stepIV: getEl('buy-button-step-IV'),
+      giftCard: getEl('buy-button-gift-card')
+    }
+  };
 
 // Helpers
 const updateDelivery = (nav, footer, text) => (nav && (nav.textContent = text), footer && (footer.textContent = text));
@@ -306,16 +310,18 @@ const initializeShopify = () => {
   }
 };
 
-// Initialization
-isDev && console.log('Current locale:', locale);
+  // Initialization
+  isDev && console.log('Current locale:', locale);
 
-const deliverySpeed = typeof config.delivery.speed === 'function' ? config.delivery.speed() : config.delivery.speed;
-dom.deliveryDate && (dom.deliveryDate.textContent = deliverySpeed);
-updateDelivery(dom.navDeliveryTrashold, dom.deliveryTrashold, config.delivery.threshold);
-updateDelivery(dom.navDeliveryTime, dom.deliveryTime, deliverySpeed);
+  const deliverySpeed = typeof config.delivery.speed === 'function' ? config.delivery.speed() : config.delivery.speed;
+  dom.deliveryDate && (dom.deliveryDate.textContent = deliverySpeed);
+  updateDelivery(dom.navDeliveryTrashold, dom.deliveryTrashold, config.delivery.threshold);
+  updateDelivery(dom.navDeliveryTime, dom.deliveryTime, deliverySpeed);
 
-config.hideUserMenu && dom.userMenu && (dom.userMenu.style.display = 'none');
-config.hideAlzaButton && dom.alzaButton && (dom.alzaButton.style.display = 'none');
-config.userBaseUrl && updateUserLinks(config.userBaseUrl);
+  config.hideUserMenu && dom.userMenu && (dom.userMenu.style.display = 'none');
+  config.hideAlzaButton && dom.alzaButton && (dom.alzaButton.style.display = 'none');
+  config.userBaseUrl && updateUserLinks(config.userBaseUrl);
 
-initializeShopify();
+  initializeShopify();
+
+})(); // End IIFE
