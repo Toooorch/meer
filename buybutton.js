@@ -194,12 +194,21 @@
   };
 
   const setupFallbackButtons = () => {
+    let created = 0;
     Object.entries(config.productIds).forEach(([key, productId]) => {
       const el = getEl(`buy-button-${key}`);
-      if (el && !el.querySelector('button')) {
-        el.appendChild(createFallbackButton(productId, config.buttonText));
+      console.log(`[Shopify] Checking buy-button-${key}:`, el ? 'EXISTS' : 'MISSING', el);
+      if (el) {
+        const hasButton = el.querySelector('button');
+        console.log(`  -> has button already:`, !!hasButton);
+        if (!hasButton) {
+          el.appendChild(createFallbackButton(productId, config.buttonText));
+          created++;
+          console.log(`  -> fallback created`);
+        }
       }
     });
+    console.log(`[Shopify] Created ${created} fallback buttons`);
   };
 
   // ===== PRIORITA 1: Ihned nastav fallback buttony (< 1ms) =====
@@ -311,14 +320,21 @@
 
         // Vytvoř komponenty pro každý produkt
         let successCount = 0;
+        console.log('[Shopify] Creating components for products:', Object.keys(config.productIds));
         Object.entries(config.productIds).forEach(([key, productId]) => {
+          console.log(`[Shopify] Processing ${key}...`);
           const el = getEl(`buy-button-${key}`);
+          console.log(`  -> Element:`, el ? 'found' : 'NOT FOUND');
           if (el) {
             try {
               // Vymaž fallback button
               const fallback = el.querySelector('.shopify-fallback-btn');
-              if (fallback) fallback.remove();
+              if (fallback) {
+                console.log(`  -> Removing fallback button`);
+                fallback.remove();
+              }
 
+              console.log(`  -> Creating Shopify component for product ${productId}`);
               ui.createComponent('product', {
                 id: [productId],
                 node: el,
@@ -326,9 +342,10 @@
                 options
               });
               successCount++;
+              console.log(`  -> Success!`);
             } catch (e) {
               // Chyba - fallback button zůstane
-              console.debug(`[Shopify] Failed to create component for ${key}`);
+              console.error(`[Shopify] Failed to create component for ${key}:`, e.message);
             }
           }
         });
