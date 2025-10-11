@@ -337,13 +337,20 @@ const loadHeurekaWidget = () => {
   if (!document.querySelector('script[src*="heureka"]')) {
     const script = document.createElement('script');
     script.async = true;
-    script.src = 'https://cz.im9.cz/direct/i/gjs.php?n=wdgt&sak=DE44F0D5D122B2322E7114114A9957A9';
+    // Použití skriptu z GitHub přes jsDelivr CDN pro lepší výkon
+    script.src = 'https://cdn.jsdelivr.net/gh/Toooorch/meer@main/heureka-widget.js';
     document.head.appendChild(script);
     
     window._hwq = window._hwq || [];
     _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
-    _hwq.push(['setTopPos', '152']);
-    _hwq.push(['showWidget', '21']);
+    
+    // Responzivní pozice podle velikosti obrazovky
+    const isMobile = window.innerWidth <= 768;
+    const topPosition = isMobile ? '80' : '152';
+    _hwq.push(['setTopPos', topPosition]);
+    
+    // Zobrazení widgetu bez omezení (odstraněno '21' které blokovalo mobily)
+    _hwq.push(['showWidget']);
   }
 };
 

@@ -78,3 +78,36 @@
 .shopify-buy-frame--toggle:not(.is-sticky) {
     overflow: visible !important;;
 }
+
+/* Heureka widget - responzivní styly */
+#hw-87kwowifjjowiklsadh666 {
+    z-index: 999999 !important;
+}
+
+/* Mobilní zařízení */
+@media only screen and (max-width: 768px) {
+    #hw-87kwowifjjowiklsadh666 {
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    /* Menší velikost pro mobily */
+    #hw-87kwowifjjowiklsadh666 iframe {
+        transform: scale(0.9);
+        transform-origin: right top;
+    }
+}
+
+/* Tablety */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    #hw-87kwowifjjowiklsadh666 {
+        display: block !important;
+    }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1025px) {
+    #hw-87kwowifjjowiklsadh666 {
+        display: block !important;
+    }
+}
