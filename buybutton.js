@@ -6,6 +6,15 @@
   const locale = localeMatch ? localeMatch[1] : 'cz';
   const dayOfWeek = new Date().getDay();
 
+  // Check Zaraz availability (silent check)
+  const isZarazAvailable = () => {
+    try {
+      return typeof zaraz !== 'undefined' && typeof zaraz.track === 'function';
+    } catch (e) {
+      return false;
+    }
+  };
+
   // DOM Cache helper
   const getEl = id => document.getElementById(id);
   const dom = {
@@ -240,16 +249,27 @@
             btn.setAttribute('data-zaraz-tracked', 'true');
             btn.addEventListener('click', function() {
               const wrapper = this.closest('.shopify-button');
-              if (wrapper && typeof zaraz !== 'undefined') {
+              if (!wrapper) return;
+              
+              // Only track if zaraz is available and properly loaded
+              if (isZarazAvailable()) {
                 try {
-                  zaraz.track("add_to_cart", {
-                    product_id: wrapper.getAttribute('data-product-id'),
-                    product_name: wrapper.getAttribute('data-product-name'),
-                    price: parseFloat(wrapper.getAttribute('data-price')),
-                    quantity: 1
-                  });
+                  const productId = wrapper.getAttribute('data-product-id');
+                  const productName = wrapper.getAttribute('data-product-name');
+                  const price = wrapper.getAttribute('data-price');
+                  
+                  // Only track if we have valid data
+                  if (productId && productName) {
+                    zaraz.track("add_to_cart", {
+                      product_id: productId,
+                      product_name: productName,
+                      price: price ? parseFloat(price) : 0,
+                      quantity: 1
+                    });
+                  }
                 } catch (e) {
-                  console.warn('Zaraz tracking error:', e);
+                  // Silent fail - don't block the user
+                  console.debug('Zaraz tracking skipped:', e.message);
                 }
               }
             }, { once: true });
@@ -297,18 +317,23 @@
 
       button.addEventListener('click', (e) => {
         e.preventDefault();
-        try {
-          if (typeof zaraz !== 'undefined') {
+        
+        // Track only if zaraz is properly configured
+        if (isZarazAvailable()) {
+          try {
             zaraz.track("add_to_cart", {
               product_id: productId,
               product_name: key,
               price: 0,
               quantity: 1
             });
+          } catch (err) {
+            // Silent fail - tracking is not critical
+            console.debug('Zaraz fallback tracking skipped:', err.message);
           }
-        } catch (e) {
-          console.warn('Zaraz fallback tracking error:', e);
         }
+        
+        // Redirect to cart regardless of tracking
         window.location.href = `${checkoutBaseURL}${productId}:1`;
       });
 
