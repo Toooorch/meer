@@ -1,69 +1,50 @@
-// Environment detection (for console logging)
-if (typeof process === 'undefined') {
-  globalThis.process = { env: { NODE_ENV: 'production' } };
-}
-
-const href = window.location.href;
-const getLocale = () => {
-  const match = href.match(/\/\/(en|sk|de|fr|pl)\.meer\./);
-  return match ? match[1] : 'cz';
-};
-
-const locale = getLocale();
-
-// - Date/time constants
+// Environment & Locale Setup
+typeof process === 'undefined' && (globalThis.process = { env: { NODE_ENV: 'production' } });
+const isDev = process.env.NODE_ENV !== 'production';
+const localeMatch = window.location.href.match(/\/\/(en|sk|de|fr|pl)\.meer\./);
+const locale = localeMatch ? localeMatch[1] : 'cz';
 const dayOfWeek = new Date().getDay();
 
-// DOM elements
-const deliveryTrashold = document.getElementById("delivery-treshold");
-const deliveryTime = document.getElementById("delivery-speed");
-const deliveryDate = document.getElementById("delivery-date");
-const navDeliveryTrashold = document.getElementById("nav-delivery-treshold");
-const navDeliveryTime = document.getElementById("nav-delivery-speed");
-const userMenu = document.getElementById("user-menu");
-
-// Helper function to update both nav and footer elements
-const updateDeliveryElements = (navElement, footerElement, text) => {
-  if (navElement) navElement.textContent = text;
-  if (footerElement) footerElement.textContent = text;
+// DOM Cache
+const $ = id => document.getElementById(id);
+const dom = {
+  deliveryTrashold: $("delivery-treshold"),
+  deliveryTime: $("delivery-speed"),
+  deliveryDate: $("delivery-date"),
+  navDeliveryTrashold: $("nav-delivery-treshold"),
+  navDeliveryTime: $("nav-delivery-speed"),
+  userMenu: $("user-menu"),
+  cartToggle: $("cart-toggle"),
+  alzaButton: $("alza-button"),
+  userLinks: {
+    orders: $('user-orders'),
+    login: $('user-login'),
+    createAccount: $('user-create-account'),
+    forgotPassword: $('user-forgot-password'),
+    addresses: $('user-addresses')
+  },
+  products: {
+    setComplete: $('buy-button-set-complete'),
+    setI: $('buy-button-set-I'),
+    setII: $('buy-button-set-II'),
+    stepI: $('buy-button-step-I'),
+    stepII: $('buy-button-step-II'),
+    stepIII: $('buy-button-step-III'),
+    stepIV: $('buy-button-step-IV'),
+    giftCard: $('buy-button-gift-card')
+  }
 };
 
-const productElements = {
-  setComplete: document.getElementById('buy-button-set-complete'),
-  setI: document.getElementById('buy-button-set-I'),
-  setII: document.getElementById('buy-button-set-II'),
-  stepI: document.getElementById('buy-button-step-I'),
-  stepII: document.getElementById('buy-button-step-II'),
-  stepIII: document.getElementById('buy-button-step-III'),
-  stepIV: document.getElementById('buy-button-step-IV'),
-  giftCard: document.getElementById('buy-button-gift-card')
-};
-
-const cartToggle = document.getElementById("cart-toggle");
-
-const userOrders = document.getElementById('user-orders');
-const userLogin = document.getElementById('user-login');
-const userCreateAccount = document.getElementById('user-create-account');
-const userForgotPassword = document.getElementById('user-forgot-password');
-const userAddresses = document.getElementById('user-addresses');
-
-const alzaButton = document.getElementById('alza-button');
-
-// Message constants
-// Delivery Time
-const deliveryMessageEN = "Fast Delivery";
-const deliveryMessageSK = "Doručenie za 1-3 dni";
-const deliveryMessageDE = "Lieferung in 2-3 Tagen";
-const deliveryMessagePL = "Dostawa 1-3 dni";
-const deliveryMessageFR = "Livraison en 2-5 jours";
-
-// Free Delivery
-const deliveryMessageCZ = "Doprava nyní ZDARMA";
-const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
-const trasholdMessageEN = "Free Delivery from $50";
-const trasholdMessageSK = "Doprava teraz ZADARMO";
-const trasholdMessageFR = "Frais de port offerts à partir de €60";
-const trasholdMessageDE = "Jetzt kostenloser Versand";
+// Helpers
+const updateDelivery = (nav, footer, text) => (nav && (nav.textContent = text), footer && (footer.textContent = text));
+const getCzDeliveryMsg = () => ['pozítří u Vás', 'pozítří u Vás', 'pozítří u Vás', 'v pondělí u Vás', 'v úterý u Vás', 'v úterý u Vás', 'v úterý u Vás'][dayOfWeek];
+const updateUserLinks = url => Object.entries({
+  orders: '/account',
+  login: '/account/login',
+  createAccount: '/account/register',
+  forgotPassword: '/account/login#recover',
+  addresses: '/account/addresses'
+}).forEach(([key, path]) => dom.userLinks[key] && (dom.userLinks[key].href = `${url}${path}`));
 
 // Configuration objects
 const localeConfigs = {
@@ -74,25 +55,18 @@ const localeConfigs = {
     countryCode: 'US',
     moneyFormat: '$%7B%7Bamount%7D%7D',
     buttonText: 'Add to Basket',
+    delivery: { speed: "Fast Delivery", threshold: "Free Delivery from $50" },
+    hideUserMenu: true,
     productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
-      giftCard: 8578704736581
+      setComplete: 8623720366405, setI: 7542825058534, setII: 8021842854118,
+      stepI: 7601486758118, stepII: 7609802686694, stepIII: 7931357692134,
+      stepIV: 7931360051430, giftCard: 8578704736581
     },
     cart: {
-      title: "Cart",
-      total: "Subtotal",
-      empty: "Your cart is empty.",
-      button: "Proceed to Checkout",
-      noteDescription: "Order Note",
+      title: "Cart", total: "Subtotal", empty: "Your cart is empty.",
+      button: "Proceed to Checkout", noteDescription: "Order Note",
       notice: "Shipping and discount codes are added at checkout.",
-      outOfStock: "Sold Out",
-      unavailable: "Sold Out"
+      outOfStock: "Sold Out", unavailable: "Sold Out"
     }
   },
   sk: {
@@ -102,25 +76,18 @@ const localeConfigs = {
     countryCode: 'SK',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'Pridať do košíka',
+    delivery: { speed: "Doručenie za 1-3 dni", threshold: "Doprava teraz ZADARMO" },
+    userBaseUrl: 'https://www.meer.beauty',
     productIds: {
-      setComplete: 8592696639827,
-      setI: 8592695624019,
-      setII: 8592696541523,
-      stepI: 8592695886163,
-      stepII: 8592696115539,
-      stepIII: 8592696279379,
-      stepIV: 8592696475987,
-      giftCard: 8592808051027
+      setComplete: 8592696639827, setI: 8592695624019, setII: 8592696541523,
+      stepI: 8592695886163, stepII: 8592696115539, stepIII: 8592696279379,
+      stepIV: 8592696475987, giftCard: 8592808051027
     },
     cart: {
-      title: "Košík",
-      total: "Celková čiastka",
-      empty: "Momentálne nemáte v košíku vložený žiadny tovar.",
-      button: "Pokračovať k pokladni",
-      noteDescription: "Poznámka k objednávke",
+      title: "Košík", total: "Celková čiastka", empty: "Momentálne nemáte v košíku vložený žiadny tovar.",
+      button: "Pokračovať k pokladni", noteDescription: "Poznámka k objednávke",
       notice: "Doprava a zľavové kódy sa pridávajú pri pokladni.",
-      outOfStock: "Vypredané",
-      unavailable: "Vypredané"
+      outOfStock: "Vypredané", unavailable: "Vypredané"
     }
   },
   de: {
@@ -130,25 +97,19 @@ const localeConfigs = {
     countryCode: 'DE',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'In den Warenkorb',
+    delivery: { speed: "Lieferung in 2-3 Tagen", threshold: "Jetzt kostenloser Versand" },
+    userBaseUrl: 'https://www.meer.beauty',
+    hideAlzaButton: true,
     productIds: {
-      setComplete: 9792222462291,
-      setI: 9792209256787,
-      setII: 9792221315411,
-      stepI: 9792209650003,
-      stepII: 9792209977683,
-      stepIII: 9792218235219,
-      stepIV: 9792220135763,
-      giftCard: 8578704736581
+      setComplete: 9792222462291, setI: 9792209256787, setII: 9792221315411,
+      stepI: 9792209650003, stepII: 9792209977683, stepIII: 9792218235219,
+      stepIV: 9792220135763, giftCard: 8578704736581
     },
     cart: {
-      title: "Warenkorb",
-      total: "Zwischensumme",
-      empty: "Ihr Warenkorb ist leer.",
-      button: "Zur Kasse gehen",
-      noteDescription: "Bestellnotiz",
+      title: "Warenkorb", total: "Zwischensumme", empty: "Ihr Warenkorb ist leer.",
+      button: "Zur Kasse gehen", noteDescription: "Bestellnotiz",
       notice: "Versand und Rabattcodes werden an der Kasse hinzugefügt.",
-      outOfStock: "Ausverkauft",
-      unavailable: "Ausverkauft"
+      outOfStock: "Ausverkauft", unavailable: "Ausverkauft"
     }
   },
   fr: {
@@ -158,25 +119,18 @@ const localeConfigs = {
     countryCode: 'FR',
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'Ajouter au panier',
+    delivery: { speed: "Livraison en 2-5 jours", threshold: "Frais de port offerts à partir de €60" },
+    userBaseUrl: 'https://www.meer.beauty',
     productIds: {
-      setComplete: 10180475715923,
-      setI: 10180474405203,
-      setII: 10180482498899,
-      stepI: 10180486824275,
-      stepII: 10180486005075,
-      stepIII: 10180484628819,
-      stepIV: 10180484301139,
-      giftCard: 8578704736581
+      setComplete: 10180475715923, setI: 10180474405203, setII: 10180482498899,
+      stepI: 10180486824275, stepII: 10180486005075, stepIII: 10180484628819,
+      stepIV: 10180484301139, giftCard: 8578704736581
     },
     cart: {
-      title: "Panier",
-      total: "Sous-total",
-      empty: "Votre panier est vide.",
-      button: "Procéder au paiement",
-      noteDescription: "Note de commande",
+      title: "Panier", total: "Sous-total", empty: "Votre panier est vide.",
+      button: "Procéder au paiement", noteDescription: "Note de commande",
       notice: "Les frais de livraison et les codes de réduction sont ajoutés lors du paiement.",
-      outOfStock: "Épuisé",
-      unavailable: "Épuisé"
+      outOfStock: "Épuisé", unavailable: "Épuisé"
     }
   },
   pl: {
@@ -186,25 +140,18 @@ const localeConfigs = {
     countryCode: 'PL',
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
     buttonText: 'Włożyć do koszyka',
+    delivery: { speed: "Dostawa 1-3 dni", threshold: "Teraz z DARMOWĄ WYSYŁKĄ" },
+    userBaseUrl: 'https://meercarepl.cz',
     productIds: {
-      setComplete: 15337577349445,
-      setI: 15337570500933,
-      setII: 15337576497477,
-      stepI: 15337572991301,
-      stepII: 15337573220677,
-      stepIII: 15337574072645,
-      stepIV: 15337575874885,
-      giftCard: 8578704736581
+      setComplete: 15337577349445, setI: 15337570500933, setII: 15337576497477,
+      stepI: 15337572991301, stepII: 15337573220677, stepIII: 15337574072645,
+      stepIV: 15337575874885, giftCard: 8578704736581
     },
     cart: {
-      title: "Koszyk",
-      total: "Suma",
-      empty: "Obecnie nie masz żadnych produktów w koszyku.",
-      button: "Przejdź do finalizacji zakupu",
-      noteDescription: "Uwaga do zamówienia",
+      title: "Koszyk", total: "Suma", empty: "Obecnie nie masz żadnych produktów w koszyku.",
+      button: "Przejdź do finalizacji zakupu", noteDescription: "Uwaga do zamówienia",
       notice: "Koszty wysyłki i kody rabatowe są dodawane przy kasie.",
-      outOfStock: "Sprzedany",
-      unavailable: "Sprzedany"
+      outOfStock: "Sprzedany", unavailable: "Sprzedany"
     }
   },
   cz: {
@@ -214,194 +161,94 @@ const localeConfigs = {
     countryCode: 'CZ',
     moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
     buttonText: 'Přidat do košíku',
+    delivery: { speed: getCzDeliveryMsg, threshold: "Doprava nyní ZDARMA" },
     productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
-      giftCard: 8578704736581
+      setComplete: 8623720366405, setI: 7542825058534, setII: 8021842854118,
+      stepI: 7601486758118, stepII: 7609802686694, stepIII: 7931357692134,
+      stepIV: 7931360051430, giftCard: 8578704736581
     },
     cart: {
-      title: "Košík",
-      total: "Mezisoučet",
-      empty: "Váš košík je prázdný.",
-      button: "Pokračovat k pokladně",
-      noteDescription: "Poznámka k objednávce",
+      title: "Košík", total: "Mezisoučet", empty: "Váš košík je prázdný.",
+      button: "Pokračovat k pokladně", noteDescription: "Poznámka k objednávce",
       notice: "Slevové kódy se přidávají u pokladny.",
-      outOfStock: "Vyprodáno",
-      unavailable: "Vyprodáno"
+      outOfStock: "Vyprodáno", unavailable: "Vyprodáno"
     }
   }
 };
 
 // Get current config (with fallback)
-const getCurrentConfig = () => localeConfigs[locale] || localeConfigs.cz;
+const config = localeConfigs[locale] || localeConfigs.cz;
+const getLanguage = () => config.language;
+const getCountry = () => config.countryCode;
+const getDomain = () => config.domain;
+const getAccessToken = () => config.accessToken;
+const getButtonText = () => config.buttonText;
+const getCart = () => config.cart;
+const getMoneyFormat = () => config.moneyFormat;
+const getProductIds = () => config.productIds;
 
-// 6. POTOM - Utility functions (direct access to config)
-const getLanguage = () => getCurrentConfig().language;
-const getCountry = () => getCurrentConfig().countryCode;
-const getDomain = () => getCurrentConfig().domain;
-const getAccessToken = () => getCurrentConfig().accessToken;
-const getButtonText = () => getCurrentConfig().buttonText;
-const getCart = () => getCurrentConfig().cart;
-const getMoneyFormat = () => getCurrentConfig().moneyFormat;
-const getProductIds = () => getCurrentConfig().productIds;
-
-// Helper function to update user account links
-const updateUserLinks = (baseUrl) => {
-  if (userOrders) userOrders.href = `${baseUrl}/account`;
-  if (userLogin) userLogin.href = `${baseUrl}/account/login`;
-  if (userCreateAccount) userCreateAccount.href = `${baseUrl}/account/register`;
-  if (userForgotPassword) userForgotPassword.href = `${baseUrl}/account/login#recover`;
-  if (userAddresses) userAddresses.href = `${baseUrl}/account/addresses`;
-};
-
-// Funkce pro vyčištění starých localStorage záznamů
+// Cleanup starých localStorage záznamů
 const cleanupOldCheckouts = () => {
   try {
-    // Najdi všechny klíče obsahující checkoutId
-    const keysToRemove = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && key.includes('checkoutId')) {
-        keysToRemove.push(key);
-      }
-    }
-    
-    // Odstraň staré klíče
-    keysToRemove.forEach(key => {
-      localStorage.removeItem(key);
-    });
-    
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Cleaned up old checkout IDs from localStorage');
-    }
-  } catch (error) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('Could not clean localStorage:', error);
-    }
+    Object.keys(localStorage).filter(k => k.includes('checkoutId')).forEach(k => localStorage.removeItem(k));
+    isDev && console.log('Cleaned up old checkout IDs');
+  } catch (e) {
+    isDev && console.warn('Could not clean localStorage:', e);
   }
 };
 
-// 7. POTOM - Main functions
-const setupTracking = (buttonText) => {
-  let isTrackingComplete = false;
-  
-  const observer = new MutationObserver((mutations) => {
-    if (isTrackingComplete) return;
-    
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'childList') {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === 1) {
-            const buttons = node.querySelectorAll ? 
-              node.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])') : 
-              [];
-            
-            buttons.forEach(button => {
-              if (button.textContent.includes(buttonText)) {
-                button.setAttribute('data-zaraz-tracked', 'true');
-                
-                button.addEventListener('click', function() {
-                  const shopifyWrapper = this.closest('.shopify-button');
-                  
-                  if (shopifyWrapper) {
-                    const eventData = {
-                      product_id: shopifyWrapper.getAttribute('data-product-id'),
-                      product_name: shopifyWrapper.getAttribute('data-product-name'),
-                      price: parseFloat(shopifyWrapper.getAttribute('data-price')),
-                      quantity: 1
-                    };
-                    
-                    if (typeof zaraz !== 'undefined') {
-                      zaraz.track("add_to_cart", eventData);
-                    }
-                  }
-                });
-              }
-            });
-            
-            // Pokud jsme našli tlačítka, můžeme ukončit sledování
-            if (buttons.length > 0) {
-              isTrackingComplete = true;
-              observer.disconnect();
+// Main functions
+const setupTracking = buttonText => {
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(({ type, addedNodes }) => {
+      if (type !== 'childList') return;
+      addedNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+        const buttons = node.querySelectorAll?.('.shopify-buy__btn:not([data-zaraz-tracked])') || [];
+        buttons.forEach(btn => {
+          if (!btn.textContent.includes(buttonText)) return;
+          btn.setAttribute('data-zaraz-tracked', 'true');
+          btn.addEventListener('click', function() {
+            const wrapper = this.closest('.shopify-button');
+            if (wrapper && typeof zaraz !== 'undefined') {
+              zaraz.track("add_to_cart", {
+                product_id: wrapper.getAttribute('data-product-id'),
+                product_name: wrapper.getAttribute('data-product-name'),
+                price: parseFloat(wrapper.getAttribute('data-price')),
+                quantity: 1
+              });
             }
-          }
+          }, { once: true });
         });
-      }
+        buttons.length && observer.disconnect();
+      });
     });
   });
-  
   observer.observe(document.body, { childList: true, subtree: true });
-  
-  // Fallback cleanup po 30 sekundách
-  setTimeout(() => {
-    if (!isTrackingComplete) {
-      observer.disconnect();
-    }
-  }, 30000);
-  
-  // Cleanup při opuštění stránky
+  setTimeout(() => observer.disconnect(), 30000);
   window.addEventListener('beforeunload', () => observer.disconnect(), { once: true });
 };
 
 const initializeShopify = () => {
-  const currentConfig = getCurrentConfig();
-  
-  if (!currentConfig) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.error('Shopify config is missing for locale:', locale);
-    }
-    return;
-  }
+  if (!config) return isDev && console.error('Shopify config missing for locale:', locale);
+  if (!Object.values(dom.products).some(el => el)) return isDev && console.log('No product elements found');
+  !dom.cartToggle && isDev && console.warn('Cart toggle not found');
 
-  // Kontrola existence alespoň jednoho produktového elementu
-  const hasAnyProductElement = Object.values(productElements).some(element => element !== null);
-  if (!hasAnyProductElement) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('No product elements found - skipping Shopify initialization');
-    }
-    return;
-  }
-
-  // Kontrola základních elementů
-  if (!cartToggle && process.env.NODE_ENV !== 'production') {
-    console.warn('Cart toggle element not found - buy buttons may not work properly');
-  }
-
-  // Vyčištění starých localStorage záznamů
   cleanupOldCheckouts();
 
   const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
   
-  if (window.ShopifyBuy?.UI) {
-    ShopifyBuyInit();
-    return;
-  }
-  
-  if (!document.querySelector(`script[src="${scriptURL}"]`)) {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = scriptURL;
-    script.onload = ShopifyBuyInit;
-    script.onerror = () => {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('Failed to load Shopify SDK');
-      }
-    };
-    document.head.appendChild(script);
-    
-    // Timeout pro loading Shopify SDK
-    setTimeout(() => {
-      if (!window.ShopifyBuy && process.env.NODE_ENV !== 'production') {
-        console.error('Shopify SDK failed to load within 10 seconds timeout');
-      }
-    }, 10000);
-  }
-  
+  if (window.ShopifyBuy?.UI) return ShopifyBuyInit();
+  if (document.querySelector(`script[src="${scriptURL}"]`)) return;
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = scriptURL;
+  script.onload = ShopifyBuyInit;
+  script.onerror = () => isDev && console.error('Failed to load Shopify SDK');
+  document.head.appendChild(script);
+  setTimeout(() => !window.ShopifyBuy && isDev && console.error('Shopify SDK timeout'), 10000);
+
   function ShopifyBuyInit() {
     try {
       const client = ShopifyBuy.buildClient({
@@ -410,222 +257,65 @@ const initializeShopify = () => {
         language: getLanguage(),
       });
 
-      const input = {
-        buyerIdentity: {
-          countryCode: getCountry(),
-        },
-      };
+      const checkoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
+      isDev && console.log('Creating checkout:', { locale, domain: client.config.domain });
 
-      // Klíč pro localStorage
-      const localStorageCheckoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
-      
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('Creating checkout for:', {
-          locale,
-          domain: client.config.domain,
-          accessToken: client.config.storefrontAccessToken,
-          language: getLanguage(),
-          country: getCountry()
-        });
-      }
+      client.checkout.create({ buyerIdentity: { countryCode: getCountry() } })
+        .then(checkout => {
+          try {
+            localStorage.setItem(checkoutKey, checkout.id);
+            isDev && console.log('Checkout created:', checkout.id);
+          } catch (e) {
+            isDev && console.warn('localStorage error:', e);
+          }
 
-      client.checkout.create(input).then((checkout) => {
-        // Uložení checkout ID do localStorage
-        try {
-          localStorage.setItem(localStorageCheckoutKey, checkout.id);
-          if (process.env.NODE_ENV !== 'production') {
-            console.log('Checkout created successfully:', checkout.id);
-          }
-        } catch (error) {
-          if (process.env.NODE_ENV !== 'production') {
-            console.warn('Could not save to localStorage:', error);
-          }
-        }
-        
-        ShopifyBuy.UI.onReady(client).then(function (ui) {
-          const options = {
-            product: {
-              iframe: false,
-              contents: {
-                img: false,
-                button: false,
-                buttonWithQuantity: true,
-                title: false,
-                price: false
+          ShopifyBuy.UI.onReady(client).then(ui => {
+            const options = {
+              product: {
+                iframe: false,
+                contents: { img: false, button: false, buttonWithQuantity: true, title: false, price: false },
+                text: { button: getButtonText(), outOfStock: getCart().outOfStock, unavailable: getCart().unavailable }
               },
-              text: {
-                button: getButtonText(),
-                outOfStock: getCart().outOfStock,
-                unavailable: getCart().unavailable
-              }
-            },
-            cart: {
-              iframe: false,
-              text: getCart(),
-              contents: { note: true },
-              popup: false
-            },
-            toggle: {
-              iframe: false,
-              sticky: false,
-              templates: { icon: '' }
-            }
-          };
+              cart: { iframe: false, text: getCart(), contents: { note: true }, popup: false },
+              toggle: { iframe: false, sticky: false, templates: { icon: '' } }
+            };
 
-          // Vytvoření komponent s error handling
-          Object.entries(getProductIds()).forEach(([key, productId]) => {
-            const element = productElements[key];
-            if (!element) {
-              if (process.env.NODE_ENV !== 'production') {
-                console.warn(`Element for ${key} (ID: buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}) not found`);
+            Object.entries(getProductIds()).forEach(([key, id]) => {
+              const el = dom.products[key];
+              if (!el) return isDev && console.warn(`Element ${key} not found`);
+              try {
+                ui.createComponent('product', {
+                  id: [id],
+                  node: el,
+                  toggles: dom.cartToggle ? [{ node: dom.cartToggle }] : [],
+                  moneyFormat: getMoneyFormat(),
+                  options
+                });
+                isDev && console.log(`Component created: ${key}`);
+              } catch (e) {
+                isDev && console.error(`Failed to create ${key}:`, e);
               }
-              return;
-            }
-            if (!cartToggle && process.env.NODE_ENV !== 'production') {
-              console.warn('Cart toggle element missing - component may not work properly');
-            }
-            
-            try {
-              ui.createComponent('product', {
-                id: [productId],
-                node: element,
-                toggles: cartToggle ? [{node: cartToggle}] : [],
-                moneyFormat: getMoneyFormat(),
-                options: options
-              });
-              if (process.env.NODE_ENV !== 'production') {
-                console.log(`Successfully created component for ${key}`);
-              }
-            } catch (error) {
-              if (process.env.NODE_ENV !== 'production') {
-                console.error(`Failed to create Shopify component for ${key}:`, error);
-              }
-            }
-          });
+            });
 
-          // Tracking s optimalizací
-          setupTracking(getButtonText());
-        }).catch(error => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.error('Shopify UI initialization failed:', error);
-          }
-        });
-      }).catch(error => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.error('Shopify checkout creation failed:', error);
-        }
-      });
-    } catch (error) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('Shopify initialization failed:', error);
-      }
+            setupTracking(getButtonText());
+          }).catch(e => isDev && console.error('Shopify UI error:', e));
+        }).catch(e => isDev && console.error('Checkout creation error:', e));
+    } catch (e) {
+      isDev && console.error('Shopify init error:', e);
     }
   }
 };
 
-// 8. NAKONEC - Variables that depend on other calculations
-let deliveryMessage;
+// Initialization
+isDev && console.log('Current locale:', locale);
 
-// 9. EXECUTION - Switch statement na konci
-if (process.env.NODE_ENV !== 'production') {
-  console.log('Current locale:', locale);
-}
+const deliverySpeed = typeof config.delivery.speed === 'function' ? config.delivery.speed() : config.delivery.speed;
+dom.deliveryDate && (dom.deliveryDate.textContent = deliverySpeed);
+updateDelivery(dom.navDeliveryTrashold, dom.deliveryTrashold, config.delivery.threshold);
+updateDelivery(dom.navDeliveryTime, dom.deliveryTime, deliverySpeed);
 
-switch (locale) {
-  // English
-  case 'en':
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Locale: English');
-    }
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
+config.hideUserMenu && dom.userMenu && (dom.userMenu.style.display = 'none');
+config.hideAlzaButton && dom.alzaButton && (dom.alzaButton.style.display = 'none');
+config.userBaseUrl && updateUserLinks(config.userBaseUrl);
 
-    // User
-    if (userMenu) userMenu.style.display = 'none';
-
-    initializeShopify();
-    break;
-  
-  // Slovakia
-  case 'sk':
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Locale: Slovakia');
-    }
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
-
-    // User links
-    updateUserLinks('https://www.meer.beauty');
-    
-    initializeShopify();
-    break;
-    
-  // Germany
-  case 'de':
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageDE;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageDE);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageDE);
-
-    // Hide alza-button if it exists
-    if (alzaButton) {
-      alzaButton.style.display = 'none';
-    }
-
-    // User links
-    updateUserLinks('https://www.meer.beauty');
-
-    initializeShopify();
-    break;
-
-  // France
-  case 'fr':
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageFR;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
-
-    // User links
-    updateUserLinks('https://www.meer.beauty');
-
-    initializeShopify();
-    break;
-  
-  // Poland
-  case 'pl':
-    if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
-
-    // User links
-    updateUserLinks('https://meercarepl.cz');
-
-    initializeShopify();
-    break;
-
-  default:
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Locale: Default (Czech)');
-    }
-    const getDeliveryMessage = () => {
-      const dayMessages = {
-        1: "pozítří u Vás", // Mon
-        2: "pozítří u Vás", // Tue  
-        3: "pozítří u Vás", // Wed
-        4: "v pondělí u Vás", // Thu
-        5: "v úterý u Vás", // Fri
-        6: "v úterý u Vás", // Sat
-        0: "v úterý u Vás"  // Sun
-      };
-      return dayMessages[dayOfWeek] || "pozítří u Vás";
-    };
-
-    deliveryMessage = getDeliveryMessage();
-    
-    if (deliveryDate) deliveryDate.textContent = deliveryMessage;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
-
-    initializeShopify();
-    break;
-}
+initializeShopify();

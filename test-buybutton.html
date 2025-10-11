@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Buy Button - CZ</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 5px; }
+        .test-section h3 { margin-top: 0; }
+        #delivery-info, #user-menu { background: white; padding: 10px; margin: 10px 0; }
+        .product-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+        .shopify-button { padding: 10px; background: #e0e0e0; border-radius: 5px; }
+        #console-output { 
+            background: #1e1e1e; 
+            color: #d4d4d4; 
+            padding: 15px; 
+            border-radius: 5px; 
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log { color: #4ec9b0; }
+        .warn { color: #dcdcaa; }
+        .error { color: #f48771; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Buy Button Script (CZ locale)</h1>
+    
+    <div class="test-section">
+        <h3>Console Output:</h3>
+        <div id="console-output"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Delivery Info:</h3>
+        <div id="delivery-info">
+            <p>Threshold: <span id="delivery-treshold">Loading...</span></p>
+            <p>Speed: <span id="delivery-speed">Loading...</span></p>
+            <p>Date: <span id="delivery-date">Loading...</span></p>
+            <p>Nav Threshold: <span id="nav-delivery-treshold">Loading...</span></p>
+            <p>Nav Speed: <span id="nav-delivery-speed">Loading...</span></p>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>User Menu:</h3>
+        <div id="user-menu">
+            <a href="#" id="user-orders">My Orders</a> |
+            <a href="#" id="user-login">Login</a> |
+            <a href="#" id="user-create-account">Create Account</a> |
+            <a href="#" id="user-forgot-password">Forgot Password</a> |
+            <a href="#" id="user-addresses">Addresses</a>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>Product Buttons:</h3>
+        <div class="product-buttons">
+            <div class="shopify-button" id="buy-button-set-complete">Set Complete</div>
+            <div class="shopify-button" id="buy-button-set-I">Set I</div>
+            <div class="shopify-button" id="buy-button-set-II">Set II</div>
+            <div class="shopify-button" id="buy-button-step-I">Step I</div>
+            <div class="shopify-button" id="buy-button-step-II">Step II</div>
+            <div class="shopify-button" id="buy-button-step-III">Step III</div>
+            <div class="shopify-button" id="buy-button-step-IV">Step IV</div>
+            <div class="shopify-button" id="buy-button-gift-card">Gift Card</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>Other Elements:</h3>
+        <div id="cart-toggle" style="background: white; padding: 10px;">Cart Toggle</div>
+        <button id="alza-button" style="margin-top: 10px;">Alza Button (should be visible in CZ)</button>
+    </div>
+
+    <script>
+        // Override console methods to display in page
+        const output = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalWarn = console.warn;
+        const originalError = console.error;
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            output.innerHTML += `<div class="log">LOG: ${args.join(' ')}</div>`;
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            output.innerHTML += `<div class="warn">WARN: ${args.join(' ')}</div>`;
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            output.innerHTML += `<div class="error">ERROR: ${args.join(' ')}</div>`;
+        };
+
+        // Set development mode
+        globalThis.process = { env: { NODE_ENV: 'development' } };
+    </script>
+
+    <script src="buybutton.js"></script>
+
+    <script>
+        // Check results after script loads
+        setTimeout(() => {
+            console.log('=== Test Results ===');
+            console.log('Locale detected:', locale);
+            console.log('Config loaded:', config ? '✓' : '✗');
+            console.log('DOM elements cached:', Object.keys(dom).length);
+            console.log('Delivery threshold text:', document.getElementById('delivery-treshold')?.textContent);
+            console.log('Delivery speed text:', document.getElementById('delivery-speed')?.textContent);
+            console.log('User menu visible:', document.getElementById('user-menu')?.style.display !== 'none');
+            console.log('Alza button visible:', document.getElementById('alza-button')?.style.display !== 'none');
+        }, 1000);
+    </script>
+</body>
+</html>
