@@ -334,32 +334,60 @@ const cleanupOldCheckouts = () => {
 };
 
 const loadHeurekaWidget = () => {
-  if (!document.querySelector('script[src*="heureka"]') && !document.querySelector('script[src*="im9.cz"]')) {
+  console.log('loadHeurekaWidget called');
+  
+  const existingScript = document.querySelector('script[src*="heureka"]') || document.querySelector('script[src*="im9.cz"]');
+  console.log('Existing Heureka script:', existingScript);
+  
+  if (!existingScript) {
+    console.log('Loading Heureka widget...');
+    
     // Inicializace fronty před načtením scriptu
     window._hwq = window._hwq || [];
+    console.log('_hwq initialized:', window._hwq);
     
     // Responzivní pozice podle velikosti obrazovky
     const isMobile = window.innerWidth <= 768;
     const topPosition = isMobile ? '80' : '152';
+    console.log('Device:', isMobile ? 'mobile' : 'desktop', 'topPosition:', topPosition);
     
     // Přidání příkazů do fronty
     _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
     _hwq.push(['setTopPos', topPosition]);
     _hwq.push(['showWidget']); // Bez parametru - zobrazí na všech zařízeních
+    console.log('Commands pushed to _hwq:', _hwq);
     
     // Načtení scriptu - zkusíme nejdřív jsDelivr, pak fallback na Heureka CDN
     const script = document.createElement('script');
     script.async = true;
     script.src = 'https://cdn.jsdelivr.net/gh/Toooorch/meer@d16912119b4b5b26b9d03fdfb583105baa6a7060/heureka-widget.min.js';
+    
+    script.onload = () => {
+      console.log('Heureka widget loaded successfully from jsDelivr');
+    };
+    
     script.onerror = () => {
       console.warn('Heureka widget from jsDelivr failed, trying original CDN');
       // Fallback na původní Heureka CDN
       const fallbackScript = document.createElement('script');
       fallbackScript.async = true;
       fallbackScript.src = 'https://cz.im9.cz/direct/i/gjs.php?n=wdgt&sak=DE44F0D5D122B2322E7114114A9957A9';
+      
+      fallbackScript.onload = () => {
+        console.log('Heureka widget loaded successfully from original CDN');
+      };
+      
+      fallbackScript.onerror = () => {
+        console.error('Heureka widget failed to load from both CDNs');
+      };
+      
       document.head.appendChild(fallbackScript);
     };
+    
     document.head.appendChild(script);
+    console.log('Heureka script added to head');
+  } else {
+    console.log('Heureka widget already loaded');
   }
 };
 
@@ -555,9 +583,11 @@ const initializeShopify = () => {
 let deliveryMessage;
 
 // 9. EXECUTION - Switch statement na konci
+console.log('Current locale:', locale);
 switch (locale) {
   // English
   case 'en':
+    console.log('Locale: English');
     if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
@@ -570,6 +600,7 @@ switch (locale) {
   
   // Slovakia
   case 'sk':
+    console.log('Locale: Slovakia - Heureka should load');
     if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
@@ -640,6 +671,7 @@ switch (locale) {
     break;
 
   default:
+    console.log('Locale: Default (Czech) - Heureka should load');
     const getDeliveryMessage = () => {
       const dayMessages = {
         1: "pozítří u Vás", // Mon
