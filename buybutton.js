@@ -350,7 +350,7 @@ const loadHeurekaWidget = () => {
     // Načtení scriptu - zkusíme nejdřív jsDelivr, pak fallback na Heureka CDN
     const script = document.createElement('script');
     script.async = true;
-    script.src = 'https://cdn.jsdelivr.net/gh/Toooorch/meer@main/heureka-widget.js';
+    script.src = 'https://cdn.jsdelivr.net/gh/Toooorch/meer@d16912119b4b5b26b9d03fdfb583105baa6a7060/heureka-widget.min.js';
     script.onerror = () => {
       console.warn('Heureka widget from jsDelivr failed, trying original CDN');
       // Fallback na původní Heureka CDN
