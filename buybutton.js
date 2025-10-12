@@ -333,20 +333,6 @@ const cleanupOldCheckouts = () => {
   }
 };
 
-const loadHeurekaWidget = () => {
-  if (!document.querySelector('script[src*="heureka"]')) {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://cz.im9.cz/direct/i/gjs.php?n=wdgt&sak=DE44F0D5D122B2322E7114114A9957A9';
-    document.head.appendChild(script);
-    
-    window._hwq = window._hwq || [];
-    _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
-    _hwq.push(['setTopPos', '152']);
-    _hwq.push(['showWidget', '21']);
-  }
-};
-
 // 7. POTOM - Main functions
 const setupTracking = (buttonText) => {
   const observer = new MutationObserver((mutations) => {
@@ -565,9 +551,6 @@ switch (locale) {
     Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
     Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
     
-    // Heureka widget
-    loadHeurekaWidget();
-    
     initializeShopify();
     break;
     
@@ -643,7 +626,6 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
 
-    loadHeurekaWidget();
     initializeShopify();
     break;
 }
