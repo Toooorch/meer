@@ -310,6 +310,96 @@ const getProductIds = () => {
   };
 };
 
+// Funkce pro animovaný reviews counter s localStorage
+const animateReviewsCounter = (maxIncrements = 20) => {
+  const reviewsElement = document.getElementById('reviews-rating-number');
+  
+  if (!reviewsElement) {
+    console.log('Reviews counter element not found');
+    return;
+  }
+
+  // Získej počáteční hodnotu z HTML
+  const initialCount = parseInt(reviewsElement.textContent.trim()) || 0;
+  
+  if (initialCount === 0) {
+    console.warn('Reviews counter starts at 0, check initial HTML value');
+    return;
+  }
+
+  // Klíč pro localStorage (specifický pro locale)
+  const storageKey = `meer_reviews_count_${locale}`;
+  const sessionKey = `meer_reviews_session_${locale}`;
+  
+  // Získej uložené hodnoty nebo použij výchozí
+  let currentCount = parseInt(localStorage.getItem(storageKey)) || initialCount;
+  let incrementCount = parseInt(sessionStorage.getItem(sessionKey)) || 0;
+
+  // Pokud je uložená hodnota nižší než HTML, použij HTML (např. admin zvýšil číslo)
+  if (currentCount < initialCount) {
+    currentCount = initialCount;
+    localStorage.setItem(storageKey, currentCount);
+  }
+
+  // Zobraz aktuální počet
+  reviewsElement.textContent = currentCount.toString();
+
+  console.log(`Reviews counter initialized: ${currentCount} (increments: ${incrementCount}/${maxIncrements})`);
+
+  // Funkce pro přidání náhodného počtu recenzí (1-3)
+  const incrementReviews = () => {
+    if (incrementCount >= maxIncrements) {
+      console.log('Reviews counter reached maximum increments for this session');
+      return;
+    }
+    
+    const increment = Math.floor(Math.random() * 3) + 1; // náhodně 1, 2 nebo 3
+    currentCount += increment;
+    incrementCount++;
+    
+    // Ulož do storage
+    localStorage.setItem(storageKey, currentCount);
+    sessionStorage.setItem(sessionKey, incrementCount);
+    
+    // Aktualizuj UI
+    reviewsElement.textContent = currentCount.toString();
+    
+    // Malá animace
+    reviewsElement.style.opacity = '0.5';
+    setTimeout(() => {
+      reviewsElement.style.opacity = '1';
+    }, 200);
+    
+    console.log(`Reviews incremented to: ${currentCount}`);
+  };
+
+  // Náhodný interval mezi 2-5 sekundami
+  const scheduleNext = () => {
+    if (incrementCount >= maxIncrements) return;
+    
+    const randomDelay = Math.floor(Math.random() * 3000) + 2000; // 2000-5000ms
+    setTimeout(() => {
+      incrementReviews();
+      scheduleNext();
+    }, randomDelay);
+  };
+
+  // Spusť první update po 3 sekundách
+  setTimeout(() => {
+    scheduleNext();
+  }, 3000);
+};
+
+// Debug funkce pro reset counters (volej v konzoli: resetReviewsCounter())
+window.resetReviewsCounter = () => {
+  ['cz', 'en', 'sk', 'de', 'fr', 'pl'].forEach(locale => {
+    localStorage.removeItem(`meer_reviews_count_${locale}`);
+    sessionStorage.removeItem(`meer_reviews_session_${locale}`);
+  });
+  console.log('All reviews counters reset');
+  location.reload();
+};
+
 // Funkce pro vyčištění starých localStorage záznamů
 const cleanupOldCheckouts = () => {
   try {
@@ -330,20 +420,6 @@ const cleanupOldCheckouts = () => {
     console.log('Cleaned up old checkout IDs from localStorage');
   } catch (error) {
     console.warn('Could not clean localStorage:', error);
-  }
-};
-
-const loadHeurekaWidget = () => {
-  if (!document.querySelector('script[src*="heureka"]')) {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://cz.im9.cz/direct/i/gjs.php?n=wdgt&sak=DE44F0D5D122B2322E7114114A9957A9';
-    document.head.appendChild(script);
-    
-    window._hwq = window._hwq || [];
-    _hwq.push(['setKey', 'DE44F0D5D122B2322E7114114A9957A9']);
-    _hwq.push(['setTopPos', '152']);
-    _hwq.push(['showWidget', '21']);
   }
 };
 
@@ -542,6 +618,7 @@ let deliveryMessage;
 switch (locale) {
   // English
   case 'en':
+    animateReviewsCounter();
     if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
@@ -554,6 +631,7 @@ switch (locale) {
   
   // Slovakia
   case 'sk':
+    animateReviewsCounter();
     if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
@@ -565,14 +643,12 @@ switch (locale) {
     Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
     Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
     
-    // Heureka widget
-    loadHeurekaWidget();
-    
     initializeShopify();
     break;
     
   // Germany
   case 'de':
+    animateReviewsCounter();
     if (deliveryDate) deliveryDate.textContent = deliveryMessageDE;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageDE);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageDE);
@@ -594,6 +670,7 @@ switch (locale) {
 
   // France
   case 'fr':
+    animateReviewsCounter();
     if (deliveryDate) deliveryDate.textContent = deliveryMessageFR;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
@@ -609,6 +686,7 @@ switch (locale) {
     break;
   // Poland
   case 'pl':
+    animateReviewsCounter();
     if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
@@ -624,6 +702,7 @@ switch (locale) {
     break;
 
   default:
+    animateReviewsCounter();
     const getDeliveryMessage = () => {
       const dayMessages = {
         1: "pozítří u Vás", // Mon
@@ -643,7 +722,6 @@ switch (locale) {
     updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
     updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
 
-    loadHeurekaWidget();
     initializeShopify();
     break;
 }
