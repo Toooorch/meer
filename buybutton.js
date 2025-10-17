@@ -65,18 +65,11 @@ const deliveryMessagePL = "Dostawa 1-3 dni";
 const deliveryMessageFR = "Livraison en 2-5 jours";
 
 // Free Delivery
-//const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
-//const deliveryMessageCZ = "Rychlé odeslání";
 const deliveryMessageCZ = "Doprava nyní ZDARMA";
-//const deliveryMessageCZ = "Doprava DNES ZDARMA";
-//const trasholdMessagePL = "Darmowa wysyłka od 200zł";
 const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
 const trasholdMessageEN = "Free Delivery from $50";
 const trasholdMessageSK = "Doprava teraz ZADARMO";
-//const trasholdMessageSK = "Doprava dnes ZADARMO";
-//const trasholdMessageSK = "Doprava zadarmo od €30";
 const trasholdMessageFR = "Frais de port offerts à partir de €60";
-//const trasholdMessageDE = "Kostenloser Versand ab €60";
 const trasholdMessageDE = "Jetzt kostenloser Versand";
 
 // Configuration objects
@@ -251,7 +244,7 @@ const localeConfigs = {
   }
 };
 
-// 6. POTOM - Utility functions
+// Utility functions
 const getLanguage = () => {
   const config = localeConfigs[locale];
   return config ? config.language : 'cs';
@@ -387,29 +380,36 @@ window.resetReviewsCounter = () => {
 };
 
 // Funkce pro vyčištění starých localStorage záznamů
+// FIXED: Mažeme jen Shopify checkouty, ne Zaraz data
 const cleanupOldCheckouts = () => {
   try {
-    // Najdi všechny klíče obsahující checkoutId
     const keysToRemove = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.includes('checkoutId')) {
+      // Mažeme jen Shopify checkouty (obsahují doménu a checkoutId)
+      if (key && key.includes('checkoutId') && 
+          (key.includes('.myshopify.com') || 
+           key.includes('meer.cz') || 
+           key.includes('meer.sk') ||
+           key.includes('meercare'))) {
         keysToRemove.push(key);
       }
     }
     
-    // Odstraň staré klíče
+    // Odstraň jen Shopify klíče
     keysToRemove.forEach(key => {
       localStorage.removeItem(key);
     });
     
-    console.log('Cleaned up old checkout IDs from localStorage');
+    if (keysToRemove.length > 0) {
+      console.log('Cleaned up old Shopify checkout IDs:', keysToRemove.length);
+    }
   } catch (error) {
     console.warn('Could not clean localStorage:', error);
   }
 };
 
-// 7. POTOM - Main functions
+// Main functions
 const setupTracking = (buttonText) => {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
@@ -473,7 +473,7 @@ const initializeShopify = () => {
     console.warn('Cart toggle element not found - buy buttons may not work properly');
   }
 
-  // Vyčištění starých localStorage záznamů
+  // Vyčištění starých localStorage záznamů (pouze Shopify)
   cleanupOldCheckouts();
 
   const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -597,10 +597,10 @@ const initializeShopify = () => {
   }
 };
 
-// 8. NAKONEC - Variables that depend on other calculations
+// Variables that depend on other calculations
 let deliveryMessage;
 
-// 9. EXECUTION - Switch statement na konci
+// EXECUTION - Switch statement
 switch (locale) {
   // English
   case 'en':
@@ -670,6 +670,7 @@ switch (locale) {
 
     initializeShopify();
     break;
+  
   // Poland
   case 'pl':
     animateReviewsCounter();
