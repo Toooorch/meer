@@ -1,14 +1,4 @@
-const href = window.location.href;
-const getLocale = () => {
-  if (href.includes('en.meer.care')) return 'en';
-  if (href.includes('sk.meer.care')) return 'sk';
-  if (href.includes('de.meer.care')) return 'de';
-  if (href.includes('fr.meer.care')) return 'fr';
-  if (href.includes('pl.meer.care')) return 'pl';
-  return 'cz'; // default
-};
-
-const locale = getLocale();
+const locale = 'cz';
 
 // - Date/time constants
 const dayOfWeek = new Date().getDay();
@@ -56,249 +46,20 @@ const userAddresses = document.getElementById('user-addresses');
 const alzaButton = document.getElementById('alza-button');
 const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
 
-// Message constants
+// Message constants - Czech only
 // Delivery Time
-const deliveryMessageEN = "Fast Delivery";
-const deliveryMessageSK = "Doručenie za 1-3 dni";
-const deliveryMessageDE = "Lieferung in 2-3 Tagen";
-const deliveryMessagePL = "Dostawa 1-3 dni";
-const deliveryMessageFR = "Livraison en 2-5 jours";
-
-// Free Delivery
-//const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
-//const deliveryMessageCZ = "Rychlé odeslání";
 const deliveryMessageCZ = "Doprava nyní ZDARMA";
-//const deliveryMessageCZ = "Doprava DNES ZDARMA";
-//const trasholdMessagePL = "Darmowa wysyłka od 200zł";
-const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
-const trasholdMessageEN = "Free Delivery from $50";
-//const trasholdMessageSK = "Doprava teraz ZADARMO";
-//const trasholdMessageSK = "Doprava dnes ZADARMO";
-const trasholdMessageSK = "Doprava zadarmo od €30";
-const trasholdMessageFR = "Frais de port offerts à partir de €60";
-//const trasholdMessageDE = "Kostenloser Versand ab €60";
-const trasholdMessageDE = "Jetzt kostenloser Versand";
+const trasholdMessageCZ = "Doprava zdarma od 1500Kč";
 
-// Configuration objects
-const localeConfigs = {
-  en: {
-    domain: 'meer-care.myshopify.com',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'en',
-    countryCode: 'US',
-    moneyFormat: '$%7B%7Bamount%7D%7D',
-    buttonText: 'Add to Basket',
-    productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Cart",
-      total: "Subtotal",
-      empty: "Your cart is empty.",
-      button: "Proceed to Checkout",
-      noteDescription: "Order Note",
-      notice: "Shipping and discount codes are added at checkout.",
-      outOfStock: "Sold Out",
-      unavailable: "Sold Out"
-    }
-  },
-  sk: {
-    domain: 'meer.sk',
-    accessToken: '618933109ccee1040151ba599180cfef',
-    language: 'sk',
-    countryCode: 'SK',
-    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-    buttonText: 'Pridať do košíka',
-    productIds: {
-      setComplete: 8592696639827,
-      setI: 8592695624019,
-      setII: 8592696541523,
-      stepI: 8592695886163,
-      stepII: 8592696115539,
-      stepIII: 8592696279379,
-      stepIV: 8592696475987,
-      giftCard: 8592808051027
-    },
-    cart: {
-      title: "Košík",
-      total: "Celková čiastka",
-      empty: "Momentálne nemáte v košíku vložený žiadny tovar.",
-      button: "Pokračovať k pokladni",
-      noteDescription: "Poznámka k objednávke",
-      notice: "Doprava a zľavové kódy sa pridávajú pri pokladni.",
-      outOfStock: "Vypredané",
-      unavailable: "Vypredané"
-    }
-  },
-  de: {
-    domain: 'meercarede.cz',
-    accessToken: '618933109ccee1040151ba599180cfef',
-    language: 'de',
-    countryCode: 'DE',
-    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-    buttonText: 'In den Warenkorb',
-    productIds: {
-      setComplete: 9792222462291,
-      setI: 9792209256787,
-      setII: 9792221315411,
-      stepI: 9792209650003,
-      stepII: 9792209977683,
-      stepIII: 9792218235219,
-      stepIV: 9792220135763,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Warenkorb",
-      total: "Zwischensumme",
-      empty: "Ihr Warenkorb ist leer.",
-      button: "Zur Kasse gehen",
-      noteDescription: "Bestellnotiz",
-      notice: "Versand und Rabattcodes werden an der Kasse hinzugefügt.",
-      outOfStock: "Ausverkauft",
-      unavailable: "Ausverkauft"
-    }
-  },
-  fr: {
-    domain: 'meercarefr.cz',
-    accessToken: '618933109ccee1040151ba599180cfef',
-    language: 'fr',
-    countryCode: 'FR',
-    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-    buttonText: 'Ajouter au panier',
-    productIds: {
-      setComplete: 10180475715923,
-      setI: 10180474405203,
-      setII: 10180482498899,
-      stepI: 10180486824275,
-      stepII: 10180486005075,
-      stepIII: 10180484628819,
-      stepIV: 10180484301139,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Panier",
-      total: "Sous-total",
-      empty: "Votre panier est vide.",
-      button: "Procéder au paiement",
-      noteDescription: "Note de commande",
-      notice: "Les frais de livraison et les codes de réduction sont ajoutés lors du paiement.",
-      outOfStock: "Épuisé",
-      unavailable: "Épuisé"
-    }
-  },
-  pl: {
-    domain: 'meercarepl.cz',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'pl',
-    countryCode: 'PL',
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
-    buttonText: 'Włożyć do koszyka',
-    productIds: {
-      setComplete: 15337577349445,
-      setI: 15337570500933,
-      setII: 15337576497477,
-      stepI: 15337572991301,
-      stepII: 15337573220677,
-      stepIII: 15337574072645,
-      stepIV: 15337575874885,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Koszyk",
-      total: "Suma",
-      empty: "Obecnie nie masz żadnych produktów w koszyku.",
-      button: "Przejdź do finalizacji zakupu",
-      noteDescription: "Uwaga do zamówienia",
-      notice: "Koszty wysyłki i kody rabatowe są dodawane przy kasie.",
-      outOfStock: "Sprzedany",
-      unavailable: "Sprzedany"
-    }
-  },
-  cz: {
-    domain: 'meer.cz',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'cs',
-    countryCode: 'CZ',
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    buttonText: 'Přidat do košíku',
-    productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Košík",
-      total: "Mezisoučet",
-      empty: "Váš košík je prázdný.",
-      button: "Pokračovat k pokladně",
-      noteDescription: "Poznámka k objednávce",
-      notice: "Slevové kódy se přidávají u pokladny.",
-      outOfStock: "Vyprodáno",
-      unavailable: "Vyprodáno"
-    }
-  }
-};
-
-// Utility functions
-const getLanguage = () => {
-  const config = localeConfigs[locale];
-  return config ? config.language : 'cs';
-};
-
-const getCountry = () => {
-  const config = localeConfigs[locale];
-  return config ? config.countryCode : 'CZ';
-};
-
-const getDomain = () => {
-  const config = localeConfigs[locale];
-  return config ? config.domain : 'meer-care.myshopify.com';
-};
-
-const getAccessToken = () => {
-  const config = localeConfigs[locale];
-  return config ? config.accessToken : 'd0790ee9d09c16714d92224efa9f5882';
-};
-
-const getButtonText = () => {
-  const config = localeConfigs[locale];
-  return config ? config.buttonText : 'Přidat do košíku';
-};
-
-const getCart = () => {
-  const config = localeConfigs[locale];
-  return config ? config.cart : {
-    title: "Košík",
-    total: "Mezisoučet",
-    empty: "Váš košík je prázdný.",
-    button: "Pokračovat k pokladně",
-    noteDescription: "Poznámka k objednávce",
-    notice: "Slevové kódy se přidávají u pokladny.",
-    outOfStock: "Vyprodáno",
-    unavailable: "Vyprodáno"
-  };
-};
-
-const getMoneyFormat = () => {
-  const config = localeConfigs[locale];
-  return config ? config.moneyFormat : '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D';
-};
-
-const getProductIds = () => {
-  const config = localeConfigs[locale];
-  return config ? config.productIds : {
+// Configuration - Czech Store Only
+const config = {
+  domain: 'meer.cz',
+  accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+  language: 'cs',
+  countryCode: 'CZ',
+  moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+  buttonText: 'Přidat do košíku',
+  productIds: {
     setComplete: 8623720366405,
     setI: 7542825058534,
     setII: 8021842854118,
@@ -307,8 +68,28 @@ const getProductIds = () => {
     stepIII: 7931357692134,
     stepIV: 7931360051430,
     giftCard: 8578704736581
-  };
+  },
+  cart: {
+    title: "Košík",
+    total: "Mezisoučet",
+    empty: "Váš košík je prázdný.",
+    button: "Pokračovat k pokladně",
+    noteDescription: "Poznámka k objednávce",
+    notice: "Slevové kódy se přidávají u pokladny.",
+    outOfStock: "Vyprodáno",
+    unavailable: "Vyprodáno"
+  }
 };
+
+// Utility functions - Czech configuration only
+const getLanguage = () => config.language;
+const getCountry = () => config.countryCode;
+const getDomain = () => config.domain;
+const getAccessToken = () => config.accessToken;
+const getButtonText = () => config.buttonText;
+const getCart = () => config.cart;
+const getMoneyFormat = () => config.moneyFormat;
+const getProductIds = () => config.productIds;
 
 // Funkce pro animovaný reviews counter
 const animateReviewsCounter = () => {
@@ -325,8 +106,8 @@ const animateReviewsCounter = () => {
     return; // Tichý exit
   }
 
-  // Klíč pro sessionStorage (specifický pro locale)
-  const sessionCountKey = `meer_reviews_added_${locale}`;
+  // Klíč pro sessionStorage
+  const sessionCountKey = 'meer_reviews_added_cz';
   
   // Získej kolik jsme už přidali v této session
   let addedInSession = parseInt(sessionStorage.getItem(sessionCountKey)) || 0;
@@ -378,11 +159,8 @@ const animateReviewsCounter = () => {
 
 // Debug funkce pro reset counters (volej v konzoli: resetReviewsCounter())
 window.resetReviewsCounter = () => {
-  ['cz', 'en', 'sk', 'de', 'fr', 'pl'].forEach(locale => {
-    sessionStorage.removeItem(`meer_reviews_added_${locale}`);
-    sessionStorage.removeItem(`meer_reviews_increments_${locale}`);
-  });
-  console.log('All reviews counters reset');
+  sessionStorage.removeItem('meer_reviews_added_cz');
+  console.log('Reviews counter reset');
   location.reload();
 };
 
@@ -394,11 +172,7 @@ const cleanupOldCheckouts = () => {
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       // Mažeme jen Shopify checkouty (obsahují doménu a checkoutId)
-      if (key && key.includes('checkoutId') && 
-          (key.includes('.myshopify.com') || 
-           key.includes('meer.cz') || 
-           key.includes('meer.sk') ||
-           key.includes('meercare'))) {
+      if (key && key.includes('checkoutId') && key.includes('meer.cz')) {
         keysToRemove.push(key);
       }
     }
@@ -462,9 +236,9 @@ const setupTracking = (buttonText) => {
 };
 
 const initializeShopify = () => {
-  const currentConfig = localeConfigs[locale];
-  if (!currentConfig) {
-    console.error('Shopify config is missing for locale:', locale);
+  // Kontrola konfigurace
+  if (!config) {
+    console.error('Shopify config is missing');
     return;
   }
 
@@ -604,118 +378,26 @@ const initializeShopify = () => {
   }
 };
 
-// Variables that depend on other calculations
-let deliveryMessage;
+// EXECUTION - Czech store only
+animateReviewsCounter();
 
-// EXECUTION - Switch statement
-switch (locale) {
-  // English
-  case 'en':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
+const getDeliveryMessage = () => {
+  const dayMessages = {
+    1: "pozítří u Vás", // Mon
+    2: "pozítří u Vás", // Tue  
+    3: "pozítří u Vás", // Wed
+    4: "v pondělí u Vás", // Thu
+    5: "v úterý u Vás", // Fri
+    6: "v úterý u Vás", // Sat
+    0: "v úterý u Vás"  // Sun
+  };
+  return dayMessages[dayOfWeek] || "pozítří u Vás";
+};
 
-    // User
-    if (userMenu) userMenu.style.display = 'none';
+const deliveryMessage = getDeliveryMessage();
 
-    initializeShopify();
-    break;
-  
-  // Slovakia
-  case 'sk':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
+if (deliveryDate) deliveryDate.textContent = deliveryMessage;
+updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
+updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
 
-    // User links
-    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
-    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
-    
-    initializeShopify();
-    break;
-    
-  // Germany
-  case 'de':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageDE;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageDE);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageDE);
-
-    // Hide alza-button if it exists
-    if (alzaButton) {
-      alzaButton.style.display = 'none';
-    }
-
-    // User links
-    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
-    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
-
-    initializeShopify();
-    break;
-
-  // France
-  case 'fr':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageFR;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
-
-    // User links
-    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
-    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
-
-    initializeShopify();
-    break;
-  
-  // Poland
-  case 'pl':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
-
-    // User links
-    Object.assign(userOrders, {href: 'https://meercarepl.cz/account'});
-    Object.assign(userLogin, {href: 'https://meercarepl.cz/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://meercarepl.cz/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://meercarepl.cz/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://meercarepl.cz/account/addresses'});
-
-    initializeShopify();
-    break;
-
-  default:
-    animateReviewsCounter();
-    const getDeliveryMessage = () => {
-      const dayMessages = {
-        1: "pozítří u Vás", // Mon
-        2: "pozítří u Vás", // Tue  
-        3: "pozítří u Vás", // Wed
-        4: "v pondělí u Vás", // Thu
-        5: "v úterý u Vás", // Fri
-        6: "v úterý u Vás", // Sat
-        0: "v úterý u Vás"  // Sun
-      };
-      return dayMessages[dayOfWeek] || "pozítří u Vás";
-    };
-
-    deliveryMessage = getDeliveryMessage();
-    
-    if (deliveryDate) deliveryDate.textContent = deliveryMessage;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
-
-    initializeShopify();
-    break;
-}
+initializeShopify();
