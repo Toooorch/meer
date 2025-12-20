@@ -48,8 +48,7 @@ const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
 
 // Message constants - Czech only
 // Delivery Time
-const deliveryMessageCZ = "Doprava nyní ZDARMA";
-const trasholdMessageCZ = "Doprava zdarma od 1500Kč";
+const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
 
 // Configuration - Czech Store Only
 const config = {
