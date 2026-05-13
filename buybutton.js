@@ -58,10 +58,13 @@ const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
 const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
 
-// Free Delivery
-const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
-const trasholdMessageSK = "Doprava zadarmo od €30";
-const trasholdMessageDE = "Jetzt kostenloser Versand";
+
+const deliveryMessageCZ = "Doprava zdarma od 1 500 Kč";
+const trasholdMessageSK = "Doprava zadarmo od 30 €";
+const trasholdMessageDE = "Kostenloser Versand ab 30 €";
+// const deliveryMessageCZ = "Doprava nyní zdarma";
+// const trasholdMessageSK = "Doprava teraz zadarmo";
+// const trasholdMessageDE = "Jetzt kostenloser Versand";
 
 const localeConfigs = {
   sk: {
