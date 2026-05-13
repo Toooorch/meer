@@ -103,10 +103,10 @@ const localeConfigs = {
       setComplete: 15873300857157,
       setI: 15873302233413,
       setII: 15873303085381,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
+      stepI: 15873776484677,
+      stepII: 15873777336645,
+      stepIII: 15873777729861,
+      stepIV: 15873778123077,
       giftCard: 8578704736581
     },
     cart: {
