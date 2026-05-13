@@ -59,11 +59,10 @@ const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
 
 // Free Delivery
-const deliveryMessageCZ = "Doprava nyní ZDARMA";
+const deliveryMessageCZ = "Doprava zdarma od 1500Kč";
 const trasholdMessageSK = "Doprava zadarmo od €30";
 const trasholdMessageDE = "Jetzt kostenloser Versand";
 
-// Configuration objects (Vše nasměrováno na CZ store)
 const localeConfigs = {
   sk: {
     domain: 'meer.sk',
@@ -101,9 +100,9 @@ const localeConfigs = {
     moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
     buttonText: 'In den Warenkorb',
     productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
+      setComplete: 15873300857157,
+      setI: 15873302233413,
+      setII: 15873303085381,
       stepI: 7601486758118,
       stepII: 7609802686694,
       stepIII: 7931357692134,
