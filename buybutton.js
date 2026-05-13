@@ -66,7 +66,7 @@ const trasholdMessageDE = "Jetzt kostenloser Versand";
 // Configuration objects (Vše nasměrováno na CZ store)
 const localeConfigs = {
   sk: {
-    domain: 'meer.cz',
+    domain: 'meer.sk',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
     language: 'sk',
     countryCode: 'SK',
@@ -94,7 +94,7 @@ const localeConfigs = {
     }
   },
   de: {
-    domain: 'meer.cz',
+    domain: 'meercarede.cz',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
     language: 'de',
     countryCode: 'DE',
