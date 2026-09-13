@@ -1,7 +1,10 @@
 const href = window.location.href;
 const getLocale = () => {
+  if (href.includes('en.meer.care')) return 'en';
   if (href.includes('sk.meer.care')) return 'sk';
   if (href.includes('de.meer.care')) return 'de';
+  if (href.includes('fr.meer.care')) return 'fr';
+  if (href.includes('pl.meer.care')) return 'pl';
   return 'cz'; // default
 };
 
@@ -55,18 +58,52 @@ const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
 
 // Message constants
 // Delivery Time
+const deliveryMessageEN = "Fast Delivery";
 const deliveryMessageSK = "Doručenie za 1-3 dni";
 const deliveryMessageDE = "Lieferung in 2-3 Tagen";
+const deliveryMessageFR = "Livraison en 2-5 jours";
+const deliveryMessagePL = "Dostawa 1-3 dni";
 
 
 const deliveryMessageCZ = "Doprava zdarma od 1 500 Kč";
+const trasholdMessageEN = "Free Delivery from $50";
 const trasholdMessageSK = "Doprava zadarmo od 30 €";
 const trasholdMessageDE = "Kostenloser Versand ab 30 €";
+const trasholdMessageFR = "Frais de port offerts à partir de €60";
+const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
 // const deliveryMessageCZ = "Doprava nyní zdarma";
 // const trasholdMessageSK = "Doprava teraz zadarmo";
 // const trasholdMessageDE = "Jetzt kostenloser Versand";
 
 const localeConfigs = {
+  en: {
+    domain: 'meer-care.myshopify.com',
+    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+    language: 'en',
+    countryCode: 'US',
+    moneyFormat: '$%7B%7Bamount%7D%7D',
+    buttonText: 'Add to Basket',
+    productIds: {
+      setComplete: 8623720366405,
+      setI: 7542825058534,
+      setII: 8021842854118,
+      stepI: 7601486758118,
+      stepII: 7609802686694,
+      stepIII: 7931357692134,
+      stepIV: 7931360051430,
+      giftCard: 8578704736581
+    },
+    cart: {
+      title: "Cart",
+      total: "Subtotal",
+      empty: "Your cart is empty.",
+      button: "Proceed to Checkout",
+      noteDescription: "Order Note",
+      notice: "Shipping and discount codes are added at checkout.",
+      outOfStock: "Sold Out",
+      unavailable: "Sold Out"
+    }
+  },
   sk: {
     domain: 'meer.sk',
     accessToken: 'd0790ee9d09c16714d92224efa9f5882',
@@ -121,6 +158,62 @@ const localeConfigs = {
       notice: "Versand und Rabattcodes werden an der Kasse hinzugefügt.",
       outOfStock: "Ausverkauft",
       unavailable: "Ausverkauft"
+    }
+  },
+  fr: {
+    domain: 'meercarefr.cz',
+    accessToken: '618933109ccee1040151ba599180cfef',
+    language: 'fr',
+    countryCode: 'FR',
+    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
+    buttonText: 'Ajouter au panier',
+    productIds: {
+      setComplete: 10180475715923,
+      setI: 10180474405203,
+      setII: 10180482498899,
+      stepI: 10180486824275,
+      stepII: 10180486005075,
+      stepIII: 10180484628819,
+      stepIV: 10180484301139,
+      giftCard: 8578704736581
+    },
+    cart: {
+      title: "Panier",
+      total: "Sous-total",
+      empty: "Votre panier est vide.",
+      button: "Procéder au paiement",
+      noteDescription: "Note de commande",
+      notice: "Les frais de livraison et les codes de réduction sont ajoutés lors du paiement.",
+      outOfStock: "Épuisé",
+      unavailable: "Épuisé"
+    }
+  },
+  pl: {
+    domain: 'meercarepl.cz',
+    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+    language: 'pl',
+    countryCode: 'PL',
+    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
+    buttonText: 'Włożyć do koszyka',
+    productIds: {
+      setComplete: 15337577349445,
+      setI: 15337570500933,
+      setII: 15337576497477,
+      stepI: 15337572991301,
+      stepII: 15337573220677,
+      stepIII: 15337574072645,
+      stepIV: 15337575874885,
+      giftCard: 8578704736581
+    },
+    cart: {
+      title: "Koszyk",
+      total: "Suma",
+      empty: "Obecnie nie masz żadnych produktów w koszyku.",
+      button: "Przejdź do finalizacji zakupu",
+      noteDescription: "Uwaga do zamówienia",
+      notice: "Koszty wysyłki i kody rabatowe są dodawane przy kasie.",
+      outOfStock: "Sprzedany",
+      unavailable: "Sprzedany"
     }
   },
   cz: {
@@ -280,7 +373,7 @@ const animateReviewsCounter = () => {
 
 // Debug funkce pro reset counters (volej v konzoli: resetReviewsCounter())
 window.resetReviewsCounter = () => {
-  ['cz', 'sk', 'de'].forEach(locale => {
+  ['cz', 'en', 'sk', 'de', 'fr', 'pl'].forEach(locale => {
     sessionStorage.removeItem(`meer_reviews_added_${locale}`);
     sessionStorage.removeItem(`meer_reviews_increments_${locale}`);
   });
@@ -510,6 +603,18 @@ let deliveryMessage;
 
 // EXECUTION - Switch statement
 switch (locale) {
+  // English
+  case 'en':
+    animateReviewsCounter();
+    if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
+
+    if (userMenu) userMenu.style.display = 'none';
+
+    initializeShopify();
+    break;
+
   // Slovakia
   case 'sk':
     animateReviewsCounter();
@@ -524,6 +629,38 @@ switch (locale) {
     Object.assign(userForgotPassword, {href: 'https://meer.cz/account/login#recover'});
     Object.assign(userAddresses, {href: 'https://meer.cz/account/addresses'});
     
+    initializeShopify();
+    break;
+
+  // France
+  case 'fr':
+    animateReviewsCounter();
+    if (deliveryDate) deliveryDate.textContent = deliveryMessageFR;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
+
+    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
+    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
+    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
+    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
+    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
+
+    initializeShopify();
+    break;
+
+  // Poland
+  case 'pl':
+    animateReviewsCounter();
+    if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
+    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
+    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
+
+    Object.assign(userOrders, {href: 'https://meercarepl.cz/account'});
+    Object.assign(userLogin, {href: 'https://meercarepl.cz/account/login'});
+    Object.assign(userCreateAccount, {href: 'https://meercarepl.cz/account/register'});
+    Object.assign(userForgotPassword, {href: 'https://meercarepl.cz/account/login#recover'});
+    Object.assign(userAddresses, {href: 'https://meercarepl.cz/account/addresses'});
+
     initializeShopify();
     break;
     
