@@ -1,713 +1,627 @@
-const href = window.location.href;
-const getLocale = () => {
-  if (href.includes('en.meer.care')) return 'en';
-  if (href.includes('sk.meer.care')) return 'sk';
-  if (href.includes('de.meer.care')) return 'de';
-  if (href.includes('fr.meer.care')) return 'fr';
-  if (href.includes('pl.meer.care')) return 'pl';
-  return 'cz'; // default
-};
+(() => {
+  'use strict';
 
-const locale = getLocale();
+  // Ochrana proti dvojímu načtení skriptu
+  if (window.__meerBuyButtonLoaded) return;
+  window.__meerBuyButtonLoaded = true;
 
-// - Date/time constants
-const dayOfWeek = new Date().getDay();
+  // ---------------------------------------------------------------------------
+  // Debug / logging
+  // ---------------------------------------------------------------------------
+  const DEBUG = /[?&]meerdebug=1/.test(window.location.search);
+  const log = (...args) => { if (DEBUG) console.log('[meer]', ...args); };
+  const warn = (...args) => { if (DEBUG) console.warn('[meer]', ...args); };
+  const error = (...args) => console.error('[meer]', ...args);
 
-// DOM elements
-const deliveryTrashold = document.getElementById("delivery-treshold");
-const deliveryTime = document.getElementById("delivery-speed");
-const deliveryDate = document.getElementById("delivery-date");
-const navDeliveryTrashold = document.getElementById("nav-delivery-treshold");
-const navDeliveryTime = document.getElementById("nav-delivery-speed");
-const userMenu = document.getElementById("user-menu");
-
-// Utility function for updating multiple elements
-const updateElements = (elements, text) => {
-  elements.forEach(element => {
-    if (element) element.textContent = text;
+  // ---------------------------------------------------------------------------
+  // Bezpečné storage helpery (private mode / zakázané cookies nesmí shodit skript)
+  // ---------------------------------------------------------------------------
+  const safeStorage = (getStore) => ({
+    get(key) { try { return getStore().getItem(key); } catch (e) { return null; } },
+    set(key, value) { try { getStore().setItem(key, value); return true; } catch (e) { return false; } },
+    remove(key) { try { getStore().removeItem(key); } catch (e) { /* noop */ } },
+    keys() {
+      try {
+        const store = getStore();
+        const out = [];
+        for (let i = 0; i < store.length; i++) out.push(store.key(i));
+        return out;
+      } catch (e) { return []; }
+    }
   });
-};
+  const local = safeStorage(() => window.localStorage);
+  const session = safeStorage(() => window.sessionStorage);
 
-// Helper function to update both nav and footer elements
-const updateDeliveryElements = (navElement, footerElement, text) => {
-  if (navElement) navElement.textContent = text;
-  if (footerElement) footerElement.textContent = text;
-};
+  // ---------------------------------------------------------------------------
+  // Locale detekce – web běží výhradně na *.meer.care, locale = subdoména
+  // ---------------------------------------------------------------------------
+  const hostname = window.location.hostname.toLowerCase();
 
-const productElements = {
-  setComplete: document.getElementById('buy-button-set-complete'),
-  setI: document.getElementById('buy-button-set-I'),
-  setII: document.getElementById('buy-button-set-II'),
-  stepI: document.getElementById('buy-button-step-I'),
-  stepII: document.getElementById('buy-button-step-II'),
-  stepIII: document.getElementById('buy-button-step-III'),
-  stepIV: document.getElementById('buy-button-step-IV'),
-  giftCard: document.getElementById('buy-button-gift-card')
-};
-
-const cartToggle = document.getElementById("cart-toggle");
-
-const userOrders = document.getElementById('user-orders');
-const userLogin = document.getElementById('user-login');
-const userCreateAccount = document.getElementById('user-create-account');
-const userForgotPassword = document.getElementById('user-forgot-password');
-const userAddresses = document.getElementById('user-addresses');
-
-const alzaButton = document.getElementById('alza-button');
-const freeShippingTags = document.querySelectorAll('.free-shipping-tag');
-
-// Message constants
-// Delivery Time
-const deliveryMessageEN = "Fast Delivery";
-const deliveryMessageSK = "Doručenie za 1-3 dni";
-const deliveryMessageDE = "Lieferung in 2-3 Tagen";
-const deliveryMessageFR = "Livraison en 2-5 jours";
-const deliveryMessagePL = "Dostawa 1-3 dni";
-
-
-const deliveryMessageCZ = "Doprava zdarma od 1 500 Kč";
-const trasholdMessageEN = "Free Delivery from $50";
-const trasholdMessageSK = "Doprava zadarmo od 30 €";
-const trasholdMessageDE = "Kostenloser Versand ab 30 €";
-const trasholdMessageFR = "Frais de port offerts à partir de €60";
-const trasholdMessagePL = "Teraz z DARMOWĄ WYSYŁKĄ";
-// const deliveryMessageCZ = "Doprava nyní zdarma";
-// const trasholdMessageSK = "Doprava teraz zadarmo";
-// const trasholdMessageDE = "Jetzt kostenloser Versand";
-
-const localeConfigs = {
-  en: {
-    domain: 'meer-care.myshopify.com',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'en',
-    countryCode: 'US',
-    moneyFormat: '$%7B%7Bamount%7D%7D',
-    buttonText: 'Add to Basket',
-    productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Cart",
-      total: "Subtotal",
-      empty: "Your cart is empty.",
-      button: "Proceed to Checkout",
-      noteDescription: "Order Note",
-      notice: "Shipping and discount codes are added at checkout.",
-      outOfStock: "Sold Out",
-      unavailable: "Sold Out"
-    }
-  },
-  sk: {
-    domain: 'meer.sk',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'sk',
-    countryCode: 'SK',
-    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-    buttonText: 'Pridať do košíka',
-    productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Košík",
-      total: "Celková čiastka",
-      empty: "Momentálne nemáte v košíku vložený žiadny tovar.",
-      button: "Pokračovať k pokladni",
-      noteDescription: "Poznámka k objednávke",
-      notice: "Doprava a zľavové kódy sa pridávajú pri pokladni.",
-      outOfStock: "Vypredané",
-      unavailable: "Vypredané"
-    }
-  },
-  de: {
-    domain: 'meercarede.cz',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'de',
-    countryCode: 'DE',
-    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-    buttonText: 'In den Warenkorb',
-    productIds: {
-      setComplete: 15873300857157,
-      setI: 15873302233413,
-      setII: 15873303085381,
-      stepI: 15873776484677,
-      stepII: 15873777336645,
-      stepIII: 15873777729861,
-      stepIV: 15873778123077,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Warenkorb",
-      total: "Zwischensumme",
-      empty: "Ihr Warenkorb ist leer.",
-      button: "Zur Kasse gehen",
-      noteDescription: "Bestellnotiz",
-      notice: "Versand und Rabattcodes werden an der Kasse hinzugefügt.",
-      outOfStock: "Ausverkauft",
-      unavailable: "Ausverkauft"
-    }
-  },
-  fr: {
-    domain: 'meercarefr.cz',
-    accessToken: '618933109ccee1040151ba599180cfef',
-    language: 'fr',
-    countryCode: 'FR',
-    moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-    buttonText: 'Ajouter au panier',
-    productIds: {
-      setComplete: 10180475715923,
-      setI: 10180474405203,
-      setII: 10180482498899,
-      stepI: 10180486824275,
-      stepII: 10180486005075,
-      stepIII: 10180484628819,
-      stepIV: 10180484301139,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Panier",
-      total: "Sous-total",
-      empty: "Votre panier est vide.",
-      button: "Procéder au paiement",
-      noteDescription: "Note de commande",
-      notice: "Les frais de livraison et les codes de réduction sont ajoutés lors du paiement.",
-      outOfStock: "Épuisé",
-      unavailable: "Épuisé"
-    }
-  },
-  pl: {
-    domain: 'meercarepl.cz',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'pl',
-    countryCode: 'PL',
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
-    buttonText: 'Włożyć do koszyka',
-    productIds: {
-      setComplete: 15337577349445,
-      setI: 15337570500933,
-      setII: 15337576497477,
-      stepI: 15337572991301,
-      stepII: 15337573220677,
-      stepIII: 15337574072645,
-      stepIV: 15337575874885,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Koszyk",
-      total: "Suma",
-      empty: "Obecnie nie masz żadnych produktów w koszyku.",
-      button: "Przejdź do finalizacji zakupu",
-      noteDescription: "Uwaga do zamówienia",
-      notice: "Koszty wysyłki i kody rabatowe są dodawane przy kasie.",
-      outOfStock: "Sprzedany",
-      unavailable: "Sprzedany"
-    }
-  },
-  cz: {
-    domain: 'meer.cz',
-    accessToken: 'd0790ee9d09c16714d92224efa9f5882',
-    language: 'cs',
-    countryCode: 'CZ',
-    moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
-    buttonText: 'Přidat do košíku',
-    productIds: {
-      setComplete: 8623720366405,
-      setI: 7542825058534,
-      setII: 8021842854118,
-      stepI: 7601486758118,
-      stepII: 7609802686694,
-      stepIII: 7931357692134,
-      stepIV: 7931360051430,
-      giftCard: 8578704736581
-    },
-    cart: {
-      title: "Košík",
-      total: "Mezisoučet",
-      empty: "Váš košík je prázdný.",
-      button: "Pokračovat k pokladně",
-      noteDescription: "Poznámka k objednávce",
-      notice: "Slevové kódy se přidávají u pokladny.",
-      outOfStock: "Vyprodáno",
-      unavailable: "Vyprodáno"
-    }
-  }
-};
-
-// Utility functions
-const getLanguage = () => {
-  const config = localeConfigs[locale];
-  return config ? config.language : 'cs';
-};
-
-const getCountry = () => {
-  const config = localeConfigs[locale];
-  return config ? config.countryCode : 'CZ';
-};
-
-const getDomain = () => {
-  const config = localeConfigs[locale];
-  return config ? config.domain : 'meer.cz';
-};
-
-const getAccessToken = () => {
-  const config = localeConfigs[locale];
-  return config ? config.accessToken : 'd0790ee9d09c16714d92224efa9f5882';
-};
-
-const getButtonText = () => {
-  const config = localeConfigs[locale];
-  return config ? config.buttonText : 'Přidat do košíku';
-};
-
-const getCart = () => {
-  const config = localeConfigs[locale];
-  return config ? config.cart : {
-    title: "Košík",
-    total: "Mezisoučet",
-    empty: "Váš košík je prázdný.",
-    button: "Pokračovat k pokladně",
-    noteDescription: "Poznámka k objednávce",
-    notice: "Slevové kódy se přidávají u pokladny.",
-    outOfStock: "Vyprodáno",
-    unavailable: "Vyprodáno"
-  };
-};
-
-const getMoneyFormat = () => {
-  const config = localeConfigs[locale];
-  return config ? config.moneyFormat : '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D';
-};
-
-const getProductIds = () => {
-  const config = localeConfigs[locale];
-  return config ? config.productIds : {
-    setComplete: 8623720366405,
-    setI: 7542825058534,
-    setII: 8021842854118,
-    stepI: 7601486758118,
-    stepII: 7609802686694,
-    stepIII: 7931357692134,
-    stepIV: 7931360051430,
-    giftCard: 8578704736581
-  };
-};
-
-// Funkce pro animovaný reviews counter
-const animateReviewsCounter = () => {
-  const reviewsElement = document.getElementById('reviews-rating-number');
-  
-  if (!reviewsElement) {
-    return; // Tichý exit, žádný log
-  }
-
-  // Získej počáteční hodnotu z HTML
-  const initialCount = parseInt(reviewsElement.textContent.trim()) || 0;
-  
-  if (initialCount === 0) {
-    return; // Tichý exit
-  }
-
-  // Klíč pro sessionStorage (specifický pro locale)
-  const sessionCountKey = `meer_reviews_added_${locale}`;
-  
-  // Získej kolik jsme už přidali v této session
-  let addedInSession = parseInt(sessionStorage.getItem(sessionCountKey)) || 0;
-
-  // Aktuální počet = HTML hodnota + přidané v session
-  let currentCount = initialCount + addedInSession;
-
-  // Zobraz aktuální počet
-  reviewsElement.textContent = currentCount.toString();
-
-  // Funkce pro přidání jedné recenze
-  const incrementReview = () => {
-    currentCount += 1;
-    addedInSession += 1;
-    
-    // Ulož do sessionStorage
-    sessionStorage.setItem(sessionCountKey, addedInSession);
-    
-    // Aktualizuj UI
-    reviewsElement.textContent = currentCount.toString();
-    
-    // Malá animace
-    reviewsElement.style.opacity = '0.6';
-    setTimeout(() => {
-      reviewsElement.style.opacity = '1';
-    }, 200);
+  const getLocale = () => {
+    if (hostname.includes('en.meer.care')) return 'en';
+    if (hostname.includes('sk.meer.care')) return 'sk';
+    if (hostname.includes('de.meer.care')) return 'de';
+    if (hostname.includes('fr.meer.care')) return 'fr';
+    if (hostname.includes('pl.meer.care')) return 'pl';
+    return 'cz'; // default (meer.care / www.meer.care)
   };
 
-  // Opakovaný cyklus: po 8s +1, pak po 20s +1, opakuje se
-  const startCycle = () => {
-    // První increment po 8 sekundách
-    setTimeout(() => {
-      incrementReview();
-      
-      // Druhý increment po dalších 20 sekundách (celkem 28s od startu cyklu)
-      setTimeout(() => {
-        incrementReview();
-      }, 20000);
-      
-    }, 8000);
-  };
+  const locale = getLocale();
 
-  // Spusť první cyklus
-  startCycle();
-  
-  // Opakuj každých 60 sekund (60000ms)
-  setInterval(startCycle, 60000);
-};
-
-// Debug funkce pro reset counters (volej v konzoli: resetReviewsCounter())
-window.resetReviewsCounter = () => {
-  ['cz', 'en', 'sk', 'de', 'fr', 'pl'].forEach(locale => {
-    sessionStorage.removeItem(`meer_reviews_added_${locale}`);
-    sessionStorage.removeItem(`meer_reviews_increments_${locale}`);
-  });
-  console.log('All reviews counters reset');
-  location.reload();
-};
-
-// Funkce pro vyčištění starých localStorage záznamů
-const cleanupOldCheckouts = () => {
-  try {
-    const keysToRemove = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      // Mažeme jen Shopify checkouty (obsahují doménu a checkoutId)
-      if (key && key.includes('checkoutId') && 
-          (key.includes('.myshopify.com') || 
-           key.includes('meer.cz') || 
-           key.includes('meer.sk') ||
-           key.includes('meercare'))) {
-        keysToRemove.push(key);
+  // ---------------------------------------------------------------------------
+  // Konfigurace jednotlivých trhů
+  //   domain          – Shopify doména pro Storefront API
+  //   accountDomain   – doména pro odkazy na zákaznický účet (musí být stejný shop!)
+  //   productIds      – null = produkt na daném trhu neexistuje, komponenta se přeskočí
+  // ---------------------------------------------------------------------------
+  const localeConfigs = {
+    en: {
+      domain: 'meer-care.myshopify.com',
+      accountDomain: 'meer-care.myshopify.com',
+      accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'en',
+      countryCode: 'US',
+      moneyFormat: '$%7B%7Bamount%7D%7D',
+      buttonText: 'Add to Basket',
+      hideUserMenu: true,
+      ui: {
+        threshold: 'Free Delivery from $50',
+        delivery: 'Fast Delivery'
+      },
+      productIds: {
+        setComplete: 8623720366405,
+        setI: 7542825058534,
+        setII: 8021842854118,
+        stepI: 7601486758118,
+        stepII: 7609802686694,
+        stepIII: 7931357692134,
+        stepIV: 7931360051430,
+        giftCard: 8578704736581
+      },
+      cart: {
+        title: 'Cart',
+        total: 'Subtotal',
+        empty: 'Your cart is empty.',
+        button: 'Proceed to Checkout',
+        noteDescription: 'Order Note',
+        notice: 'Shipping and discount codes are added at checkout.',
+        outOfStock: 'Sold Out',
+        unavailable: 'Sold Out'
       }
-    }
-    
-    // Odstraň jen Shopify klíče
-    keysToRemove.forEach(key => {
-      localStorage.removeItem(key);
-    });
-    
-    if (keysToRemove.length > 0) {
-      console.log('Cleaned up old Shopify checkout IDs:', keysToRemove.length);
-    }
-  } catch (error) {
-    console.warn('Could not clean localStorage:', error);
-  }
-};
+    },
 
-// Main functions
-const setupTracking = (buttonText) => {
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'childList') {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === 1) {
-            const buttons = node.querySelectorAll ? 
-              node.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])') : 
-              [];
-            
-            buttons.forEach(button => {
-              if (button.textContent.includes(buttonText)) {
-                button.setAttribute('data-zaraz-tracked', 'true');
-                
-                button.addEventListener('click', function() {
-                  const shopifyWrapper = this.closest('.shopify-button');
-                  
-                  if (shopifyWrapper) {
-                    const eventData = {
-                      product_id: shopifyWrapper.getAttribute('data-product-id'),
-                      product_name: shopifyWrapper.getAttribute('data-product-name'),
-                      price: parseFloat(shopifyWrapper.getAttribute('data-price')),
-                      quantity: 1
-                    };
-                    
-                    if (typeof zaraz !== 'undefined') {
-                      zaraz.track("add_to_cart", eventData);
-                    }
-                  }
-                });
-              }
-            });
-          }
-        });
+    sk: {
+      domain: 'meer.sk',
+      accountDomain: 'meer.sk',
+      accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'sk',
+      countryCode: 'SK',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
+      buttonText: 'Pridať do košíka',
+      ui: {
+        // alternativa: "Doprava teraz zadarmo"
+        threshold: 'Doprava zadarmo od 30 €',
+        delivery: 'Doručenie za 1-3 dni'
+      },
+      productIds: {
+        setComplete: 8623720366405,
+        setI: 7542825058534,
+        setII: 8021842854118,
+        stepI: 7601486758118,
+        stepII: 7609802686694,
+        stepIII: 7931357692134,
+        stepIV: 7931360051430,
+        giftCard: 8578704736581
+      },
+      cart: {
+        title: 'Košík',
+        total: 'Celková čiastka',
+        empty: 'Momentálne nemáte v košíku vložený žiadny tovar.',
+        button: 'Pokračovať k pokladni',
+        noteDescription: 'Poznámka k objednávke',
+        notice: 'Doprava a zľavové kódy sa pridávajú pri pokladni.',
+        outOfStock: 'Vypredané',
+        unavailable: 'Vypredané'
       }
-    });
-  });
-  
-  observer.observe(document.body, { childList: true, subtree: true });
-  
-  // Cleanup po 30 sekundách
-  setTimeout(() => observer.disconnect(), 30000);
-};
+    },
 
-const initializeShopify = () => {
-  const currentConfig = localeConfigs[locale];
-  if (!currentConfig) {
-    console.error('Shopify config is missing for locale:', locale);
-    return;
-  }
-
-  // Kontrola existence alespoň jednoho produktového elementu
-  const hasAnyProductElement = Object.values(productElements).some(element => element !== null);
-  if (!hasAnyProductElement) {
-    console.log('No product elements found - skipping Shopify initialization');
-    return;
-  }
-
-  // Kontrola základních elementů
-  if (!cartToggle) {
-    console.warn('Cart toggle element not found - buy buttons may not work properly');
-  }
-
-  // Vyčištění starých localStorage záznamů (pouze Shopify)
-  cleanupOldCheckouts();
-
-  const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-  
-  if (window.ShopifyBuy?.UI) {
-    ShopifyBuyInit();
-    return;
-  }
-  
-  if (!document.querySelector(`script[src="${scriptURL}"]`)) {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = scriptURL;
-    script.onload = ShopifyBuyInit;
-    script.onerror = () => console.error('Failed to load Shopify SDK');
-    document.head.appendChild(script);
-    
-    // Timeout pro loading Shopify SDK
-    setTimeout(() => {
-      if (!window.ShopifyBuy) {
-        console.error('Shopify SDK failed to load within 10 seconds timeout');
+    de: {
+      domain: 'meercarede.cz',
+      accountDomain: 'meercarede.cz',
+      accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'de',
+      countryCode: 'DE',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
+      buttonText: 'In den Warenkorb',
+      hideAlzaButton: true,
+      ui: {
+        // alternativa: "Jetzt kostenloser Versand"
+        threshold: 'Kostenloser Versand ab 30 €',
+        delivery: 'Lieferung in 2-3 Tagen'
+      },
+      productIds: {
+        setComplete: 15873300857157,
+        setI: 15873302233413,
+        setII: 15873303085381,
+        stepI: 15873776484677,
+        stepII: 15873777336645,
+        stepIII: 15873777729861,
+        stepIV: 15873778123077,
+        giftCard: null // na DE shopu zatím neexistuje – doplnit ID, jakmile bude
+      },
+      cart: {
+        title: 'Warenkorb',
+        total: 'Zwischensumme',
+        empty: 'Ihr Warenkorb ist leer.',
+        button: 'Zur Kasse gehen',
+        noteDescription: 'Bestellnotiz',
+        notice: 'Versand und Rabattcodes werden an der Kasse hinzugefügt.',
+        outOfStock: 'Ausverkauft',
+        unavailable: 'Ausverkauft'
       }
-    }, 10000);
-  }
-  
-  function ShopifyBuyInit() {
-    try {
-      const client = ShopifyBuy.buildClient({
-        domain: getDomain(),
-        storefrontAccessToken: getAccessToken(),
-        language: getLanguage(),
-      });
+    },
 
-      const input = {
-        buyerIdentity: {
-          countryCode: getCountry(),
-        },
-      };
+    fr: {
+      domain: 'meercarefr.cz',
+      accountDomain: 'meercarefr.cz',
+      accessToken: '618933109ccee1040151ba599180cfef',
+      language: 'fr',
+      countryCode: 'FR',
+      moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
+      buttonText: 'Ajouter au panier',
+      ui: {
+        threshold: 'Frais de port offerts à partir de €60',
+        delivery: 'Livraison en 2-5 jours'
+      },
+      productIds: {
+        setComplete: 10180475715923,
+        setI: 10180474405203,
+        setII: 10180482498899,
+        stepI: 10180486824275,
+        stepII: 10180486005075,
+        stepIII: 10180484628819,
+        stepIV: 10180484301139,
+        giftCard: null // na FR shopu zatím neexistuje – doplnit ID, jakmile bude
+      },
+      cart: {
+        title: 'Panier',
+        total: 'Sous-total',
+        empty: 'Votre panier est vide.',
+        button: 'Procéder au paiement',
+        noteDescription: 'Note de commande',
+        notice: 'Les frais de livraison et les codes de réduction sont ajoutés lors du paiement.',
+        outOfStock: 'Épuisé',
+        unavailable: 'Épuisé'
+      }
+    },
 
-      // Klíč pro localStorage
-      const localStorageCheckoutKey = `${client.config.storefrontAccessToken}.${client.config.domain}.checkoutId`;
-      console.log('Creating checkout for:', {
-        locale,
-        domain: client.config.domain,
-        accessToken: client.config.storefrontAccessToken,
-        language: getLanguage(),
-        country: getCountry()
-      });
+    pl: {
+      domain: 'meercarepl.cz',
+      accountDomain: 'meercarepl.cz',
+      accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'pl',
+      countryCode: 'PL',
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20z%C5%82',
+      buttonText: 'Włożyć do koszyka',
+      ui: {
+        threshold: 'Teraz z DARMOWĄ WYSYŁKĄ',
+        delivery: 'Dostawa 1-3 dni'
+      },
+      productIds: {
+        setComplete: 15337577349445,
+        setI: 15337570500933,
+        setII: 15337576497477,
+        stepI: 15337572991301,
+        stepII: 15337573220677,
+        stepIII: 15337574072645,
+        stepIV: 15337575874885,
+        giftCard: null // na PL shopu zatím neexistuje – doplnit ID, jakmile bude
+      },
+      cart: {
+        title: 'Koszyk',
+        total: 'Suma',
+        empty: 'Obecnie nie masz żadnych produktów w koszyku.',
+        button: 'Przejdź do finalizacji zakupu',
+        noteDescription: 'Uwaga do zamówienia',
+        notice: 'Koszty wysyłki i kody rabatowe są dodawane przy kasie.',
+        outOfStock: 'Sprzedany',
+        unavailable: 'Sprzedany'
+      }
+    },
 
-      client.checkout.create(input).then((checkout) => {
-        // Uložení checkout ID do localStorage
-        try {
-          localStorage.setItem(localStorageCheckoutKey, checkout.id);
-          console.log('Checkout created successfully:', checkout.id);
-        } catch (error) {
-          console.warn('Could not save to localStorage:', error);
-        }
-        
-        ShopifyBuy.UI.onReady(client).then(function (ui) {
-          const options = {
-            product: {
-              iframe: false,
-              contents: {
-                img: false,
-                button: false,
-                buttonWithQuantity: true,
-                title: false,
-                price: false
-              },
-              text: {
-                button: getButtonText(),
-                outOfStock: getCart().outOfStock,
-                unavailable: getCart().unavailable
-              }
-            },
-            cart: {
-              iframe: false,
-              text: getCart(),
-              contents: { note: true },
-              popup: false
-            },
-            toggle: {
-              iframe: false,
-              sticky: false,
-              templates: { icon: '' }
-            }
+    cz: {
+      domain: 'meer.cz',
+      accountDomain: 'meer.cz',
+      accessToken: 'd0790ee9d09c16714d92224efa9f5882',
+      language: 'cs',
+      countryCode: 'CZ',
+      moneyFormat: '%7B%7Bamount_with_comma_separator%7D%7D%20K%C4%8D',
+      buttonText: 'Přidat do košíku',
+      ui: {
+        // alternativa: "Doprava nyní zdarma"
+        threshold: 'Doprava zdarma od 1 500 Kč',
+        // CZ má doručení závislé na dni v týdnu
+        delivery: () => {
+          const dayMessages = {
+            1: 'pozítří u Vás',     // Po
+            2: 'pozítří u Vás',     // Út
+            3: 'pozítří u Vás',     // St
+            4: 'v pondělí u Vás',   // Čt
+            5: 'v úterý u Vás',     // Pá
+            6: 'v úterý u Vás',     // So
+            0: 'v úterý u Vás'      // Ne
           };
-
-          // Vytvoření komponent s error handling
-          Object.entries(getProductIds()).forEach(([key, productId]) => {
-            const element = productElements[key];
-            if (!element) {
-              console.warn(`Element for ${key} (ID: buy-button-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}) not found`);
-              return;
-            }
-            if (!cartToggle) {
-              console.warn('Cart toggle element missing - component may not work properly');
-            }
-            
-            try {
-              ui.createComponent('product', {
-                id: [productId],
-                node: element,
-                toggles: cartToggle ? [{node: cartToggle}] : [],
-                moneyFormat: getMoneyFormat(),
-                options: options
-              });
-              console.log(`Successfully created component for ${key}`);
-            } catch (error) {
-              console.error(`Failed to create Shopify component for ${key}:`, error);
-            }
-          });
-
-          // Tracking s optimalizací
-          setupTracking(getButtonText());
-        }).catch(error => console.error('Shopify UI initialization failed:', error));
-      }).catch(error => console.error('Shopify checkout creation failed:', error));
-    } catch (error) {
-      console.error('Shopify initialization failed:', error);
+          return dayMessages[new Date().getDay()] || 'pozítří u Vás';
+        }
+      },
+      productIds: {
+        setComplete: 8623720366405,
+        setI: 7542825058534,
+        setII: 8021842854118,
+        stepI: 7601486758118,
+        stepII: 7609802686694,
+        stepIII: 7931357692134,
+        stepIV: 7931360051430,
+        giftCard: 8578704736581
+      },
+      cart: {
+        title: 'Košík',
+        total: 'Mezisoučet',
+        empty: 'Váš košík je prázdný.',
+        button: 'Pokračovat k pokladně',
+        noteDescription: 'Poznámka k objednávce',
+        notice: 'Slevové kódy se přidávají u pokladny.',
+        outOfStock: 'Vyprodáno',
+        unavailable: 'Vyprodáno'
+      }
     }
-  }
-};
+  };
 
-// Variables that depend on other calculations
-let deliveryMessage;
+  const config = localeConfigs[locale] || localeConfigs.cz;
 
-// EXECUTION - Switch statement
-switch (locale) {
-  // English
-  case 'en':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageEN;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageEN);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageEN);
+  // ---------------------------------------------------------------------------
+  // DOM helpery (vše s null-checkem)
+  // ---------------------------------------------------------------------------
+  const setText = (...args) => {
+    const text = args.pop();
+    args.forEach((el) => { if (el) el.textContent = text; });
+  };
 
-    if (userMenu) userMenu.style.display = 'none';
+  const setHref = (el, href) => { if (el) el.href = href; };
 
-    initializeShopify();
-    break;
+  const hide = (el) => { if (el) el.style.display = 'none'; };
 
-  // Slovakia
-  case 'sk':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageSK;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageSK);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageSK);
+  // ---------------------------------------------------------------------------
+  // Reviews counter (s horním limitem a úklidem timerů)
+  // ---------------------------------------------------------------------------
+  const MAX_SESSION_INCREMENTS = 30;
 
-    // User links
-    Object.assign(userOrders, {href: 'https://meer.cz/account'});
-    Object.assign(userLogin, {href: 'https://meer.cz/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://meer.cz/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://meer.cz/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://meer.cz/account/addresses'});
-    
-    initializeShopify();
-    break;
+  const animateReviewsCounter = () => {
+    const reviewsElement = document.getElementById('reviews-rating-number');
+    if (!reviewsElement) return;
 
-  // France
-  case 'fr':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageFR;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageFR);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageFR);
+    const initialCount = parseInt(String(reviewsElement.textContent).trim(), 10) || 0;
+    if (initialCount === 0) return;
 
-    Object.assign(userOrders, {href: 'https://www.meer.beauty/account'});
-    Object.assign(userLogin, {href: 'https://www.meer.beauty/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://www.meer.beauty/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://www.meer.beauty/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://www.meer.beauty/account/addresses'});
+    const sessionCountKey = `meer_reviews_added_${locale}`;
+    let addedInSession = parseInt(session.get(sessionCountKey), 10) || 0;
+    if (addedInSession > MAX_SESSION_INCREMENTS) addedInSession = MAX_SESSION_INCREMENTS;
 
-    initializeShopify();
-    break;
+    let currentCount = initialCount + addedInSession;
+    reviewsElement.textContent = String(currentCount);
 
-  // Poland
-  case 'pl':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessagePL;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessagePL);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessagePL);
+    // Limit dosažen – žádné další timery
+    if (addedInSession >= MAX_SESSION_INCREMENTS) return;
 
-    Object.assign(userOrders, {href: 'https://meercarepl.cz/account'});
-    Object.assign(userLogin, {href: 'https://meercarepl.cz/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://meercarepl.cz/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://meercarepl.cz/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://meercarepl.cz/account/addresses'});
+    const timers = new Set();
+    let intervalId = null;
 
-    initializeShopify();
-    break;
-    
-  // Germany
-  case 'de':
-    animateReviewsCounter();
-    if (deliveryDate) deliveryDate.textContent = deliveryMessageDE;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, trasholdMessageDE);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessageDE);
-
-    // Hide alza-button if it exists
-    if (alzaButton) {
-      alzaButton.style.display = 'none';
-    }
-
-    // User links
-    Object.assign(userOrders, {href: 'https://meer.cz/account'});
-    Object.assign(userLogin, {href: 'https://meer.cz/account/login'});
-    Object.assign(userCreateAccount, {href: 'https://meer.cz/account/register'});
-    Object.assign(userForgotPassword, {href: 'https://meer.cz/account/login#recover'});
-    Object.assign(userAddresses, {href: 'https://meer.cz/account/addresses'});
-
-    initializeShopify();
-    break;
-
-  // Czech (default)
-  default:
-    animateReviewsCounter();
-    const getDeliveryMessage = () => {
-      const dayMessages = {
-        1: "pozítří u Vás", // Mon
-        2: "pozítří u Vás", // Tue  
-        3: "pozítří u Vás", // Wed
-        4: "v pondělí u Vás", // Thu
-        5: "v úterý u Vás", // Fri
-        6: "v úterý u Vás", // Sat
-        0: "v úterý u Vás"  // Sun
-      };
-      return dayMessages[dayOfWeek] || "pozítří u Vás";
+    const stop = () => {
+      timers.forEach(clearTimeout);
+      timers.clear();
+      if (intervalId) clearInterval(intervalId);
+      intervalId = null;
     };
 
-    deliveryMessage = getDeliveryMessage();
-    
-    if (deliveryDate) deliveryDate.textContent = deliveryMessage;
-    updateDeliveryElements(navDeliveryTrashold, deliveryTrashold, deliveryMessageCZ);
-    updateDeliveryElements(navDeliveryTime, deliveryTime, deliveryMessage);
+    const later = (fn, delay) => {
+      const id = setTimeout(() => { timers.delete(id); fn(); }, delay);
+      timers.add(id);
+      return id;
+    };
 
+    const incrementReview = () => {
+      if (addedInSession >= MAX_SESSION_INCREMENTS) { stop(); return; }
+
+      currentCount += 1;
+      addedInSession += 1;
+      session.set(sessionCountKey, String(addedInSession));
+      reviewsElement.textContent = String(currentCount);
+
+      reviewsElement.style.opacity = '0.6';
+      later(() => { reviewsElement.style.opacity = '1'; }, 200);
+
+      if (addedInSession >= MAX_SESSION_INCREMENTS) stop();
+    };
+
+    // Cyklus: +1 po 8 s, +1 po dalších 20 s; opakuje se každých 60 s
+    const startCycle = () => {
+      later(() => {
+        incrementReview();
+        later(incrementReview, 20000);
+      }, 8000);
+    };
+
+    startCycle();
+    intervalId = setInterval(startCycle, 60000);
+
+    window.addEventListener('pagehide', stop, { once: true });
+  };
+
+  // Debug utilita: v konzoli zavolej resetReviewsCounter()
+  window.resetReviewsCounter = () => {
+    Object.keys(localeConfigs).forEach((loc) => {
+      session.remove(`meer_reviews_added_${loc}`);
+      session.remove(`meer_reviews_increments_${loc}`);
+    });
+    console.log('[meer] All reviews counters reset');
+    location.reload();
+  };
+
+  // ---------------------------------------------------------------------------
+  // Úklid localStorage – maže POUZE checkouty z jiných domén/tokenů.
+  // Aktuální checkout zůstává, aby se košík neztratil mezi stránkami.
+  // ---------------------------------------------------------------------------
+  const cleanupForeignCheckouts = (currentKey) => {
+    const removed = local.keys().filter((key) => {
+      if (!key || key === currentKey || !key.includes('checkoutId')) return false;
+      return key.includes('.myshopify.com')
+        || key.includes('meer.cz')
+        || key.includes('meer.sk')
+        || key.includes('meercare');
+    });
+
+    removed.forEach((key) => local.remove(key));
+    if (removed.length) log('Removed checkout IDs from other stores:', removed.length);
+  };
+
+  // ---------------------------------------------------------------------------
+  // Tracking add_to_cart (Zaraz)
+  // ---------------------------------------------------------------------------
+  let trackingInitialized = false;
+
+  const setupTracking = (buttonText) => {
+    if (trackingInitialized || !document.body) return;
+    trackingInitialized = true;
+
+    const attach = (button) => {
+      if (!button || button.hasAttribute('data-zaraz-tracked')) return;
+      if (buttonText && !button.textContent.includes(buttonText)) return;
+
+      button.setAttribute('data-zaraz-tracked', 'true');
+      button.addEventListener('click', function () {
+        const shopifyWrapper = this.closest('.shopify-button');
+        if (!shopifyWrapper) return;
+
+        const rawPrice = parseFloat(shopifyWrapper.getAttribute('data-price'));
+        const eventData = {
+          product_id: shopifyWrapper.getAttribute('data-product-id'),
+          product_name: shopifyWrapper.getAttribute('data-product-name'),
+          price: Number.isFinite(rawPrice) ? rawPrice : undefined,
+          quantity: 1
+        };
+
+        if (typeof zaraz !== 'undefined') zaraz.track('add_to_cart', eventData);
+      });
+    };
+
+    // Tlačítka, která už v DOM jsou
+    document.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])').forEach(attach);
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type !== 'childList') return;
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType !== 1) return;
+          if (node.matches && node.matches('.shopify-buy__btn')) attach(node);
+          if (node.querySelectorAll) {
+            node.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])').forEach(attach);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    setTimeout(() => observer.disconnect(), 30000);
+  };
+
+  // ---------------------------------------------------------------------------
+  // Shopify Buy Button
+  // ---------------------------------------------------------------------------
+  const SHOPIFY_SDK_URL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+  const getProductElements = () => ({
+    setComplete: document.getElementById('buy-button-set-complete'),
+    setI: document.getElementById('buy-button-set-I'),
+    setII: document.getElementById('buy-button-set-II'),
+    stepI: document.getElementById('buy-button-step-I'),
+    stepII: document.getElementById('buy-button-step-II'),
+    stepIII: document.getElementById('buy-button-step-III'),
+    stepIV: document.getElementById('buy-button-step-IV'),
+    giftCard: document.getElementById('buy-button-gift-card')
+  });
+
+  const initializeShopify = () => {
+    const productElements = getProductElements();
+    const cartToggle = document.getElementById('cart-toggle');
+
+    // Na stránce nejsou žádné buy buttony – nemá smysl cokoli inicializovat
+    if (!Object.values(productElements).some(Boolean)) {
+      log('No product elements found – skipping Shopify initialization');
+      return;
+    }
+
+    if (!cartToggle) warn('Cart toggle element not found – cart may not open from the header');
+
+    const shopifyBuyInit = () => {
+      try {
+        const client = ShopifyBuy.buildClient({
+          domain: config.domain,
+          storefrontAccessToken: config.accessToken,
+          language: config.language
+        });
+
+        const checkoutKey = `${config.accessToken}.${config.domain}.checkoutId`;
+
+        // Smaž jen checkouty z ostatních trhů, ten aktuální ponech
+        cleanupForeignCheckouts(checkoutKey);
+
+        log('Shopify init', { locale, domain: config.domain, language: config.language, country: config.countryCode });
+
+        const createCheckout = () => client.checkout.create({
+          buyerIdentity: { countryCode: config.countryCode }
+        });
+
+        // Znovupoužij existující košík, pokud je platný a nedokončený
+        const existingId = local.get(checkoutKey);
+        const checkoutPromise = existingId
+          ? client.checkout.fetch(existingId)
+              .then((checkout) => {
+                if (checkout && !checkout.completedAt) {
+                  log('Reusing existing checkout');
+                  return checkout;
+                }
+                log('Existing checkout completed/invalid – creating new one');
+                return createCheckout();
+              })
+              .catch(() => createCheckout())
+          : createCheckout();
+
+        checkoutPromise
+          .then((checkout) => {
+            local.set(checkoutKey, checkout.id);
+
+            return ShopifyBuy.UI.onReady(client).then((ui) => {
+              const options = {
+                product: {
+                  iframe: false,
+                  contents: {
+                    img: false,
+                    button: false,
+                    buttonWithQuantity: true,
+                    title: false,
+                    price: false
+                  },
+                  text: {
+                    button: config.buttonText,
+                    outOfStock: config.cart.outOfStock,
+                    unavailable: config.cart.unavailable
+                  }
+                },
+                cart: {
+                  iframe: false,
+                  text: config.cart,
+                  contents: { note: true },
+                  popup: false
+                },
+                toggle: {
+                  iframe: false,
+                  sticky: false,
+                  templates: { icon: '' }
+                }
+              };
+
+              Object.entries(config.productIds).forEach(([key, productId]) => {
+                const element = productElements[key];
+                if (!element) return;            // element na stránce není – tiše přeskoč
+                if (!productId) {                // produkt na tomto trhu neexistuje
+                  warn(`Product "${key}" is not available for locale "${locale}" – skipping`);
+                  return;
+                }
+
+                try {
+                  ui.createComponent('product', {
+                    id: [productId],
+                    node: element,
+                    toggles: cartToggle ? [{ node: cartToggle }] : [],
+                    moneyFormat: config.moneyFormat,
+                    options
+                  });
+                  log(`Component created: ${key}`);
+                } catch (err) {
+                  error(`Failed to create Shopify component for ${key}:`, err);
+                }
+              });
+
+              setupTracking(config.buttonText);
+            });
+          })
+          .catch((err) => error('Shopify checkout/UI initialization failed:', err));
+      } catch (err) {
+        error('Shopify initialization failed:', err);
+      }
+    };
+
+    if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+      shopifyBuyInit();
+      return;
+    }
+
+    const existingScript = document.querySelector(`script[src="${SHOPIFY_SDK_URL}"]`);
+    if (existingScript) {
+      existingScript.addEventListener('load', shopifyBuyInit, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = SHOPIFY_SDK_URL;
+    script.onload = shopifyBuyInit;
+    script.onerror = () => error('Failed to load Shopify SDK');
+    document.head.appendChild(script);
+
+    setTimeout(() => {
+      if (!window.ShopifyBuy) error('Shopify SDK failed to load within 10s');
+    }, 10000);
+  };
+
+  // ---------------------------------------------------------------------------
+  // Init
+  // ---------------------------------------------------------------------------
+  const init = () => {
+    // Delivery / threshold texty
+    const deliveryThreshold = document.getElementById('delivery-treshold');
+    const deliveryTime = document.getElementById('delivery-speed');
+    const deliveryDate = document.getElementById('delivery-date');
+    const navDeliveryThreshold = document.getElementById('nav-delivery-treshold');
+    const navDeliveryTime = document.getElementById('nav-delivery-speed');
+
+    const deliveryText = typeof config.ui.delivery === 'function'
+      ? config.ui.delivery()
+      : config.ui.delivery;
+
+    setText(deliveryDate, deliveryText);
+    setText(navDeliveryThreshold, deliveryThreshold, config.ui.threshold);
+    setText(navDeliveryTime, deliveryTime, deliveryText);
+
+    // Skrývání prvků podle trhu
+    if (config.hideUserMenu) hide(document.getElementById('user-menu'));
+    if (config.hideAlzaButton) hide(document.getElementById('alza-button'));
+
+    // Odkazy na zákaznický účet – vždy na doménu daného shopu
+    const accountBase = `https://${config.accountDomain}`;
+    setHref(document.getElementById('user-orders'), `${accountBase}/account`);
+    setHref(document.getElementById('user-login'), `${accountBase}/account/login`);
+    setHref(document.getElementById('user-create-account'), `${accountBase}/account/register`);
+    setHref(document.getElementById('user-forgot-password'), `${accountBase}/account/login#recover`);
+    setHref(document.getElementById('user-addresses'), `${accountBase}/account/addresses`);
+
+    animateReviewsCounter();
     initializeShopify();
-    break;
-}
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
