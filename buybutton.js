@@ -164,7 +164,7 @@
     fr: {
       domain: 'meercarefr.cz',
       accountDomain: 'meercarefr.cz',
-      accessToken: '618933109ccee1040151ba599180cfef',
+      accessToken: 'd0790ee9d09c16714d92224efa9f5882',
       language: 'fr',
       countryCode: 'FR',
       moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
@@ -239,7 +239,7 @@
       buttonText: 'Přidat do košíku',
       ui: {
         // alternativa: "Doprava nyní zdarma"
-        threshold: 'Doprava zdarma od 1 500 Kč',
+        threshold: 'Doprava nyní ZDARMA',
         // CZ má doručení závislé na dni v týdnu
         delivery: () => {
           const dayMessages = {
@@ -278,6 +278,28 @@
   };
 
   const config = localeConfigs[locale] || localeConfigs.cz;
+
+  // ---------------------------------------------------------------------------
+  // Performance helpery
+  // ---------------------------------------------------------------------------
+  // Spustí práci, až když má prohlížeč volno (nezdržuje vykreslení stránky)
+  const whenIdle = (fn, timeout = 2000) => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(fn, { timeout });
+    } else {
+      setTimeout(fn, 1);
+    }
+  };
+
+  // <link rel="preconnect"> – TCP/TLS handshake proběhne dřív, než začne download
+  const preconnect = (origin) => {
+    if (document.querySelector(`link[rel="preconnect"][href="${origin}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = origin;
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+  };
 
   // ---------------------------------------------------------------------------
   // DOM helpery (vše s null-checkem)
@@ -386,52 +408,33 @@
 
   // ---------------------------------------------------------------------------
   // Tracking add_to_cart (Zaraz)
+  // Jeden delegovaný listener na document – žádný MutationObserver, žádná
+  // režie při změnách DOM, funguje i pro tlačítka vykreslená kdykoli později.
   // ---------------------------------------------------------------------------
   let trackingInitialized = false;
 
   const setupTracking = (buttonText) => {
-    if (trackingInitialized || !document.body) return;
+    if (trackingInitialized) return;
     trackingInitialized = true;
 
-    const attach = (button) => {
-      if (!button || button.hasAttribute('data-zaraz-tracked')) return;
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest && event.target.closest('.shopify-buy__btn');
+      if (!button) return;
       if (buttonText && !button.textContent.includes(buttonText)) return;
 
-      button.setAttribute('data-zaraz-tracked', 'true');
-      button.addEventListener('click', function () {
-        const shopifyWrapper = this.closest('.shopify-button');
-        if (!shopifyWrapper) return;
+      const shopifyWrapper = button.closest('.shopify-button');
+      if (!shopifyWrapper) return;
 
-        const rawPrice = parseFloat(shopifyWrapper.getAttribute('data-price'));
-        const eventData = {
-          product_id: shopifyWrapper.getAttribute('data-product-id'),
-          product_name: shopifyWrapper.getAttribute('data-product-name'),
-          price: Number.isFinite(rawPrice) ? rawPrice : undefined,
-          quantity: 1
-        };
+      const rawPrice = parseFloat(shopifyWrapper.getAttribute('data-price'));
+      const eventData = {
+        product_id: shopifyWrapper.getAttribute('data-product-id'),
+        product_name: shopifyWrapper.getAttribute('data-product-name'),
+        price: Number.isFinite(rawPrice) ? rawPrice : undefined,
+        quantity: 1
+      };
 
-        if (typeof zaraz !== 'undefined') zaraz.track('add_to_cart', eventData);
-      });
-    };
-
-    // Tlačítka, která už v DOM jsou
-    document.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])').forEach(attach);
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type !== 'childList') return;
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType !== 1) return;
-          if (node.matches && node.matches('.shopify-buy__btn')) attach(node);
-          if (node.querySelectorAll) {
-            node.querySelectorAll('.shopify-buy__btn:not([data-zaraz-tracked])').forEach(attach);
-          }
-        });
-      });
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-    setTimeout(() => observer.disconnect(), 30000);
+      if (typeof zaraz !== 'undefined') zaraz.track('add_to_cart', eventData);
+    }, { passive: true });
   };
 
   // ---------------------------------------------------------------------------
@@ -496,11 +499,12 @@
               .catch(() => createCheckout())
           : createCheckout();
 
-        checkoutPromise
-          .then((checkout) => {
+        // Checkout i UI se načítají paralelně – ušetří jeden síťový round-trip
+        Promise.all([checkoutPromise, ShopifyBuy.UI.onReady(client)])
+          .then(([checkout, ui]) => {
             local.set(checkoutKey, checkout.id);
 
-            return ShopifyBuy.UI.onReady(client).then((ui) => {
+            {
               const options = {
                 product: {
                   iframe: false,
@@ -552,14 +556,18 @@
                 }
               });
 
-              setupTracking(config.buttonText);
-            });
+              whenIdle(() => setupTracking(config.buttonText));
+            }
           })
           .catch((err) => error('Shopify checkout/UI initialization failed:', err));
       } catch (err) {
         error('Shopify initialization failed:', err);
       }
     };
+
+    // Připoj se k CDN i shop doméně dřív, než se SDK začne stahovat
+    preconnect('https://sdks.shopifycdn.com');
+    preconnect(`https://${config.domain}`);
 
     if (window.ShopifyBuy && window.ShopifyBuy.UI) {
       shopifyBuyInit();
@@ -615,8 +623,11 @@
     setHref(document.getElementById('user-forgot-password'), `${accountBase}/account/login#recover`);
     setHref(document.getElementById('user-addresses'), `${accountBase}/account/addresses`);
 
-    animateReviewsCounter();
+    // Buy buttony jsou priorita – startují hned
     initializeShopify();
+
+    // Kosmetika až když má prohlížeč volno
+    whenIdle(animateReviewsCounter);
   };
 
   if (document.readyState === 'loading') {
