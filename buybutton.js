@@ -504,7 +504,6 @@
           .then(([checkout, ui]) => {
             local.set(checkoutKey, checkout.id);
 
-            {
               const options = {
                 product: {
                   iframe: false,
@@ -557,7 +556,6 @@
               });
 
               whenIdle(() => setupTracking(config.buttonText));
-            }
           })
           .catch((err) => error('Shopify checkout/UI initialization failed:', err));
       } catch (err) {
