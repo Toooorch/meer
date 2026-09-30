@@ -239,7 +239,7 @@
       buttonText: 'Přidat do košíku',
       ui: {
         // alternativa: "Doprava nyní zdarma"
-        threshold: 'Doprava nyní ZDARMA',
+        threshold: 'Doprava zdarma od 1500Kč',
         // CZ má doručení závislé na dni v týdnu
         delivery: () => {
           const dayMessages = {
